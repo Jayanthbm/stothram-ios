@@ -3,9 +3,7 @@ import { useNavigate } from "react-router-dom";
 import AppHeader from "../components/appHeader.jsx";
 import { CACHED_DATA_KEYS, DATA_URLS, SCREEN_NAMES } from "../constants.jsx";
 import { ThemeContext } from "../context/themeContext.jsx";
-import {
-  dataHelper
-} from "../utils/dataUtils";
+import { dataHelper } from "../utils/dataUtils";
 const SettingsScreen = () => {
   const { toggleDarkMode, darkmode, toggleDarkSwitch, darkSwitch } =
     useContext(ThemeContext);
@@ -33,45 +31,19 @@ const SettingsScreen = () => {
   const ListHeader = ({ title, icon }) => {
     return (
       <div className="list-header">
-        <span
-          className="list-header-title"
-          style={{
-            color: darkmode ? "#fff" : "#000",
-          }}
-        >
-          {title}
-        </span>
+        <span className="list-header-title">{title}</span>
       </div>
     );
   };
   const ListItem = ({ title, subtitle, toggle, state }) => {
     // Provide default values for optional props
     const renderSubtitle = subtitle && (
-      <span
-        className="settings-item-subtitle"
-        style={{
-          color: darkmode ? "#fff" : "#000",
-        }}
-      >
-        {subtitle}
-      </span>
+      <span className="settings-item-subtitle">{subtitle}</span>
     );
     return (
-      <div
-        className="settings-item-container"
-        style={{
-          borderBottomColor: darkmode ? "#b8b6ab" : "#8f8f8f",
-        }}
-      >
+      <div className="settings-item-container">
         <div className="settings-item">
-          <span
-            className="settings-item-title"
-            style={{
-              color: darkmode ? "#fff" : "#000",
-            }}
-          >
-            {title}
-          </span>
+          <span className="settings-item-title">{title}</span>
           {renderSubtitle}
         </div>
         {toggle && (
@@ -105,6 +77,15 @@ const SettingsScreen = () => {
       {contributions?.map(({ name, role }) => (
         <ListItem title={name} subtitle={role} key={name} />
       ))}
+      <ListHeader title="Andriod App" icon={"info"} />
+      <div style={{ textAlign: "center" }}>
+        <a
+          href="https://play.google.com/store/apps/details?id=com.jayanth.shotram"
+          target="_blank"
+        >
+          Download Now
+        </a>
+      </div>
     </>
   );
 };

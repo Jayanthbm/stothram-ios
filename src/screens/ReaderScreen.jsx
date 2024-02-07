@@ -6,7 +6,7 @@ import { ThemeContext } from "../context/themeContext.jsx";
 import { dataHelper } from "../utils/dataUtils.jsx";
 
 const ReaderScreen = () => {
-  const { darkmode, font, updateFont } = useContext(ThemeContext);
+  const { font, updateFont } = useContext(ThemeContext);
   const location = useLocation();
   const navigate = useNavigate();
   const { state } = location;
@@ -38,13 +38,15 @@ const ReaderScreen = () => {
     }
   }, [item]);
 
+  // Scroll to top on component mount
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const Paragraph = ({ data }) => {
     return (
       <div
         className="paragarph-container"
-        style={{
-          borderBottomColor: darkmode ? "#b8b6ab" : "#8f8f8f",
-        }}
+
       >
         {data?.lines?.map((line, index) => {
           return (
@@ -52,7 +54,6 @@ const ReaderScreen = () => {
               key={index}
               className="line"
               style={{
-                color: darkmode ? "#fff" : "#000",
                 fontSize: font,
               }}
             >
@@ -68,9 +69,6 @@ const ReaderScreen = () => {
     return (
       <div
         className="subheading-container"
-        style={{
-          backgroundColor: darkmode ? "#878683" : "#6200EE",
-        }}
       >
         <span className="subheading-text">{data.title}</span>
       </div>

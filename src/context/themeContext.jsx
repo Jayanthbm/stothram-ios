@@ -63,6 +63,7 @@ export const ThemeProvider = ({ children }) => {
   }, []);
 
   const showToast = (message) => {
+    toast.dismiss();
     return toast(message);
   };
 

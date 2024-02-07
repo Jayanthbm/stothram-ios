@@ -43,8 +43,8 @@ const HomeScreen = () => {
   };
 
   const icons = {
-    profile: <AiOutlineProfile color="#fff" size={80} style={{ paddingTop: 10 }} />,
-    database: <FiDatabase color="#fff" size={80} style={{ paddingTop: 10 }} />,
+    profile: <AiOutlineProfile color="#fff" size={80} style={{ paddingTop: 5 }} />,
+    database: <FiDatabase color="#fff" size={80} style={{ paddingTop: 5 }} />,
   };
   const TypeItem = ({ item, onClick }) => {
     const { title, icon, darkBackground, lightBackground } = item;
@@ -58,7 +58,7 @@ const HomeScreen = () => {
         onClick={onClick}
       >
         {icons[icon]}
-        <div className="card-title">{title}</div>
+        <div className="card-title" style={{color:'#fff'}}>{title}</div>
       </div>
     );
   };

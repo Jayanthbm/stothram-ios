@@ -1,17 +1,25 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { ToastContainer } from "react-toastify";
 import "./App.css";
 import Navigation from "./Navigation.jsx";
 import { ThemeContext } from "./context/themeContext.jsx";
 function App() {
   const { darkmode } = useContext(ThemeContext);
+
+  useEffect(() => {
+    if (darkmode) {
+      document.body.classList.add('dark-mode')
+    } else {
+      document.body.classList.remove('dark-mode')
+    }
+  },[darkmode])
   return (
-    <div className={darkmode ? "app dark" : "app light"}>
+    <div className={"app"}>
       <Navigation />
       <ToastContainer
         position="bottom-center"
-        autoClose={2000}
-        theme={darkmode ? "dark" : "light"}
+        autoClose={1000}
+        theme={darkmode ? "light" : "dark"}
       />
     </div>
   );

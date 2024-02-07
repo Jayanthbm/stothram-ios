@@ -2,12 +2,12 @@ import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import AppHeader from "../components/appHeader.jsx";
 
-import godLogo from '../assets/god.webp';
+import godLogo from "../assets/god.webp";
 import { SCREEN_NAMES } from "../constants.jsx";
 import { ThemeContext } from "../context/themeContext.jsx";
 import { dataHelper, preFetcher } from "../utils/dataUtils.jsx";
 const ListScreen = () => {
-  const { darkmode, viewType } = useContext(ThemeContext);
+  const { viewType } = useContext(ThemeContext);
   const location = useLocation();
   const navigate = useNavigate();
   const { state } = location;
@@ -72,26 +72,9 @@ const ListScreen = () => {
   const CardView = ({ item, onClick }) => {
     const { displayTitle } = item;
     return (
-      <div
-        className="card-item"
-        style={{
-          borderColor: darkmode ? "#b8b6ab" : "#8f8f8f",
-        }}
-        onClick={onClick}
-      >
-        <img
-          src={godLogo}
-          alt={"god"}
-          className="card-image"
-        />
-        <div
-          className="card-title"
-          style={{
-            color: darkmode ? "#ffffff" : "#000000",
-          }}
-        >
-          {displayTitle}
-        </div>
+      <div className="card-item" onClick={onClick}>
+        <img src={godLogo} alt={"god"} className="card-image" />
+        <div className="card-title">{displayTitle}</div>
       </div>
     );
   };
@@ -99,17 +82,8 @@ const ListScreen = () => {
   const ListView = ({ item, onClick }) => {
     const { displayTitle } = item;
     return (
-      <div
-        className="list-item"
-        style={{
-          borderColor: darkmode ? "#b8b6ab" : "#8f8f8f",
-        }}
-        onClick={onClick}
-      >
-        <div className="list-title"
-        >
-          {displayTitle}
-        </div>
+      <div className="list-item" onClick={onClick}>
+        <div className="list-title">{displayTitle}</div>
       </div>
     );
   };
@@ -131,8 +105,9 @@ const ListScreen = () => {
         />
       </div>
       <div
-        className={`${viewType === "list" ? "list-container" : "card-container"
-          }`}
+        className={`${
+          viewType === "list" ? "list-container" : "card-container"
+        }`}
       >
         {filteredData.map((item, index) => {
           if (viewType === "list") {
@@ -142,7 +117,7 @@ const ListScreen = () => {
                 item={item}
                 onClick={() => handlePress(item)}
               />
-            )
+            );
           }
           if (viewType === "card") {
             return (
@@ -151,12 +126,11 @@ const ListScreen = () => {
                 item={item}
                 onClick={() => handlePress(item)}
               />
-            )
+            );
           } else {
-            return null
+            return null;
           }
-        }
-        )}
+        })}
       </div>
       {rendered && filteredData.length === 0 && (
         <div className="no-data">No data found</div>

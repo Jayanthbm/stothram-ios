@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { FaRupeeSign } from "react-icons/fa";
 import {
   FiChevronLeft,
@@ -12,8 +12,17 @@ import { ThemeContext } from "../context/themeContext.jsx";
 const AppHeader = ({ title, backAction, settingsAction, toggleView }) => {
   const { darkmode, viewType, toggleViewType, darkSwitch, toggleDarkMode } =
     useContext(ThemeContext);
+  const [showDailog, setShowDialog] = useState(false);
+
+  const handleShowDialog = () => {
+    setShowDialog(true);
+  };
+
+  const handleCloseDialog = () => {
+    setShowDialog(false);
+  };
   return (
-    <div className={`app-header ${darkmode ? "dark" : "light"}`}>
+    <div className="app-header">
       {backAction && (
         <span className="back-button" onClick={backAction}>
           <FiChevronLeft className="icon-style" />
@@ -22,7 +31,7 @@ const AppHeader = ({ title, backAction, settingsAction, toggleView }) => {
 
       <span className="app-header-title">{title}</span>
       <div className="right-content">
-        <span onClick={() => console.log("clicked")}>
+        <span onClick={handleShowDialog}>
           <FaRupeeSign className="icon-style" />
         </span>
         {toggleView && (
@@ -37,7 +46,7 @@ const AppHeader = ({ title, backAction, settingsAction, toggleView }) => {
         {darkSwitch && (
           <span onClick={toggleDarkMode}>
             {darkmode ? (
-              <FiSun color="orange" className="icon-style" />
+              <FiSun color="#f1e408" className="icon-style" />
             ) : (
               <FiMoon className="icon-style" />
             )}

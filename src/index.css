@@ -1,3 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Kannada:wght@500;800&display=swap');
+
+:root {
+  --background-color: #fefefe;
+  --text-color: #000000;
+  --border-color: #8f8f8f;
+  --header-color: #6200EE;
+
+}
+
+.dark-mode {
+  --background-color: #5e5e5c;
+  --text-color: #ffffff;
+  --border-color: #b8b6ab;
+  --header-color: #878683;
+}
+
+html{
+  overflow-x: hidden;
+}
+body {
+  margin-left: 15px;
+  margin-right: 15px;
+  font-family: 'Noto Sans Kannada', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  overflow-x: hidden;
+}
+
+a {
+  color: var(--text-color);
+}
+
+a::visited {
+  color: var(--text-color);
+}
+
 input[type="text"] {
   -webkit-text-size-adjust: 100%;
 }
