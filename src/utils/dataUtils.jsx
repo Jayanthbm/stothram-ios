@@ -55,6 +55,7 @@ export const storeJSON = (key, value) => {
 export const getJSON =  key => {
   try {
     const value = localStorage.getItem(key);
+    if (!value) return null;
     return JSON.parse(value);
   } catch (error) {
     console.log(error);
@@ -180,4 +181,31 @@ export const preFetcher = async (dataArray, SCREEN_TYPE) => {
     console.error('Error in preFetcher:', error);
     return false;
   }
+};
+
+/**
+ * used to get device info
+ * @returns {object} - device info
+ */
+
+export const getOSInfo = () => {
+  const userAgent = navigator.userAgent;
+  let os = "Unknown";
+
+  // Detect OS
+  if (/windows phone/i.test(userAgent)) {
+    os = "Windows Phone";
+  } else if (/android/i.test(userAgent)) {
+    os = "Android";
+  } else if (/iphone|ipad|ipod/i.test(userAgent)) {
+    os = "iOS";
+  } else if (/mac os/i.test(userAgent)) {
+    os = "macOS";
+  } else if (/windows/i.test(userAgent)) {
+    os = "Windows";
+  } else if (/linux/i.test(userAgent)) {
+    os = "Linux";
+  }
+
+  return os;
 };

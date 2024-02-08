@@ -8,11 +8,11 @@ function App() {
 
   useEffect(() => {
     if (darkmode) {
-      document.body.classList.add('dark-mode')
+      document.body.classList.add("dark-mode");
     } else {
-      document.body.classList.remove('dark-mode')
+      document.body.classList.remove("dark-mode");
     }
-  },[darkmode])
+  }, [darkmode]);
   return (
     <div className={"app"}>
       <Navigation />

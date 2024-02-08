@@ -11,11 +11,13 @@ import {
   storeItem,
   storeJSON,
 } from "../utils/dataUtils.jsx";
+
 const HomeScreen = () => {
   const navigate = useNavigate();
   const [types, setTypes] = useState([]);
   const { darkmode } = useContext(ThemeContext);
   const windowSize = useRef([window.innerWidth, window.innerHeight]);
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -69,7 +71,13 @@ const HomeScreen = () => {
         title={"Stothram"}
         settingsAction={() => navigate("/settings")}
       />
-      <div style={{ display: 'flex', flexDirection: 'column-reverse', height: windowSize.current[1] - 130 }}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column-reverse",
+          height: windowSize.current[1] - 150,
+        }}
+      >
         <div className="card-container">
           {types.map((type) => (
             <TypeItem

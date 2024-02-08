@@ -8,7 +8,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: #ffffff;
+  color: var(--header-text-color);
   font-weight: bold;
   text-align: center;
   padding: 10px;
@@ -37,6 +37,7 @@
   font-size: 25px;
   padding-left: 5px;
   padding-right: 5px;
+  padding-top: 10px;
 }
 
 .search-container {
@@ -108,7 +109,7 @@
 .no-data {
   text-align: center;
   font-size: large;
-  margin-top:50px;
+  margin-top: 50px;
 }
 
 .font-slider-container {
@@ -139,7 +140,7 @@
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background: var(--header-color);
+  background: var(--slider-color);
   cursor: pointer;
 }
 
@@ -147,7 +148,7 @@
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background: var(--header-color);
+  background: var(--slider-color);
   cursor: pointer;
 }
 
@@ -179,7 +180,7 @@
 
 .list-header {
   align-self: center;
-  padding:15px;
+  padding: 15px;
 }
 
 .list-header-title {
@@ -195,7 +196,7 @@
   border-bottom-width: 1px;
   border-bottom-style: solid;
   border-bottom-color: var(--border-color);
-  padding:15px;
+  padding: 15px;
 }
 
 .settings-item {
@@ -211,7 +212,7 @@
 
 .settings-item-subtitle {
   font-size: 12px;
-  color:#878683;
+  color: #878683;
 }
 
 
@@ -291,16 +292,62 @@ input:checked+.slider:before {
 }
 
 .modal-content {
-  background-color: #fff;
-  padding: 20px;
+  height: fit-content;
+  background-color: var(--modal-background);
+  padding: 30px;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
+.modal-title {
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 10px;
+  text-align: center;
+
+}
+
+.amounts-container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+.amount {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  font-size: 15px;
+}
+.money-input-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.money-input {
+  font-size: 18px;
+  border-color: #ccc;
+  border-width: 2px;
+  margin-bottom: 10px;
+
+}
+.payment-app-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.payment-img{
+  width: 45px;
+  padding:5px;
+}
+
 /* Optional: Add styles for close button */
 .modal-content button {
-  background-color: #007bff;
-  color: #fff;
+  background-color: var(--header-color);
+  color:var(--header-text-color);
   border: none;
   padding: 10px 15px;
   border-radius: 5px;
@@ -310,4 +357,22 @@ input:checked+.slider:before {
 /* Show the modal when it's active */
 .modal.active {
   display: flex;
+}
+
+.notSupported {
+  text-align: center;
+  padding: 20px;
+}
+
+.message {
+  margin-top: 20px;
+}
+
+.message p {
+  margin-bottom: 10px;
+}
+
+.message a {
+  text-decoration: none;
+  color: #007bff;
 }
