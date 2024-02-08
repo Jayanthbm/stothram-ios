@@ -9,10 +9,23 @@ import {
   FiSun,
 } from "react-icons/fi";
 import { ThemeContext } from "../context/themeContext.jsx";
+
+const Modal = ({ handleCloseDialog }) => {
+  return (
+    <div className="modal active">
+      <div className="modal-content">
+        <h2>Modal Title</h2>
+        <p>This is the modal content.</p>
+        <button onClick={handleCloseDialog}>Close Modal</button>
+      </div>
+    </div>
+  );
+};
+
 const AppHeader = ({ title, backAction, settingsAction, toggleView }) => {
   const { darkmode, viewType, toggleViewType, darkSwitch, toggleDarkMode } =
     useContext(ThemeContext);
-  const [showDailog, setShowDialog] = useState(false);
+  const [showDailog, setShowDialog] = useState(true);
 
   const handleShowDialog = () => {
     setShowDialog(true);
@@ -58,6 +71,8 @@ const AppHeader = ({ title, backAction, settingsAction, toggleView }) => {
           </span>
         )}
       </div>
+
+      {showDailog && <Modal handleCloseDialog={handleCloseDialog} />}
     </div>
   );
 };
