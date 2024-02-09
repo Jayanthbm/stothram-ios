@@ -16,7 +16,7 @@ import {
   UPI_LOGO,
 } from "../constants.jsx";
 import { ThemeContext } from "../context/themeContext.jsx";
-import { getItem, getJSON, isInternetConnected } from "../utils/dataUtils.jsx";
+import { getItem, getJSON, getOSInfo, isInternetConnected } from "../utils/dataUtils.jsx";
 
 const AppHeader = ({ title, backAction, settingsAction, toggleView }) => {
   const { darkmode, viewType, toggleViewType, darkSwitch, toggleDarkMode } =
@@ -33,15 +33,22 @@ const AppHeader = ({ title, backAction, settingsAction, toggleView }) => {
   }, []);
 
   const handleShowDialog = () => {
-    if (!isInternetConnected()) {
-      alert("Please connect to the internet");
+    const os = getOSInfo();
+    if(os === "iOS" || os === "Android") {
+      if (!isInternetConnected()) {
+        alert("Please connect to the internet");
+        return;
+      }
+      if (upiId === "") {
+        alert("Coming soon!");
+        return;
+      }
+      setShowDialog(true);
+    } else {
+      alert("Not supported on " + os);
       return;
     }
-    if (upiId === "") {
-      alert('Coming soon!');
-      return;
-    }
-    setShowDialog(true);
+
   };
 
   const handleCloseDialog = () => {

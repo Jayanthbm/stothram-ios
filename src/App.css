@@ -122,7 +122,7 @@
   appearance: none;
   height: 10px;
   border-radius: 10px;
-  background: #d3d3d3;
+  background: var(--slider-color);
   outline: none;
   opacity: 0.5;
   -webkit-transition: opacity 0.2s;
@@ -140,7 +140,7 @@
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background: var(--slider-color);
+  background: var(--text-color);
   cursor: pointer;
 }
 
@@ -148,7 +148,7 @@
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background: var(--slider-color);
+  background: var(--text-color);
   cursor: pointer;
 }
 
@@ -159,6 +159,7 @@
   margin-bottom: 15px;
   padding-bottom: 10px;
   padding-top: 10px;
+  margin-left: 10px;
 }
 
 .line {
