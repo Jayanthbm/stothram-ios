@@ -13,6 +13,7 @@ function App() {
       document.body.classList.remove("dark-mode");
     }
   }, [darkmode]);
+
   return (
     <div className={"app"}>
       <Navigation />
