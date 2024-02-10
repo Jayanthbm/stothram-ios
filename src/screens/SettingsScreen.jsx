@@ -4,6 +4,8 @@ import AppHeader from "../components/appHeader.jsx";
 import { CACHED_DATA_KEYS, DATA_URLS, SCREEN_NAMES } from "../constants.jsx";
 import { ThemeContext } from "../context/themeContext.jsx";
 import { dataHelper } from "../utils/dataUtils";
+import AdsenseBottom from "../components/adsenseBottom.jsx";
+import AdsenseTop from "../components/adsenseTop.jsx";
 const SettingsScreen = () => {
   const { toggleDarkMode, darkmode, toggleDarkSwitch, darkSwitch } =
     useContext(ThemeContext);
@@ -59,6 +61,7 @@ const SettingsScreen = () => {
   return (
     <>
       <AppHeader title={"Settings"} backAction={() => navigate(-1)} />
+      <AdsenseTop />
       <ListHeader title="General Settings" icon={"settings"} />
       <ListItem
         title="Dark theme"
@@ -86,6 +89,7 @@ const SettingsScreen = () => {
           Download Now
         </a>
       </div>
+      <AdsenseBottom />
     </>
   );
 };

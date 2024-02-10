@@ -3,6 +3,8 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import AppHeader from "../components/appHeader";
+import AdsenseTop from "../components/adsenseTop.jsx";
+import AdsenseBottom from "../components/adsenseBottom.jsx";
 
 
 const NotSupported = () => {
@@ -34,6 +36,7 @@ const NotSupported = () => {
   return (
     <div className={"notSupported"}>
       <AppHeader title={"Stothram"} />
+      <AdsenseTop />
       {os === "Android" ? (
         <div className={"message"}>
           <p>
@@ -56,6 +59,7 @@ const NotSupported = () => {
           </p>
         </div>
       )}
+      <AdsenseBottom />
     </div>
   );
 };

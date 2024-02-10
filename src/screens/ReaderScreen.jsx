@@ -4,7 +4,8 @@ import AppHeader from "../components/appHeader.jsx";
 import { SCREEN_NAMES } from "../constants.jsx";
 import { ThemeContext } from "../context/themeContext.jsx";
 import { dataHelper } from "../utils/dataUtils.jsx";
-
+import AdsenseBottom from "../components/adsenseBottom.jsx";
+import AdsenseTop from "../components/adsenseTop.jsx";
 const ReaderScreen = () => {
   const { font, updateFont } = useContext(ThemeContext);
   const location = useLocation();
@@ -80,6 +81,7 @@ const ReaderScreen = () => {
         title={displayTitle ? displayTitle : title}
         backAction={() => navigate(-1)}
       />
+      <AdsenseTop />
       <div className="font-slider-container">
         <input
           type="range"
@@ -104,6 +106,7 @@ const ReaderScreen = () => {
           return null;
         })}
       </div>
+      <AdsenseBottom />
     </>
   );
 };

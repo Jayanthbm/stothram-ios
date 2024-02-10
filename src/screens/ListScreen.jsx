@@ -6,6 +6,8 @@ import godLogo from "../assets/god.webp";
 import { SCREEN_NAMES } from "../constants.jsx";
 import { ThemeContext } from "../context/themeContext.jsx";
 import { dataHelper, preFetcher } from "../utils/dataUtils.jsx";
+import AdsenseBottom from "../components/adsenseBottom.jsx";
+import AdsenseTop from "../components/adsenseTop.jsx";
 const ListScreen = () => {
   const { viewType } = useContext(ThemeContext);
   const location = useLocation();
@@ -95,6 +97,7 @@ const ListScreen = () => {
         backAction={() => navigate(-1)}
         toggleView={true}
       />
+      <AdsenseTop />
       <div className={"search-container"}>
         <input
           type="text"
@@ -135,6 +138,7 @@ const ListScreen = () => {
       {rendered && filteredData.length === 0 && (
         <div className="no-data">No data found</div>
       )}
+      <AdsenseBottom />
     </>
   );
 };

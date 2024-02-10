@@ -2,8 +2,14 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { AiOutlineProfile } from "react-icons/ai";
 import { FiDatabase } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
+import AdsenseBottom from "../components/adsenseBottom.jsx";
+import AdsenseTop from "../components/adsenseTop.jsx";
 import AppHeader from "../components/appHeader.jsx";
-import { CACHED_DATA_KEYS, DATA_URLS, SCREEN_NAMES } from "../constants.jsx";
+import {
+  CACHED_DATA_KEYS,
+  DATA_URLS,
+  SCREEN_NAMES,
+} from "../constants.jsx";
 import { ThemeContext } from "../context/themeContext.jsx";
 import {
   dataHelper,
@@ -71,6 +77,7 @@ const HomeScreen = () => {
         title={"Stothram"}
         settingsAction={() => navigate("/settings")}
       />
+      <AdsenseTop />
       <div
         style={{
           display: "flex",
@@ -90,6 +97,7 @@ const HomeScreen = () => {
           ))}
         </div>
       </div>
+      <AdsenseBottom />
     </>
   );
 };
