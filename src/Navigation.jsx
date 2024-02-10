@@ -13,7 +13,7 @@ const Navigation = () => {
   useEffect(() => {
     const os = getOSInfo();
     if (os === "iOS") {
-      navigate("/home");
+      navigate("/");
     } else {
       navigate("/invalid",{ state: { os } });
     }
@@ -41,7 +41,7 @@ const Navigation = () => {
 
   return (
     <Routes>
-      <Route path="/home" element={<HomeScreen />} />
+      <Route path="/" element={<HomeScreen />} />
       <Route path="/list" element={<ListScreen />} />
       <Route path="/reader" element={<ReaderScreen />} />
       <Route path="/settings" element={<SettingsScreen />} />

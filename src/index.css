@@ -6,8 +6,8 @@
   --header-color: #f0ead6;
   --header-text-color: #676767;
   --border-color: #cdcdcd;
-  --slider-color:#f0ead6;
-  --modal-background:#ececec;
+  --slider-color: #f0ead6;
+  --modal-background: #ececec;
 
 }
 
@@ -17,13 +17,14 @@
   --border-color: #b8b6ab;
   --header-color: #3b3b3b;
   --header-text-color: #cdcdcd;
-  --slider-color:#f0ead6;
+  --slider-color: #f0ead6;
   --modal-background: #262626;
 }
 
-html{
+html {
   overflow-x: hidden;
 }
+
 body {
   margin-left: 15px;
   margin-right: 15px;
@@ -33,6 +34,11 @@ body {
   background-color: var(--background-color);
   color: var(--text-color);
   overflow-x: hidden;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
 }
 
 a {

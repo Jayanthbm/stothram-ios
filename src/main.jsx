@@ -5,12 +5,12 @@ import App from './App.jsx';
 import { ThemeProvider } from './context/themeContext.jsx';
 import './index.css';
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode basename="/">
     <MemoryRouter>
       <ThemeProvider>
         <App />
       </ThemeProvider>
     </MemoryRouter>
-  </React.StrictMode>,
-)
+  </React.StrictMode>
+);
