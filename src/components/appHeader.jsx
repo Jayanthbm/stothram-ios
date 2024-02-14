@@ -56,7 +56,7 @@ const AppHeader = ({ title, backAction, settingsAction, toggleView }) => {
   };
 
 
-  const Modal = ({upiId, upiData}) => {
+  const Modal = ({upiId, upidata}) => {
     const [amount, setAmount] = useState(1);
     const [money, setMoney] = useState(1);
 
@@ -238,7 +238,7 @@ const AppHeader = ({ title, backAction, settingsAction, toggleView }) => {
         <Modal
           handleCloseDialog={handleCloseDialog}
           upiId={upiId}
-          upiData={upidata}
+          upidata={upidata}
         />
       )}
     </div>
