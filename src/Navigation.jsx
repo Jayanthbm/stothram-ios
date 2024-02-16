@@ -12,7 +12,7 @@ const Navigation = () => {
   const [promptShown, setPromptShown] = useState(true);
   useEffect(() => {
     const os = getOSInfo();
-    if (os === "iOS") {
+    if (os === "iOS" || os === "macOS" || os === "Windows") {
       navigate("/");
     } else {
       navigate("/invalid",{ state: { os } });

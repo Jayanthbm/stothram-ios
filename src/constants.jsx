@@ -17,6 +17,7 @@ export const CACHED_DATA_KEYS = {
   SETTINGS_SCREEN: "CACHED_SETTINGS_SCREEN",
   UPI_ID: "CACHED_UPI_ID",
   UPI_DATA: "CACHED_UPI_DATA",
+  MONEY_POPUP: "CACHED_MONEY_POPUP"
 };
 
 const BASE_IMAGE_URL = "https://jayanthbm.github.io/stothram-data/images";

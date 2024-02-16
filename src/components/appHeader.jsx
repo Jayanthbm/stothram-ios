@@ -16,7 +16,7 @@ import {
   UPI_LOGO,
 } from "../constants.jsx";
 import { ThemeContext } from "../context/themeContext.jsx";
-import { getItem, getJSON, getOSInfo, isInternetConnected } from "../utils/dataUtils.jsx";
+import { compareTimeDifference, getItem, getJSON, getOSInfo, isInternetConnected, storeItem } from "../utils/dataUtils.jsx";
 
 const AppHeader = ({ title, backAction, settingsAction, toggleView }) => {
   const { darkmode, viewType, toggleViewType, darkSwitch, toggleDarkMode } =
@@ -44,8 +44,12 @@ const AppHeader = ({ title, backAction, settingsAction, toggleView }) => {
         return;
       }
       setShowDialog(true);
+      storeItem(CACHED_DATA_KEYS.MONEY_POPUP, 'true');
+      storeItem(
+      `${CACHED_DATA_KEYS.MONEY_POPUP}_lastFetchTime`,
+      new Date().getTime().toString(),
+    );
     } else {
-      alert("Not supported on " + os);
       return;
     }
 
@@ -55,6 +59,31 @@ const AppHeader = ({ title, backAction, settingsAction, toggleView }) => {
     setShowDialog(false);
   };
 
+
+  useEffect(() => {
+    function init() {
+      const lastFetchTime = getItem(
+        `${CACHED_DATA_KEYS.MONEY_POPUP}_lastFetchTime`,
+      );
+      if (!lastFetchTime) {
+         handleShowDialog();
+      }
+        console.log("lastFetchTime", lastFetchTime);
+      const currentTime = new Date().getTime();
+      const shouldShouldPopUp = compareTimeDifference(
+        currentTime,
+        lastFetchTime,
+        30 * 24 * 60 * 60 * 1000 // 30 days
+      );
+      if (shouldShouldPopUp) {
+        handleShowDialog();
+      }
+
+    }
+    if (upiId && upiId !== "") {
+      init();
+    }
+  }, [upiId]);
 
   const Modal = ({upiId, upidata}) => {
     const [amount, setAmount] = useState(1);
