@@ -3,6 +3,7 @@ export const DATA_THRESHOLDS = {
   LIST: 2 * 60 * 60 * 1000, // 3 hours in milliseconds
   READER: 1 * 60 * 60 * 1000, // 1 hour in milliseconds
   SETTING: 15 * 24 * 60 * 60 * 1000, // 15 days in milliseconds
+  CALENDAR: 24 * 60 * 60 * 1000, // 24 hours in milliseconds
 }
 
 /**
@@ -146,11 +147,15 @@ export const fetchAndStoreData = async (KEYNAME, URL) => {
     if (isConnected) {
       const response = await fetch(URL);
       const data = await response.json();
+      if (data) {
+        // Update local storage with the new data and timestamp
+        storeJSON(KEYNAME, data);
+        storeItem(`${KEYNAME}_lastFetchTime`, new Date().getTime().toString());
+        return data;
+      }
 
-      // Update local storage with the new data and timestamp
-      storeJSON(KEYNAME, data);
-      storeItem(`${KEYNAME}_lastFetchTime`, new Date().getTime().toString());
-      return data;
+      return true;
+
     } else {
       console.log('No internet connection. Data fetching skipped.');
       return null;

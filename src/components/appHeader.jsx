@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { FaRupeeSign } from "react-icons/fa";
+import { FaRegCalendarAlt, FaRupeeSign } from "react-icons/fa";
 import {
   FiChevronLeft,
   FiGrid,
@@ -18,7 +18,7 @@ import {
 import { ThemeContext } from "../context/themeContext.jsx";
 import { compareTimeDifference, getItem, getJSON, getOSInfo, isInternetConnected, storeItem } from "../utils/dataUtils.jsx";
 
-const AppHeader = ({ title, backAction, settingsAction, toggleView }) => {
+const AppHeader = ({ title, backAction, settingsAction, toggleView,calendarAction }) => {
   const { darkmode, viewType, toggleViewType, darkSwitch, toggleDarkMode } =
     useContext(ThemeContext);
   const [showDailog, setShowDialog] = useState(false);
@@ -68,7 +68,6 @@ const AppHeader = ({ title, backAction, settingsAction, toggleView }) => {
       if (!lastFetchTime) {
          handleShowDialog();
       }
-        console.log("lastFetchTime", lastFetchTime);
       const currentTime = new Date().getTime();
       const shouldShouldPopUp = compareTimeDifference(
         currentTime,
@@ -238,6 +237,12 @@ const AppHeader = ({ title, backAction, settingsAction, toggleView }) => {
         <span onClick={handleShowDialog}>
           <FaRupeeSign className="icon-style" />
         </span>
+        {calendarAction && (
+          <span onClick={calendarAction}>
+            <FaRegCalendarAlt className="icon-style" />
+          </span>
+        )}
+
         {toggleView && (
           <span onClick={toggleViewType}>
             {viewType === "card" ? (

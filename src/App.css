@@ -165,6 +165,7 @@
 .line {
   font-weight: 500;
   line-height: 1.8;
+  display: block;
 }
 
 .subheading-container {
@@ -321,11 +322,13 @@ input:checked+.slider:before {
   align-items: baseline;
   font-size: 15px;
 }
+
 .money-input-container {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
+
 .money-input {
   font-size: 18px;
   border-color: #ccc;
@@ -333,6 +336,7 @@ input:checked+.slider:before {
   margin-bottom: 10px;
 
 }
+
 .payment-app-container {
   display: flex;
   flex-direction: row;
@@ -340,15 +344,15 @@ input:checked+.slider:before {
   margin-bottom: 15px;
 }
 
-.payment-img{
+.payment-img {
   width: 45px;
-  padding:5px;
+  padding: 5px;
 }
 
 /* Optional: Add styles for close button */
 .modal-content button {
   background-color: var(--header-color);
-  color:var(--header-text-color);
+  color: var(--header-text-color);
   border: none;
   padding: 10px 15px;
   border-radius: 5px;
@@ -376,4 +380,148 @@ input:checked+.slider:before {
 .message a {
   text-decoration: none;
   color: #007bff;
+}
+
+
+/* Coming Soon Container */
+.coming-soon-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+  background: linear-gradient(to bottom right, #4c669f, #3b5998, #192f6a);
+  color: #fff;
+}
+
+/* Coming Soon Text */
+.coming-soon-text {
+  text-align: center;
+}
+
+.coming-soon-text h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.coming-soon-text p {
+  font-size: 1.2rem;
+  font-weight: 300;
+  margin-bottom: 2rem;
+}
+
+/* Months Container */
+.months-container {
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #fff;
+}
+
+
+
+/* Events Container */
+.events-container {
+  padding: 1rem;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+
+/* Event Card */
+.event-card {
+  background-color: #f8f8f8;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1rem;
+}
+
+.event-date {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.event-title {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.event-time {
+  color: #666;
+}
+
+/* No Events Container */
+.no-events-container {
+  padding: 1rem;
+  text-align: center;
+}
+
+.no-events-text {
+  color: #666;
+  font-style: italic;
+}
+
+/* Month Header */
+.month-header {
+  background-color: #333;
+  color: #fff;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.month-header:hover {
+  background-color: #444;
+}
+
+.month-name {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+/* Day Header */
+.day-header {
+  background-color: #334;
+  color: #fff;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.day-header:hover {
+  background-color: #444;
+}
+
+.day-name {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+  .month-header {
+    padding: 0.8rem;
+  }
+
+  .month-name {
+    font-size: 1rem;
+  }
+
+  .day-header {
+    padding: 0.8rem;
+  }
+
+  .day-name {
+    font-size: 1rem;
+  }
 }

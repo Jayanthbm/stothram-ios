@@ -76,6 +76,7 @@ const HomeScreen = () => {
       <AppHeader
         title={"Stothram"}
         settingsAction={() => navigate("/settings")}
+        calendarAction={() => navigate("/calendar")}
       />
       <AdsenseTop />
       <div

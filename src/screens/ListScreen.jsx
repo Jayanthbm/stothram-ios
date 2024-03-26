@@ -3,11 +3,11 @@ import { useLocation, useNavigate } from "react-router-dom";
 import AppHeader from "../components/appHeader.jsx";
 
 import godLogo from "../assets/god.webp";
+import AdsenseBottom from "../components/adsenseBottom.jsx";
+import AdsenseTop from "../components/adsenseTop.jsx";
 import { SCREEN_NAMES } from "../constants.jsx";
 import { ThemeContext } from "../context/themeContext.jsx";
 import { dataHelper, preFetcher } from "../utils/dataUtils.jsx";
-import AdsenseBottom from "../components/adsenseBottom.jsx";
-import AdsenseTop from "../components/adsenseTop.jsx";
 const ListScreen = () => {
   const { viewType } = useContext(ThemeContext);
   const location = useLocation();
@@ -96,6 +96,7 @@ const ListScreen = () => {
         title={title}
         backAction={() => navigate(-1)}
         toggleView={true}
+        calendarAction={() => navigate("/calendar")}
       />
       <AdsenseTop />
       <div className={"search-container"}>

@@ -5,11 +5,13 @@ export const SCREEN_NAMES = {
   SETTINGS_SCREEN: "SETTING",
 };
 
+const BASE_URL = "https://jayanthbm.github.io/stothram-data";
+
 export const DATA_URLS = {
   HOME_SCREEN:
-    "https://jayanthbm.github.io/stothram-data/home-screen-data.json",
+    `${BASE_URL}/home-screen-data.json`,
   SETTINGS_SCREEN:
-    "https://jayanthbm.github.io/stothram-data/setting-screen-data.json",
+    `${BASE_URL}/setting-screen-data.json`,
 };
 
 export const CACHED_DATA_KEYS = {
@@ -20,7 +22,7 @@ export const CACHED_DATA_KEYS = {
   MONEY_POPUP: "CACHED_MONEY_POPUP"
 };
 
-const BASE_IMAGE_URL = "https://jayanthbm.github.io/stothram-data/images";
+const BASE_IMAGE_URL = `${BASE_URL}/images`;
 
 export const PAYTM_LOGO = `${BASE_IMAGE_URL}/paytm.png`;
 
@@ -41,3 +43,5 @@ export function AD_ID() {
     return AD_UNITS[0];
   }
 }
+
+export const CALENDAR_URL = `${BASE_URL}/calendar`;

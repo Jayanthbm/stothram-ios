@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
+import CalendarScreen from "./screens/CalendarScreen.jsx";
 import HomeScreen from "./screens/HomeScreen";
 import ListScreen from "./screens/ListScreen";
 import NotSupported from "./screens/NotSupoorted";
@@ -45,6 +46,7 @@ const Navigation = () => {
       <Route path="/list" element={<ListScreen />} />
       <Route path="/reader" element={<ReaderScreen />} />
       <Route path="/settings" element={<SettingsScreen />} />
+      <Route path="/calendar" element={<CalendarScreen />} />
       <Route path="/invalid" element={<NotSupported />} />
     </Routes>
   );
