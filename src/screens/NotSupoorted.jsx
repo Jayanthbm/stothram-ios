@@ -6,7 +6,6 @@ import AppHeader from "../components/appHeader";
 import AdsenseTop from "../components/adsenseTop.jsx";
 import AdsenseBottom from "../components/adsenseBottom.jsx";
 
-
 const NotSupported = () => {
   const location = useLocation();
   const navigate = useNavigate();

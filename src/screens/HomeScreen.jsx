@@ -5,11 +5,7 @@ import { useNavigate } from "react-router-dom";
 import AdsenseBottom from "../components/adsenseBottom.jsx";
 import AdsenseTop from "../components/adsenseTop.jsx";
 import AppHeader from "../components/appHeader.jsx";
-import {
-  CACHED_DATA_KEYS,
-  DATA_URLS,
-  SCREEN_NAMES,
-} from "../constants.jsx";
+import { CACHED_DATA_KEYS, DATA_URLS, SCREEN_NAMES } from "../constants.jsx";
 import { ThemeContext } from "../context/themeContext.jsx";
 import {
   dataHelper,
@@ -24,14 +20,13 @@ const HomeScreen = () => {
   const { darkmode } = useContext(ThemeContext);
   const windowSize = useRef([window.innerWidth, window.innerHeight]);
 
-
   useEffect(() => {
     const fetchData = async () => {
       try {
         const fetchedData = await dataHelper(
           CACHED_DATA_KEYS.HOME_SCREEN,
           DATA_URLS.HOME_SCREEN,
-          SCREEN_NAMES.HOME_SCREEN
+          SCREEN_NAMES.HOME_SCREEN,
         );
         if (fetchedData) {
           setTypes(fetchedData?.data);
@@ -51,7 +46,9 @@ const HomeScreen = () => {
   };
 
   const icons = {
-    profile: <AiOutlineProfile color="#fff" size={80} style={{ paddingTop: 5 }} />,
+    profile: (
+      <AiOutlineProfile color="#fff" size={80} style={{ paddingTop: 5 }} />
+    ),
     database: <FiDatabase color="#fff" size={80} style={{ paddingTop: 5 }} />,
   };
   const TypeItem = ({ item, onClick }) => {
@@ -66,7 +63,9 @@ const HomeScreen = () => {
         onClick={onClick}
       >
         {icons[icon]}
-        <div className="card-title" style={{color:'#fff'}}>{title}</div>
+        <div className="card-title" style={{ color: "#fff" }}>
+          {title}
+        </div>
       </div>
     );
   };

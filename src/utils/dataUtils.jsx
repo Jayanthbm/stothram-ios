@@ -3,7 +3,7 @@ export const DATA_THRESHOLDS = {
   LIST: 2 * 60 * 60 * 1000, // 3 hours in milliseconds
   READER: 1 * 60 * 60 * 1000, // 1 hour in milliseconds
   SETTING: 15 * 24 * 60 * 60 * 1000, // 15 days in milliseconds
-}
+};
 
 /**
  * Store a key-value pair in local storage.
@@ -23,7 +23,7 @@ export const storeItem = async (key, value) => {
  * @param {string} key - The key to retrieve.
  * @returns {string|null} - The retrieved value or null on error.
  */
-export const getItem = key => {
+export const getItem = (key) => {
   try {
     const value = localStorage.getItem(key);
     return value;
@@ -32,7 +32,6 @@ export const getItem = key => {
     return null;
   }
 };
-
 
 /**
  * Store a key-value pair as JSON in local storage.
@@ -52,7 +51,7 @@ export const storeJSON = (key, value) => {
  * @param {string} key - The key to retrieve.
  * @returns {object|null} - The retrieved JSON value or null on error.
  */
-export const getJSON =  key => {
+export const getJSON = (key) => {
   try {
     const value = localStorage.getItem(key);
     if (!value) return null;
@@ -104,8 +103,8 @@ export const compareTimeDifference = (
  */
 export const dataHelper = async (KEYNAME, URL, SCREEN_TYPE) => {
   try {
-    const cachedData =  getJSON(KEYNAME);
-    const lastFetchTime =  getItem(`${KEYNAME}_lastFetchTime`);
+    const cachedData = getJSON(KEYNAME);
+    const lastFetchTime = getItem(`${KEYNAME}_lastFetchTime`);
 
     if (cachedData) {
       // Check if it's time to fetch from online
@@ -152,7 +151,7 @@ export const fetchAndStoreData = async (KEYNAME, URL) => {
       storeItem(`${KEYNAME}_lastFetchTime`, new Date().getTime().toString());
       return data;
     } else {
-      console.log('No internet connection. Data fetching skipped.');
+      console.log("No internet connection. Data fetching skipped.");
       return null;
     }
   } catch (error) {
@@ -169,7 +168,7 @@ export const fetchAndStoreData = async (KEYNAME, URL) => {
  */
 export const preFetcher = async (dataArray, SCREEN_TYPE) => {
   try {
-    const fetchPromises = dataArray.map(dataObject =>
+    const fetchPromises = dataArray.map((dataObject) =>
       dataObject.dataUrl
         ? dataHelper(dataObject.title, dataObject.dataUrl, SCREEN_TYPE)
         : Promise.resolve(null),
@@ -178,7 +177,7 @@ export const preFetcher = async (dataArray, SCREEN_TYPE) => {
     await Promise.all(fetchPromises);
     return true;
   } catch (error) {
-    console.error('Error in preFetcher:', error);
+    console.error("Error in preFetcher:", error);
     return false;
   }
 };

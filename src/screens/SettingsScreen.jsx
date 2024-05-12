@@ -17,7 +17,7 @@ const SettingsScreen = () => {
         const fetchedData = await dataHelper(
           CACHED_DATA_KEYS.SETTINGS_SCREEN,
           DATA_URLS.SETTINGS_SCREEN,
-          SCREEN_NAMES.SETTINGS_SCREEN
+          SCREEN_NAMES.SETTINGS_SCREEN,
         );
         // Update state with fetched contributions
         if (fetchedData) {

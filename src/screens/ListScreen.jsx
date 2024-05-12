@@ -32,7 +32,7 @@ const ListScreen = () => {
       const fetchedData = await dataHelper(
         title,
         dataUrl,
-        SCREEN_NAMES.LIST_SCREEN
+        SCREEN_NAMES.LIST_SCREEN,
       );
       if (fetchedData) {
         setList(fetchedData?.data);
@@ -54,7 +54,7 @@ const ListScreen = () => {
   // Filter Data based on Search Text
   const filterData = (data, searchText) => {
     return data.filter((item) =>
-      item.title.toLowerCase().includes(searchText.toLowerCase())
+      item.title.toLowerCase().includes(searchText.toLowerCase()),
     );
   };
 

@@ -8,13 +8,13 @@ const FONT_SIZE_KEY = "@fontSize";
 
 export const ThemeContext = React.createContext({
   darkmode: false,
-  toggleDarkMode: () => { },
+  toggleDarkMode: () => {},
   darkSwitch: false,
-  toggleDarkSwitch: () => { },
+  toggleDarkSwitch: () => {},
   viewType: "card",
-  toggleViewType: () => { },
+  toggleViewType: () => {},
   font: 24,
-  updateFont: () => { },
+  updateFont: () => {},
 });
 
 export const ThemeProvider = ({ children }) => {
@@ -80,19 +80,19 @@ export const ThemeProvider = ({ children }) => {
         toggleDarkSwitch: () => {
           localStorage.setItem(
             DARK_MODE_TOGGLE_KEY,
-            JSON.stringify(!darkSwitch)
+            JSON.stringify(!darkSwitch),
           );
           setDarkSwitch(!darkSwitch);
           showToast(
             !darkSwitch
               ? "Toggle in Every Page Enabled"
-              : "Toggle in Every Page Disabled"
+              : "Toggle in Every Page Disabled",
           );
         },
         viewType,
         toggleViewType: () => {
           setViewType((currentType) =>
-            currentType === "card" ? "list" : "card"
+            currentType === "card" ? "list" : "card",
           );
         },
         font,

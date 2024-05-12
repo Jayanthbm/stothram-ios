@@ -15,14 +15,18 @@ const Navigation = () => {
     if (os === "iOS" || os === "macOS" || os === "Windows") {
       navigate("/");
     } else {
-      navigate("/invalid",{ state: { os } });
+      navigate("/invalid", { state: { os } });
     }
   }, []);
 
   useEffect(() => {
-    if (promptShown === false && "standalone" in window.navigator && !window.navigator.standalone) {
+    if (
+      promptShown === false &&
+      "standalone" in window.navigator &&
+      !window.navigator.standalone
+    ) {
       alert(
-        "For the best experience, tap the 'Share' button and select 'Add to Home Screen.'"
+        "For the best experience, tap the 'Share' button and select 'Add to Home Screen.'",
       );
       localStorage.setItem("promptShown", "true");
       localStorage.setItem("lastShownTime", Date.now().toString());
@@ -37,7 +41,7 @@ const Navigation = () => {
     ) {
       setPromptShown(false);
     }
-  },[promptShown])
+  }, [promptShown]);
 
   return (
     <Routes>

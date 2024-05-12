@@ -1,11 +1,11 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import AdsenseBottom from "../components/adsenseBottom.jsx";
+import AdsenseTop from "../components/adsenseTop.jsx";
 import AppHeader from "../components/appHeader.jsx";
 import { SCREEN_NAMES } from "../constants.jsx";
 import { ThemeContext } from "../context/themeContext.jsx";
 import { dataHelper } from "../utils/dataUtils.jsx";
-import AdsenseBottom from "../components/adsenseBottom.jsx";
-import AdsenseTop from "../components/adsenseTop.jsx";
 const ReaderScreen = () => {
   const { font, updateFont } = useContext(ThemeContext);
   const location = useLocation();
@@ -15,7 +15,7 @@ const ReaderScreen = () => {
   const [title, setTitle] = useState("");
   const [displayTitle, setDisplayTitle] = useState("");
   const [readerData, setReaderData] = useState(null);
-
+  const [highlightedIndex, setHighlightedIndex] = useState(0);
   // useEffect to fetch data on component mount
   useEffect(() => {
     const fetchData = async () => {
@@ -23,7 +23,7 @@ const ReaderScreen = () => {
         const fetchedData = await dataHelper(
           item?.title,
           item?.dataUrl,
-          SCREEN_NAMES.READER_SCREEN
+          SCREEN_NAMES.READER_SCREEN,
         );
         if (fetchedData) {
           setReaderData(fetchedData);
@@ -43,11 +43,20 @@ const ReaderScreen = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-  const Paragraph = ({ data }) => {
+  const Paragraph = ({
+    data,
+    index,
+    highlightedIndex,
+    onClick,
+    onTouchStart,
+  }) => {
     return (
       <div
-        className="paragarph-container"
-
+        className={`paragarph-container ${
+          highlightedIndex === index ? "active-paragraph" : ""
+        }`}
+        onClick={onClick}
+        onTouchStart={onTouchStart}
       >
         {data?.lines?.map((line, index) => {
           return (
@@ -56,6 +65,7 @@ const ReaderScreen = () => {
               className="line"
               style={{
                 fontSize: font,
+                display: "block",
               }}
             >
               {line}
@@ -68,9 +78,7 @@ const ReaderScreen = () => {
 
   const Subheading = ({ data }) => {
     return (
-      <div
-        className="subheading-container"
-      >
+      <div className="subheading-container">
         <span className="subheading-text">{data.title}</span>
       </div>
     );
@@ -98,7 +106,20 @@ const ReaderScreen = () => {
       <div>
         {readerData?.content?.map((item, index) => {
           if (item?.type === "paragraph") {
-            return <Paragraph data={item} key={index} />;
+            return (
+              <Paragraph
+                data={item}
+                key={index}
+                onClick={() => {
+                  setHighlightedIndex(index);
+                }}
+                highlightedIndex={highlightedIndex}
+                index={index}
+                onTouchStart={() => {
+                  setHighlightedIndex(index);
+                }}
+              />
+            );
           }
           if (item.type === "subheading") {
             return <Subheading data={item} key={index} />;

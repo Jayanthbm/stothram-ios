@@ -97,7 +97,7 @@
   border-bottom-width: 1px;
   border-bottom-style: solid;
   cursor: pointer;
-  border-color: var(--border-color)
+  border-color: var(--border-color);
 }
 
 .list-title {
@@ -160,6 +160,14 @@
   padding-bottom: 10px;
   padding-top: 10px;
   margin-left: 10px;
+  padding-right: 5px;
+}
+
+.active-paragraph {
+  border-left-color: var(--border-color);
+  border-left-width: 2px;
+  padding-left: 2px;
+  border-left-style: solid;
 }
 
 .line {
@@ -208,14 +216,12 @@
 
 .settings-item-title {
   font-size: 16px;
-
 }
 
 .settings-item-subtitle {
   font-size: 12px;
   color: #878683;
 }
-
 
 .switch {
   position: relative;
@@ -238,8 +244,8 @@
   right: 0;
   bottom: 0;
   background-color: #ccc;
-  -webkit-transition: .4s;
-  transition: .4s;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
 }
 
 .slider:before {
@@ -250,21 +256,19 @@
   left: 4px;
   bottom: 4px;
   background-color: white;
-  -webkit-transition: .4s;
-  transition: .4s;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
 }
 
-input:checked+.slider {
+input:checked + .slider {
   background-color: var(--header-color);
-  ;
 }
 
-input:focus+.slider {
+input:focus + .slider {
   box-shadow: 0 0 1px var(--header-color);
-  ;
 }
 
-input:checked+.slider:before {
+input:checked + .slider:before {
   -webkit-transform: translateX(26px);
   -ms-transform: translateX(26px);
   transform: translateX(26px);
@@ -305,7 +309,6 @@ input:checked+.slider:before {
   font-weight: 500;
   margin-bottom: 10px;
   text-align: center;
-
 }
 
 .amounts-container {
@@ -331,7 +334,6 @@ input:checked+.slider:before {
   border-color: #ccc;
   border-width: 2px;
   margin-bottom: 10px;
-
 }
 .payment-app-container {
   display: flex;
@@ -340,15 +342,15 @@ input:checked+.slider:before {
   margin-bottom: 15px;
 }
 
-.payment-img{
+.payment-img {
   width: 45px;
-  padding:5px;
+  padding: 5px;
 }
 
 /* Optional: Add styles for close button */
 .modal-content button {
   background-color: var(--header-color);
-  color:var(--header-text-color);
+  color: var(--header-text-color);
   border: none;
   padding: 10px 15px;
   border-radius: 5px;

@@ -16,7 +16,14 @@ import {
   UPI_LOGO,
 } from "../constants.jsx";
 import { ThemeContext } from "../context/themeContext.jsx";
-import { compareTimeDifference, getItem, getJSON, getOSInfo, isInternetConnected, storeItem } from "../utils/dataUtils.jsx";
+import {
+  compareTimeDifference,
+  getItem,
+  getJSON,
+  getOSInfo,
+  isInternetConnected,
+  storeItem,
+} from "../utils/dataUtils.jsx";
 
 const AppHeader = ({ title, backAction, settingsAction, toggleView }) => {
   const { darkmode, viewType, toggleViewType, darkSwitch, toggleDarkMode } =
@@ -34,7 +41,7 @@ const AppHeader = ({ title, backAction, settingsAction, toggleView }) => {
 
   const handleShowDialog = () => {
     const os = getOSInfo();
-    if(os === "iOS" || os === "Android") {
+    if (os === "iOS" || os === "Android") {
       if (!isInternetConnected()) {
         alert("Please connect to the internet");
         return;
@@ -44,21 +51,19 @@ const AppHeader = ({ title, backAction, settingsAction, toggleView }) => {
         return;
       }
       setShowDialog(true);
-      storeItem(CACHED_DATA_KEYS.MONEY_POPUP, 'true');
+      storeItem(CACHED_DATA_KEYS.MONEY_POPUP, "true");
       storeItem(
-      `${CACHED_DATA_KEYS.MONEY_POPUP}_lastFetchTime`,
-      new Date().getTime().toString(),
-    );
+        `${CACHED_DATA_KEYS.MONEY_POPUP}_lastFetchTime`,
+        new Date().getTime().toString(),
+      );
     } else {
       return;
     }
-
   };
 
   const handleCloseDialog = () => {
     setShowDialog(false);
   };
-
 
   useEffect(() => {
     function init() {
@@ -66,26 +71,25 @@ const AppHeader = ({ title, backAction, settingsAction, toggleView }) => {
         `${CACHED_DATA_KEYS.MONEY_POPUP}_lastFetchTime`,
       );
       if (!lastFetchTime) {
-         handleShowDialog();
+        handleShowDialog();
       }
-        console.log("lastFetchTime", lastFetchTime);
+      console.log("lastFetchTime", lastFetchTime);
       const currentTime = new Date().getTime();
       const shouldShouldPopUp = compareTimeDifference(
         currentTime,
         lastFetchTime,
-        30 * 24 * 60 * 60 * 1000 // 30 days
+        30 * 24 * 60 * 60 * 1000, // 30 days
       );
       if (shouldShouldPopUp) {
         handleShowDialog();
       }
-
     }
     if (upiId && upiId !== "") {
       init();
     }
   }, [upiId]);
 
-  const Modal = ({upiId, upidata}) => {
+  const Modal = ({ upiId, upidata }) => {
     const [amount, setAmount] = useState(1);
     const [money, setMoney] = useState(1);
 

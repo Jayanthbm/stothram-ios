@@ -17,7 +17,7 @@ export const CACHED_DATA_KEYS = {
   SETTINGS_SCREEN: "CACHED_SETTINGS_SCREEN",
   UPI_ID: "CACHED_UPI_ID",
   UPI_DATA: "CACHED_UPI_DATA",
-  MONEY_POPUP: "CACHED_MONEY_POPUP"
+  MONEY_POPUP: "CACHED_MONEY_POPUP",
 };
 
 const BASE_IMAGE_URL = "https://jayanthbm.github.io/stothram-data/images";
@@ -31,7 +31,12 @@ export const PHONEPE_LOGO = `${BASE_IMAGE_URL}/phonepe.webp`;
 export const UPI_LOGO = `${BASE_IMAGE_URL}/upi.webp`;
 
 export const PUB_ID = "ca-pub-0714649342045057";
-export const AD_UNITS = ["6674078733", "9554574702", "2324356915", "8241493031"];
+export const AD_UNITS = [
+  "6674078733",
+  "9554574702",
+  "2324356915",
+  "8241493031",
+];
 
 export function AD_ID() {
   try {

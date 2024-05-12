@@ -6,7 +6,7 @@ const AdsenseTop = () => {
   useEffect(() => {
     try {
       setAdsenseTopContent(
-        `<ins class="adsbygoogle" style="display:block" data-ad-client="${PUB_ID}" data-ad-slot="${AD_ID()}"></ins>`
+        `<ins class="adsbygoogle" style="display:block" data-ad-client="${PUB_ID}" data-ad-slot="${AD_ID()}"></ins>`,
       );
       (window.adsbygoogle = window.adsbygoogle || []).push({});
     } catch (error) {
@@ -20,6 +20,6 @@ const AdsenseTop = () => {
       dangerouslySetInnerHTML={{ __html: adsenseTopContent }}
     ></div>
   );
-}
+};
 
-export default AdsenseTop
+export default AdsenseTop;
