@@ -29,7 +29,7 @@ const ReaderScreen = () => {
         const fetchedData = await dataHelper(
           item?.title,
           item?.dataUrl,
-          SCREEN_NAMES.READER_SCREEN
+          SCREEN_NAMES.READER_SCREEN,
         );
         setFetchedData(fetchedData);
         if (fetchedData) {

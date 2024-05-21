@@ -62,7 +62,7 @@ const AppHeader = ({
       storeItem(CACHED_DATA_KEYS.MONEY_POPUP, "true");
       storeItem(
         `${CACHED_DATA_KEYS.MONEY_POPUP}_lastFetchTime`,
-        new Date().getTime().toString()
+        new Date().getTime().toString(),
       );
     } else {
       return;
@@ -76,7 +76,7 @@ const AppHeader = ({
   useEffect(() => {
     function init() {
       const lastFetchTime = getItem(
-        `${CACHED_DATA_KEYS.MONEY_POPUP}_lastFetchTime`
+        `${CACHED_DATA_KEYS.MONEY_POPUP}_lastFetchTime`,
       );
       if (!lastFetchTime) {
         handleShowDialog();
@@ -86,7 +86,7 @@ const AppHeader = ({
       const shouldShouldPopUp = compareTimeDifference(
         currentTime,
         lastFetchTime,
-        30 * 24 * 60 * 60 * 1000 // 30 days
+        30 * 24 * 60 * 60 * 1000, // 30 days
       );
       if (shouldShouldPopUp) {
         handleShowDialog();
