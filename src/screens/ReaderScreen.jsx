@@ -1,12 +1,12 @@
 import { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import PdfReaderComponent from "../components/PdfReader.jsx";
 import AdsenseBottom from "../components/adsenseBottom.jsx";
 import AdsenseTop from "../components/adsenseTop.jsx";
 import AppHeader from "../components/appHeader.jsx";
 import { SCREEN_NAMES } from "../constants.jsx";
 import { ThemeContext } from "../context/themeContext.jsx";
 import { dataHelper } from "../utils/dataUtils.jsx";
-import PdfReaderComponent from "../components/PdfReader.jsx";
 
 const ReaderScreen = () => {
   const { font, updateFont } = useContext(ThemeContext);
@@ -19,6 +19,9 @@ const ReaderScreen = () => {
   const [readerData, setReaderData] = useState(null);
   const [pdfReader, setPdfReader] = useState(false);
   const [highlightedIndex, setHighlightedIndex] = useState(0);
+  const [fetchedData, setFetchedData] = useState(null);
+  const [languages, setLanguages] = useState(null);
+  const [currentLanguage, setCurrentLanguage] = useState(null);
   // useEffect to fetch data on component mount
   useEffect(() => {
     const fetchData = async () => {
@@ -26,13 +29,21 @@ const ReaderScreen = () => {
         const fetchedData = await dataHelper(
           item?.title,
           item?.dataUrl,
-          SCREEN_NAMES.READER_SCREEN,
+          SCREEN_NAMES.READER_SCREEN
         );
+        setFetchedData(fetchedData);
         if (fetchedData) {
           if (typeof fetchedData === "string") {
             setPdfReader(true);
           }
-          setReaderData(fetchedData);
+          if (fetchedData.translations) {
+            const languages = Object.keys(fetchedData.translations);
+            setLanguages(languages);
+            const currentLanguage = languages[0];
+            setCurrentLanguage(currentLanguage);
+          } else {
+            setReaderData(fetchedData);
+          }
         }
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -45,6 +56,12 @@ const ReaderScreen = () => {
     }
   }, [item]);
 
+  useEffect(() => {
+    if (currentLanguage && fetchedData.translations !== undefined) {
+      setReaderData(fetchedData["translations"][currentLanguage]);
+      setDisplayTitle(fetchedData["translations"][currentLanguage].title);
+    }
+  }, [currentLanguage]);
   // Scroll to top on component mount
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -89,11 +106,17 @@ const ReaderScreen = () => {
       </div>
     );
   };
+  const transalateAction = (language) => {
+    setCurrentLanguage(language);
+  };
   return (
     <>
       <AppHeader
         title={displayTitle ? displayTitle : title}
         backAction={() => navigate(-1)}
+        languages={languages}
+        selectedLanguage={currentLanguage}
+        transalateAction={transalateAction}
       />
       <AdsenseTop />
       {pdfReader ? (

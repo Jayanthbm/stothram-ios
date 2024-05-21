@@ -25,7 +25,15 @@ import {
   storeItem,
 } from "../utils/dataUtils.jsx";
 
-const AppHeader = ({ title, backAction, settingsAction, toggleView }) => {
+const AppHeader = ({
+  title,
+  backAction,
+  settingsAction,
+  toggleView,
+  selectedLanguage,
+  languages,
+  transalateAction,
+}) => {
   const { darkmode, viewType, toggleViewType, darkSwitch, toggleDarkMode } =
     useContext(ThemeContext);
   const [showDailog, setShowDialog] = useState(false);
@@ -37,7 +45,7 @@ const AppHeader = ({ title, backAction, settingsAction, toggleView }) => {
       setUpiData(getJSON(CACHED_DATA_KEYS.UPI_DATA));
     }
     init();
-  }, []);
+  }, [selectedLanguage]);
 
   const handleShowDialog = () => {
     const os = getOSInfo();
@@ -54,7 +62,7 @@ const AppHeader = ({ title, backAction, settingsAction, toggleView }) => {
       storeItem(CACHED_DATA_KEYS.MONEY_POPUP, "true");
       storeItem(
         `${CACHED_DATA_KEYS.MONEY_POPUP}_lastFetchTime`,
-        new Date().getTime().toString(),
+        new Date().getTime().toString()
       );
     } else {
       return;
@@ -68,7 +76,7 @@ const AppHeader = ({ title, backAction, settingsAction, toggleView }) => {
   useEffect(() => {
     function init() {
       const lastFetchTime = getItem(
-        `${CACHED_DATA_KEYS.MONEY_POPUP}_lastFetchTime`,
+        `${CACHED_DATA_KEYS.MONEY_POPUP}_lastFetchTime`
       );
       if (!lastFetchTime) {
         handleShowDialog();
@@ -78,7 +86,7 @@ const AppHeader = ({ title, backAction, settingsAction, toggleView }) => {
       const shouldShouldPopUp = compareTimeDifference(
         currentTime,
         lastFetchTime,
-        30 * 24 * 60 * 60 * 1000, // 30 days
+        30 * 24 * 60 * 60 * 1000 // 30 days
       );
       if (shouldShouldPopUp) {
         handleShowDialog();
@@ -229,6 +237,9 @@ const AppHeader = ({ title, backAction, settingsAction, toggleView }) => {
       </div>
     );
   };
+  const handleLanguageChange = (e) => {
+    return transalateAction(e.target.value);
+  };
   return (
     <div className="app-header">
       {backAction && (
@@ -239,6 +250,19 @@ const AppHeader = ({ title, backAction, settingsAction, toggleView }) => {
 
       <span className="app-header-title">{title}</span>
       <div className="right-content">
+        {languages && languages.length > 0 && (
+          <select
+            onChange={handleLanguageChange}
+            value={selectedLanguage}
+            className="language-select"
+          >
+            {languages.map((language, index) => (
+              <option key={index} value={language} className="language-option">
+                {language}
+              </option>
+            ))}
+          </select>
+        )}
         <span onClick={handleShowDialog}>
           <FaRupeeSign className="icon-style" />
         </span>
