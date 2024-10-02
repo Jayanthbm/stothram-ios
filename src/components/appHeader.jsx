@@ -7,6 +7,7 @@ import {
   FiMoon,
   FiSettings,
   FiSun,
+  FiCopy,
 } from "react-icons/fi";
 import {
   CACHED_DATA_KEYS,
@@ -21,10 +22,9 @@ import {
   getItem,
   getJSON,
   getOSInfo,
-  isInternetConnected,
   storeItem,
 } from "../utils/dataUtils.jsx";
-
+import QRIMAGE from "../assets/qr.png";
 const AppHeader = ({
   title,
   backAction,
@@ -34,8 +34,14 @@ const AppHeader = ({
   languages,
   transalateAction,
 }) => {
-  const { darkmode, viewType, toggleViewType, darkSwitch, toggleDarkMode } =
-    useContext(ThemeContext);
+  const {
+    darkmode,
+    viewType,
+    toggleViewType,
+    darkSwitch,
+    toggleDarkMode,
+    showAlert,
+  } = useContext(ThemeContext);
   const [showDailog, setShowDialog] = useState(false);
   const [upiId, setUpiId] = useState("");
   const [upidata, setUpiData] = useState(null);
@@ -46,26 +52,17 @@ const AppHeader = ({
     }
     init();
   }, [selectedLanguage]);
-
   const handleShowDialog = () => {
-    const os = getOSInfo();
-    if (os === "iOS" || os === "Android") {
-      if (!isInternetConnected()) {
-        alert("Please connect to the internet");
-        return;
-      }
-      if (upiId === "") {
-        alert("Coming soon!");
-        return;
-      }
+    if (upiId === "") {
+      alert("Coming soon!");
+      return;
+    } else {
       setShowDialog(true);
       storeItem(CACHED_DATA_KEYS.MONEY_POPUP, "true");
       storeItem(
         `${CACHED_DATA_KEYS.MONEY_POPUP}_lastFetchTime`,
-        new Date().getTime().toString(),
+        new Date().getTime().toString()
       );
-    } else {
-      return;
     }
   };
 
@@ -76,7 +73,7 @@ const AppHeader = ({
   useEffect(() => {
     function init() {
       const lastFetchTime = getItem(
-        `${CACHED_DATA_KEYS.MONEY_POPUP}_lastFetchTime`,
+        `${CACHED_DATA_KEYS.MONEY_POPUP}_lastFetchTime`
       );
       if (!lastFetchTime) {
         handleShowDialog();
@@ -86,7 +83,7 @@ const AppHeader = ({
       const shouldShouldPopUp = compareTimeDifference(
         currentTime,
         lastFetchTime,
-        30 * 24 * 60 * 60 * 1000, // 30 days
+        30 * 24 * 60 * 60 * 1000 // 30 days
       );
       if (shouldShouldPopUp) {
         handleShowDialog();
@@ -97,30 +94,47 @@ const AppHeader = ({
     }
   }, [upiId]);
 
-  const Modal = ({ upiId, upidata }) => {
-    const [amount, setAmount] = useState(1);
-    const [money, setMoney] = useState(1);
+  // Fallback function for copying text
+  function fallbackCopyTextToClipboard(text) {
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
 
-    //generate 10 letter transaction id include letter and numbers
-    function genearteTransactionId() {
-      var text = "";
-      var possible =
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-      for (var i = 0; i < 10; i++)
-        text += possible.charAt(Math.floor(Math.random() * possible.length));
-      return text;
+    // Styling to make sure the textarea isn't visible or disrupts layout
+    textArea.style.position = "fixed";
+    textArea.style.top = 0;
+    textArea.style.left = 0;
+    textArea.style.width = "2em";
+    textArea.style.height = "2em";
+    textArea.style.padding = 0;
+    textArea.style.border = "none";
+    textArea.style.outline = "none";
+    textArea.style.boxShadow = "none";
+    textArea.style.background = "transparent";
+
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+
+    try {
+      const successful = document.execCommand("copy");
+      showAlert(successful ? "Copied to clipboard" : "Failed to copy");
+    } catch (err) {
+      showAlert("Failed to copy");
     }
 
+    document.body.removeChild(textArea);
+  }
+  const Modal = ({ upiId, upidata }) => {
+    const os = getOSInfo();
+
     const openPaymentApp = async (payApp, amnt) => {
-      if (isNaN(amnt)) {
-        alert("Please enter valid amount");
-        return;
-      }
-      if (amnt < 1) {
-        alert("Please enter amount greater than 0");
-        return;
-      }
       let url = "";
+      try {
+        // Attempt to use the clipboard API
+        await navigator.clipboard.writeText(upiId);
+      } catch (err) {
+        fallbackCopyTextToClipboard(upiId);
+      }
       switch (payApp) {
         case "PAYTM":
           url = "paytmmp://";
@@ -134,16 +148,7 @@ const AppHeader = ({
         case "BHIM":
           url = "upi://";
       }
-
-      url =
-        url +
-        `pay?pa=${upiId}&pn=${upidata?.payee_name}&tn=${
-          upidata?.transaction_note
-        }&am=${amnt}&cu=INR&mc=0000&tr=${genearteTransactionId()}`;
-
       handleCloseDialog();
-      setAmount(1);
-      setMoney(1);
       try {
         window.open(url);
       } catch (err) {
@@ -154,84 +159,92 @@ const AppHeader = ({
       <div className="modal active">
         <div className="modal-content">
           <div className="modal-title">Contribute to Stothram</div>
-          <div className="amounts-container">
-            <div className="amount" key={"amount"}>
-              {upidata?.upi_amounts?.map((amnt) => {
-                return (
-                  <>
-                    <input
-                      type="radio"
-                      name="money"
-                      value={amnt}
-                      id={amnt}
-                      key={amnt}
-                      checked={amnt.toString() === amount.toString()}
-                      onChange={(e) => {
-                        setAmount(e.target.value);
-                        setMoney(e.target.value);
-                      }}
-                    />
-                    <label htmlFor={amnt} key={`label-${amnt}`}>
-                      ₹{amnt}
-                    </label>
-                  </>
-                );
-              })}
-              <input
-                type="radio"
-                name="money"
-                value={"custom"}
-                id={"custom"}
-                key={"custom"}
-                checked={amount === "custom"}
-                onChange={(e) => {
-                  setAmount(e.target.value);
-                  setMoney(null);
-                }}
-              />
-              <label htmlFor={"custom"}>Custom ₹</label>
-            </div>
+          <div style={{ fontSize: "1rem", marginBottom: "1rem" }}>
+            Use the below to contribute
           </div>
-          {amount === "custom" && (
-            <div className="money-input-container">
-              <input
-                type="text"
-                placeholder="Enter amount"
-                value={money ? money.toString() : ""}
-                onChange={(e) => {
-                  setMoney(e.target.value);
+          {upiId && (
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <div
+                style={{
+                  fontSize: "1rem",
+                  marginBottom: "1rem",
+                  color: "green",
                 }}
-                className="money-input"
-              />
+              >
+                {upiId}
+              </div>
+              <div>
+                <FiCopy
+                  style={{ marginLeft: "1rem", cursor: "pointer" }}
+                  onClick={async () => {
+                    try {
+                      // Attempt to use the clipboard API
+                      await navigator.clipboard.writeText(upiId);
+                      showAlert("Copied to clipboard");
+                    } catch (err) {
+                      console.log("Error:", err);
+                      // Fallback for unsupported browsers or failed clipboard writes
+                      fallbackCopyTextToClipboard(upiId);
+                    }
+                  }}
+                />
+              </div>
             </div>
           )}
-          <div className="settings-item-subtitle">Choose App to pay</div>
-          <div className="payment-app-container">
-            <img
-              src={PHONEPE_LOGO}
-              className="payment-img"
-              onClick={() => openPaymentApp("PHONEPE", money)}
-              key={"PHONEPE"}
-            />
-            <img
-              src={GPAY_LOGO}
-              className="payment-img"
-              onClick={() => openPaymentApp("GPAY", money)}
-              key={"GPAY"}
-            />
-            <img
-              src={PAYTM_LOGO}
-              className="payment-img"
-              onClick={() => openPaymentApp("PAYTM", money)}
-              key={"PAYTM"}
-            />
-            <img
-              src={UPI_LOGO}
-              className="payment-img"
-              onClick={() => openPaymentApp("BHIM", money)}
-              key={"BHIM"}
-            />
-          </div>
+          {os === "iOS" || os === "Android" ? (
+            <>
+              <div className="settings-item-subtitle">Choose App to pay</div>
+              <span
+                style={{
+                  fontSize: "16px",
+                  fontWeight: "bold",
+                  color: "#333",
+                  marginBottom: "10px",
+                  display: "block",
+                }}
+              >
+                Click on the app icon to copy the UPI ID, then use it to make a
+                payment.
+              </span>
+
+              <div className="payment-app-container">
+                <img
+                  src={PHONEPE_LOGO}
+                  className="payment-img"
+                  onClick={() => openPaymentApp("PHONEPE")}
+                  key={"PHONEPE"}
+                />
+                <img
+                  src={GPAY_LOGO}
+                  className="payment-img"
+                  onClick={() => openPaymentApp("GPAY")}
+                  key={"GPAY"}
+                />
+                <img
+                  src={PAYTM_LOGO}
+                  className="payment-img"
+                  onClick={() => openPaymentApp("PAYTM")}
+                  key={"PAYTM"}
+                />
+                <img
+                  src={UPI_LOGO}
+                  className="payment-img"
+                  onClick={() => openPaymentApp("BHIM")}
+                  key={"BHIM"}
+                />
+              </div>
+            </>
+          ) : (
+            <div>
+              <img src={QRIMAGE} />
+            </div>
+          )}
           <button onClick={handleCloseDialog}>Close</button>
         </div>
       </div>
@@ -240,6 +253,7 @@ const AppHeader = ({
   const handleLanguageChange = (e) => {
     return transalateAction(e.target.value);
   };
+
   return (
     <div className="app-header">
       {backAction && (

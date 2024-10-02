@@ -14,7 +14,8 @@ export const ThemeContext = React.createContext({
   viewType: "card",
   toggleViewType: () => {},
   font: 24,
-  updateFont: () => {},
+  updateFont: () => { },
+  showAlert: () => { },
 });
 
 export const ThemeProvider = ({ children }) => {
@@ -99,6 +100,9 @@ export const ThemeProvider = ({ children }) => {
         updateFont: (size) => {
           localStorage.setItem(FONT_SIZE_KEY, size.toString());
           setFont(size);
+        },
+        showAlert: (message) => {
+          showToast(message);
         },
       }}
     >
