@@ -29,7 +29,7 @@ const ReaderScreen = () => {
         const fetchedData = await dataHelper(
           item?.title,
           item?.dataUrl,
-          SCREEN_NAMES.READER_SCREEN,
+          SCREEN_NAMES.READER_SCREEN
         );
         setFetchedData(fetchedData);
         if (fetchedData) {
@@ -117,26 +117,26 @@ const ReaderScreen = () => {
         languages={languages}
         selectedLanguage={currentLanguage}
         transalateAction={transalateAction}
-      />
-      <AdsenseTop />
+      >
+        <div className="font-slider-container">
+          <input
+            type="range"
+            min="15"
+            max="40"
+            step="1"
+            value={font}
+            onChange={(e) => {
+              updateFont(parseInt(e.target.value));
+            }}
+            className="font-slider"
+          />
+        </div>
+      </AppHeader>
       {pdfReader ? (
         <>{readerData && <PdfReaderComponent url={readerData} />}</>
       ) : (
         <>
-          <div className="font-slider-container">
-            <input
-              type="range"
-              min="15"
-              max="40"
-              step="1"
-              value={font}
-              onChange={(e) => {
-                updateFont(parseInt(e.target.value));
-              }}
-              className="font-slider"
-            />
-          </div>
-          <div>
+          <div style={{ marginTop: "6rem" }}>
             {readerData?.content?.map((item, index) => {
               if (item?.type === "paragraph") {
                 return (

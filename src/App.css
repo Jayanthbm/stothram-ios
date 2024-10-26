@@ -4,15 +4,22 @@
   font-size: calc(10px + 2vmin);
 }
 
+.app-header-container {
+    color: var(--header-text-color);
+    background-color: var(--header-color);
+    font-weight: bold;
+    text-align: center;
+    padding: 8px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+}
 .app-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: var(--header-text-color);
-  font-weight: bold;
-  text-align: center;
-  padding: 10px;
-  background-color: var(--header-color);
 }
 
 .back-button {

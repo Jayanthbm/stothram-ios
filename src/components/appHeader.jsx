@@ -33,6 +33,7 @@ const AppHeader = ({
   selectedLanguage,
   languages,
   transalateAction,
+  children,
 }) => {
   const {
     darkmode,
@@ -255,54 +256,63 @@ const AppHeader = ({
   };
 
   return (
-    <div className="app-header">
-      {backAction && (
-        <span className="back-button" onClick={backAction}>
-          <FiChevronLeft className="icon-style" />
-        </span>
-      )}
+    <>
+      <div className="app-header-container">
+        <div className="app-header">
+          {backAction && (
+            <span className="back-button" onClick={backAction}>
+              <FiChevronLeft className="icon-style" />
+            </span>
+          )}
 
-      <span className="app-header-title">{title}</span>
-      <div className="right-content">
-        {languages && languages.length > 0 && (
-          <select
-            onChange={handleLanguageChange}
-            value={selectedLanguage}
-            className="language-select"
-          >
-            {languages.map((language, index) => (
-              <option key={index} value={language} className="language-option">
-                {language}
-              </option>
-            ))}
-          </select>
-        )}
-        <span onClick={handleShowDialog}>
-          <FaRupeeSign className="icon-style" />
-        </span>
-        {toggleView && (
-          <span onClick={toggleViewType}>
-            {viewType === "card" ? (
-              <FiList className="icon-style" />
-            ) : (
-              <FiGrid className="icon-style" />
+          <span className="app-header-title">{title}</span>
+          <div className="right-content">
+            {languages && languages.length > 0 && (
+              <select
+                onChange={handleLanguageChange}
+                value={selectedLanguage}
+                className="language-select"
+              >
+                {languages.map((language, index) => (
+                  <option
+                    key={index}
+                    value={language}
+                    className="language-option"
+                  >
+                    {language}
+                  </option>
+                ))}
+              </select>
             )}
-          </span>
-        )}
-        {darkSwitch && (
-          <span onClick={toggleDarkMode}>
-            {darkmode ? (
-              <FiSun color="#f1e408" className="icon-style" />
-            ) : (
-              <FiMoon className="icon-style" />
+            <span onClick={handleShowDialog}>
+              <FaRupeeSign className="icon-style" />
+            </span>
+            {toggleView && (
+              <span onClick={toggleViewType}>
+                {viewType === "card" ? (
+                  <FiList className="icon-style" />
+                ) : (
+                  <FiGrid className="icon-style" />
+                )}
+              </span>
             )}
-          </span>
-        )}
-        {settingsAction && (
-          <span onClick={settingsAction}>
-            <FiSettings className="icon-style" />
-          </span>
-        )}
+            {darkSwitch && (
+              <span onClick={toggleDarkMode}>
+                {darkmode ? (
+                  <FiSun color="#f1e408" className="icon-style" />
+                ) : (
+                  <FiMoon className="icon-style" />
+                )}
+              </span>
+            )}
+            {settingsAction && (
+              <span onClick={settingsAction}>
+                <FiSettings className="icon-style" />
+              </span>
+            )}
+          </div>
+        </div>
+        {children}
       </div>
 
       {showDailog && (
@@ -312,7 +322,7 @@ const AppHeader = ({
           upidata={upidata}
         />
       )}
-    </div>
+    </>
   );
 };
 
