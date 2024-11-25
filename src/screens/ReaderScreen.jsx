@@ -90,6 +90,7 @@ const ReaderScreen = () => {
                 fontSize: font,
                 display: "block",
                 fontFamily: fontFamily,
+                fontWeight: "700",
               }}
             >
               {line}
