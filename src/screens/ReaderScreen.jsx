@@ -2,7 +2,6 @@ import { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import PdfReaderComponent from "../components/PdfReader.jsx";
 import AdsenseBottom from "../components/adsenseBottom.jsx";
-import AdsenseTop from "../components/adsenseTop.jsx";
 import AppHeader from "../components/appHeader.jsx";
 import { SCREEN_NAMES } from "../constants.jsx";
 import { ThemeContext } from "../context/themeContext.jsx";
@@ -72,6 +71,7 @@ const ReaderScreen = () => {
     highlightedIndex,
     onClick,
     onTouchStart,
+    fontFamily,
   }) => {
     return (
       <div
@@ -89,6 +89,7 @@ const ReaderScreen = () => {
               style={{
                 fontSize: font,
                 display: "block",
+                fontFamily: fontFamily,
               }}
             >
               {line}
@@ -151,6 +152,9 @@ const ReaderScreen = () => {
                     onTouchStart={() => {
                       setHighlightedIndex(index);
                     }}
+                    fontFamily={
+                      item?.fontFamily ? item?.fontFamily : "NotoSans"
+                    }
                   />
                 );
               }

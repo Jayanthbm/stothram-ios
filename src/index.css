@@ -1,4 +1,25 @@
-@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Kannada:wght@500;800&display=swap");
+
+@font-face {
+  font-family: 'NotoSans';
+  src: url('./assets/NotoSans.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'NotoSerif';
+  src: url('./assets/NotoSerif.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Brhknde';
+  src: url('./assets/brhknde.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 
 :root {
   --background-color: #fefefe;
@@ -27,7 +48,7 @@ html {
 body {
   margin-left: 15px;
   margin-right: 15px;
-  font-family: "Noto Sans Kannada", sans-serif;
+  font-family: "NotoSans", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--background-color);
@@ -50,3 +71,4 @@ a::visited {
 input[type="text"] {
   -webkit-text-size-adjust: 100%;
 }
+
