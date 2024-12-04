@@ -87,10 +87,11 @@ const ReaderScreen = () => {
               key={index}
               className="line"
               style={{
-                fontSize: font,
+                fontSize: fontFamily === "brhknde" ? parseInt(font) + 3 : font,
                 display: "block",
                 fontFamily: fontFamily,
-                fontWeight: "700",
+                fontWeight: "bold",
+                lineHeight: fontFamily === "brhknde" ? 2 : 1.8,
               }}
             >
               {line}
