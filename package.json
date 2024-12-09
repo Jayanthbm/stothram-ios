@@ -13,15 +13,15 @@
     "prettify": "prettier --write 'src/**/*.{js,jsx,ts,tsx,json,css,scss}'"
   },
   "dependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
     "react-icons": "^5.3.0",
     "react-router-dom": "^7.0.1",
     "react-toastify": "^10.0.6",
     "vite-plugin-pwa": "^0.21.1"
   },
   "devDependencies": {
-    "@types/react": "^18.3.12",
+    "@types/react": "^19.0.1",
     "@types/react-dom": "^18.3.1",
     "@vitejs/plugin-react": "^4.3.4",
     "eslint": "^9.16.0",
