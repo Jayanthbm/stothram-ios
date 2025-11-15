@@ -1,14 +1,15 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import PdfReaderComponent from "../components/PdfReader.jsx";
-import AdsenseBottom from "../components/adsenseBottom.jsx";
 import AppHeader from "../components/appHeader.jsx";
 import { SCREEN_NAMES } from "../constants.jsx";
 import { ThemeContext } from "../context/themeContext.jsx";
 import { dataHelper } from "../utils/dataUtils.jsx";
+import AppBar from "../components/AppBar.jsx";
 
 const ReaderScreen = () => {
-  const { font, updateFont } = useContext(ThemeContext);
+  const { font, updateFont, darkmode, toggleDarkMode, darkSwitch } =
+    useContext(ThemeContext);
   const location = useLocation();
   const navigate = useNavigate();
   const { state } = location;
@@ -112,9 +113,22 @@ const ReaderScreen = () => {
   const transalateAction = (language) => {
     setCurrentLanguage(language);
   };
+
+  const rightIcons = useMemo(() => {
+    const icons = [];
+    if (darkSwitch) {
+      icons.push({
+        iconName: darkmode ? "light_mode" : "dark_mode",
+        onPress: () => toggleDarkMode(),
+      });
+    }
+    return icons;
+  }, [darkSwitch, darkmode, toggleDarkMode]);
   return (
     <>
-      <AppHeader
+      <AppBar showBack={true} title={title} rightIcons={rightIcons} />
+
+      {/* <AppHeader
         title={displayTitle ? displayTitle : title}
         backAction={() => navigate(-1)}
         languages={languages}
@@ -134,12 +148,25 @@ const ReaderScreen = () => {
             className="font-slider"
           />
         </div>
-      </AppHeader>
+      </AppHeader> */}
+      <div className="font-slider-container">
+        <input
+          type="range"
+          min="15"
+          max="40"
+          step="1"
+          value={font}
+          onChange={(e) => {
+            updateFont(parseInt(e.target.value));
+          }}
+          className="font-slider"
+        />
+      </div>
       {pdfReader ? (
         <>{readerData && <PdfReaderComponent url={readerData} />}</>
       ) : (
         <>
-          <div style={{ marginTop: "6rem" }}>
+          <div style={{ marginTop: "0rem" }}>
             {readerData?.content?.map((item, index) => {
               if (item?.type === "paragraph") {
                 return (
@@ -168,8 +195,6 @@ const ReaderScreen = () => {
           </div>
         </>
       )}
-
-      <AdsenseBottom />
     </>
   );
 };

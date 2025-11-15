@@ -1,4 +1,6 @@
-
+/* ==========================
+   FONT IMPORTS
+========================== */
 @font-face {
   font-family: 'NotoSans';
   src: url('./assets/NotoSans.ttf') format('truetype');
@@ -20,18 +22,59 @@
   font-style: normal;
 }
 
-
+/* =====================================================
+   LIGHT THEME (default) — YOUR VARIABLES + M3E VARIABLES
+===================================================== */
 :root {
+  /* Your UI variables */
   --background-color: #fefefe;
   --text-color: #0d0d0d;
   --header-color: #f0ead6;
   --header-text-color: #676767;
   --border-color: #cdcdcd;
-  --slider-color: #676767;;
+  --slider-color: #676767;
   --modal-background: #ececec;
+/* ===== Material 3 (M3E) COLORS ===== */
+  --md-sys-color-primary: #0B57D0;
+  --md-sys-color-on-primary: #FFFFFF;
+  --md-sys-color-primary-container: #D2E3FF;
+  --md-sys-color-on-primary-container: #001D35;
+
+  --md-sys-color-secondary: #535F70;
+  --md-sys-color-on-secondary: #FFFFFF;
+  --md-sys-color-secondary-container: #D7E3F0;
+  --md-sys-color-on-secondary-container: #101C2B;
+
+  --md-sys-color-background: #EEEDF3;
+  --md-sys-color-on-background: #1B1B1B;
+
+  --md-sys-color-surface: #F9F8FE !important;
+  --md-sys-color-on-surface: #191A1F;
+
+  --md-sys-color-surface-variant: #EFF3F8;
+  --md-sys-color-on-surface-variant: #444746;
+
+  --md-sys-color-outline: #C7C7C7;
+  --md-sys-color-outline-variant: #DADCE0;
+
+  --md-sys-color-surface-container-highest: #FFFFFF;
+
+  /* Custom extensions */
+  --app-search-container: #CBD8EB;
+  --app-active-indicator: #C3E7FF;
+  --app-on-active-indicator: #004A77;
+
+  --app-income: #43a047;
+  --app-expense: #e53935;
+  --app-shadow: #000000;
 }
 
+/* =====================================================
+   DARK THEME — YOUR VARIABLES + M3E VARIABLES
+   Activated via: <body class="dark-mode">
+===================================================== */
 .dark-mode {
+  /* Your UI variables */
   --background-color: #171717;
   --text-color: #f9f9f9;
   --border-color: #b8b6ab;
@@ -39,24 +82,54 @@
   --header-text-color: #cdcdcd;
   --slider-color: #f0ead6;
   --modal-background: #262626;
+/* ===== Material 3 (M3E) COLORS ===== */
+  --md-sys-color-primary: #A8C7FA;
+  --md-sys-color-on-primary: #00325A;
+  --md-sys-color-primary-container: #1E3A5F;
+  --md-sys-color-on-primary-container: #D2E3FF;
+
+  --md-sys-color-secondary: #BBC7DB;
+  --md-sys-color-on-secondary: #1B1F23;
+  --md-sys-color-secondary-container: #3B4858;
+  --md-sys-color-on-secondary-container: #E8EAED;
+
+  --md-sys-color-background: #1D1F24;
+  --md-sys-color-on-background: #E3E3E3;
+
+  --md-sys-color-surface: #111218 !important;
+  --md-sys-color-on-surface: #E3E3E3;
+
+  --md-sys-color-surface-variant: #1E1E1E;
+  --md-sys-color-on-surface-variant: #C3C7CE;
+
+  --md-sys-color-outline: #5F6368;
+  --md-sys-color-outline-variant: #8C9199;
+
+  --md-sys-color-surface-container-highest: #2A2C30;
+
+  /* Custom extensions */
+  --app-search-container: #2B2C30;
+  --app-active-indicator: #004A77;
+  --app-on-active-indicator: #C3E7FF;
+
+  --app-income: #66bb6a;
+  --app-expense: #ef5350;
 }
 
-html {
-  overflow-x: hidden;
-}
+/* =====================================================
+   BASE STYLE
+===================================================== */
 
 body {
   margin-left: 15px;
   margin-right: 15px;
   font-family: "NotoSans", sans-serif;
+background-color: var(--background-color);
+  color: var(--text-color);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: var(--background-color);
-  color: var(--text-color);
   overflow-x: hidden;
-  -moz-user-select: none;
-  -webkit-user-select: none;
-  -ms-user-select: none;
+
   user-select: none;
 }
 
@@ -72,3 +145,22 @@ input[type="text"] {
   -webkit-text-size-adjust: 100%;
 }
 
+
+.heart-pulse {
+  display: inline-block;
+  animation: pulse 1.2s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.28);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}

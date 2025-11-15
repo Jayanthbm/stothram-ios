@@ -1,15 +1,14 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import AppHeader from "../components/appHeader.jsx";
 
 import godLogo from "../assets/god.webp";
 import { SCREEN_NAMES } from "../constants.jsx";
 import { ThemeContext } from "../context/themeContext.jsx";
 import { dataHelper, preFetcher } from "../utils/dataUtils.jsx";
-import AdsenseBottom from "../components/adsenseBottom.jsx";
-import AdsenseTop from "../components/adsenseTop.jsx";
+import AppBar from "../components/AppBar.jsx";
 const ListScreen = () => {
-  const { viewType } = useContext(ThemeContext);
+  const { viewType, darkSwitch, toggleDarkMode, toggleViewType, darkmode } =
+    useContext(ThemeContext);
   const location = useLocation();
   const navigate = useNavigate();
   const { state } = location;
@@ -32,7 +31,7 @@ const ListScreen = () => {
       const fetchedData = await dataHelper(
         title,
         dataUrl,
-        SCREEN_NAMES.LIST_SCREEN,
+        SCREEN_NAMES.LIST_SCREEN
       );
       if (fetchedData) {
         setList(fetchedData?.data);
@@ -54,7 +53,7 @@ const ListScreen = () => {
   // Filter Data based on Search Text
   const filterData = (data, searchText) => {
     return data.filter((item) =>
-      item.title.toLowerCase().includes(searchText.toLowerCase()),
+      item.title.toLowerCase().includes(searchText.toLowerCase())
     );
   };
 
@@ -90,14 +89,24 @@ const ListScreen = () => {
     );
   };
 
+  const rightIcons = useMemo(() => {
+    const icons = [];
+    if (darkSwitch) {
+      icons.push({
+        iconName: darkmode ? "light_mode" : "dark_mode",
+        onPress: () => toggleDarkMode(),
+      });
+    }
+    icons.push({
+      iconName: viewType === "card" ? "view_list" : "view_module",
+      onPress: () => toggleViewType(),
+    });
+    return icons;
+  }, [darkSwitch, darkmode, toggleDarkMode, toggleViewType, viewType]);
+
   return (
     <>
-      <AppHeader
-        title={title}
-        backAction={() => navigate(-1)}
-        toggleView={true}
-      />
-      <AdsenseTop />
+      <AppBar showBack={true} title={title} rightIcons={rightIcons} />
       <div className={"search-container"}>
         <input
           type="text"
@@ -138,7 +147,6 @@ const ListScreen = () => {
       {rendered && filteredData.length === 0 && (
         <div className="no-data">No data found</div>
       )}
-      <AdsenseBottom />
     </>
   );
 };

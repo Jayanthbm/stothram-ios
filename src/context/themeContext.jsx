@@ -64,8 +64,9 @@ export const ThemeProvider = ({ children }) => {
   }, []);
 
   const showToast = (message) => {
-    toast.dismiss();
-    return toast(message);
+    // toast.dismiss();
+    // return toast(message);
+    M3eSnackbar.open(message, true);
   };
 
   return (

@@ -13,18 +13,67 @@
   <meta name="author" content="Jayanthbharadwaj M" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <title>Stothram</title>
+  <!-- Import Map -->
+  <script type="importmap">
+    {
+      "imports": {
+        "lit": "/node_modules/lit/index.js",
+        "@m3e/core": "/node_modules/@m3e/core/dist/index.js",
+        "@m3e/core/a11y": "/node_modules/@m3e/core/dist/a11y.js",
+        "@m3e/core/anchoring": "/node_modules/@m3e/core/dist/anchoring.js",
+        @m3e/core/platform": "/node_modules/@m3e/core/dist/platform.js",
+        "@m3e/core/bidi": "/node_modules/@m3e/core/dist/bidi.js",
+        "@m3e/core/layout": "/node_modules/@m3e/core/dist/layout.js",
+        "@m3e/theme": "/node_modules/@m3e/theme/dist/index.js",
+        "@m3e/toc": "/node_modules/@m3e/toc/dist/index.js",
+        "@m3e/app-bar": "/node_modules/@m3e/app-bar/dist/index.js",
+        "@m3e/icon": "/node_modules/@m3e/icon/dist/index.js",
+        "@m3e/icon-button": "/node_modules/@m3e/icon-button/dist/index.js",
+        "@m3e/card": "/node_modules/@m3e/card/dist/index.js",
+        "@m3e/list": "/node_modules/@m3e/list/dist/index.js",
+        "@m3e/switch": "/node_modules/@m3e/switch/dist/index.js"
+        "@m3e/snackbar": "/node_modules/@m3e/snackbar/dist/index.js",
+        "@m3e/divider": "/node_modules/@m3e/divider/dist/index.js",
+        "@m3e/tooltip": "/node_modules/@m3e/tooltip/dist/index.js"
+        "@m3e/slider": "/node_modules/@m3e/slider/dist/index.js"
+      }
+}
+             </script>
+
+  <!-- Material Symbols (required for M3E icons) -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+  <!-- Load M3E FIRST -->
+  <script type="module">
+    import "@m3e/core";
+    import "@m3e/core/a11y";
+    import "@m3e/core/bidi";
+    import "@m3e/core/layout";
+    import "@m3e/core/platform";
+
+    import "@m3e/theme";
+    import "@m3e/toc";
+    import "@m3e/app-bar";
+    import "@m3e/icon";
+    import "@m3e/icon-button";
+    import "@m3e/card";
+    import "@m3e/list";
+    import "@m3e/switch";
+    import "@m3e/snackbar";
+    import "@m3e/divider";
+    import "@m3e/tooltip";
+    import "@m3e/slider";
+  </script>
+
 </head>
 
 <body>
   <div id="root"></div>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-0714649342045057"
-    crossorigin="anonymous"></script>
   <script type="module" src="/src/main.jsx"></script>
-  <script>
+  <!-- <script>
     window.addEventListener('contextmenu', function (e) {
       e.preventDefault();
     }, false);
-  </script>
+  </script> -->
 </body>
 
 </html>

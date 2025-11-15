@@ -1,9 +1,7 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
 import { AiOutlineProfile } from "react-icons/ai";
 import { FiDatabase } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
-import AdsenseBottom from "../components/adsenseBottom.jsx";
-import AdsenseTop from "../components/adsenseTop.jsx";
 import AppHeader from "../components/appHeader.jsx";
 import { CACHED_DATA_KEYS, DATA_URLS, SCREEN_NAMES } from "../constants.jsx";
 import { ThemeContext } from "../context/themeContext.jsx";
@@ -13,11 +11,12 @@ import {
   storeItem,
   storeJSON,
 } from "../utils/dataUtils.jsx";
+import AppBar from "../components/AppBar.jsx";
 
 const HomeScreen = () => {
   const navigate = useNavigate();
   const [types, setTypes] = useState([]);
-  const { darkmode } = useContext(ThemeContext);
+  const { darkmode, darkSwitch, toggleDarkMode } = useContext(ThemeContext);
   const windowSize = useRef([window.innerWidth, window.innerHeight]);
 
   useEffect(() => {
@@ -26,7 +25,7 @@ const HomeScreen = () => {
         const fetchedData = await dataHelper(
           CACHED_DATA_KEYS.HOME_SCREEN,
           DATA_URLS.HOME_SCREEN,
-          SCREEN_NAMES.HOME_SCREEN,
+          SCREEN_NAMES.HOME_SCREEN
         );
         if (fetchedData) {
           setTypes(fetchedData?.data);
@@ -70,13 +69,27 @@ const HomeScreen = () => {
     );
   };
 
+  const rightIcons = useMemo(() => {
+    const icons = [];
+    if (darkSwitch) {
+      icons.push({
+        iconName: darkmode ? "light_mode" : "dark_mode",
+        onPress: () => toggleDarkMode(),
+      });
+    }
+    icons.push({
+      iconName: "settings",
+      onPress: () => navigate("/settings"),
+    });
+    return icons;
+  }, [darkSwitch, darkmode, toggleDarkMode]);
+
   return (
     <>
-      <AppHeader
-        title={"Stothram"}
-        settingsAction={() => navigate("/settings")}
-      />
-      <AdsenseTop />
+      <AppBar showBack={false} title="Stothram" rightIcons={rightIcons} />
+      <m3e-slider>
+        <m3e-slider-thumb></m3e-slider-thumb>
+      </m3e-slider>
       <div
         style={{
           display: "flex",
@@ -96,7 +109,6 @@ const HomeScreen = () => {
           ))}
         </div>
       </div>
-      <AdsenseBottom />
     </>
   );
 };
