@@ -131,6 +131,7 @@ const ReaderScreen = () => {
           {item.lines.map((line, idx) =>
             line?.trim() ? (
               <div
+                className="reader-text"
                 key={idx}
                 style={{
                   fontFamily: item.fontFamily,
