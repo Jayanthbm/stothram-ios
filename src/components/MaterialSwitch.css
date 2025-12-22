@@ -1,0 +1,75 @@
+.material-switch {
+   width: 52px;
+   height: 32px;
+
+   display: flex;
+   align-items: center;
+   justify-content: center;
+
+   padding: 0;
+   border: none;
+   background: transparent;
+
+   cursor: pointer;
+   user-select: none;
+}
+
+/* Disabled */
+.material-switch--disabled {
+   opacity: 0.4;
+   cursor: default;
+   pointer-events: none;
+}
+
+/* Track */
+.material-switch__track {
+   width: 48px;
+   height: 28px;
+
+   border-radius: 20px;
+   border: 1px solid var(--outline-variant);
+
+   background-color: var(--surface-variant);
+
+   display: flex;
+   align-items: center;
+
+   transition:
+      background-color 180ms ease-in-out,
+      border-color 180ms ease-in-out;
+}
+
+/* Thumb */
+.material-switch__thumb {
+   width: 20px;
+   height: 20px;
+
+   margin-left: 2px;
+
+   border-radius: 10px;
+
+   background-color: var(--primary);
+
+   box-shadow:
+      0 1px 1.5px rgba(0, 0, 0, 0.3);
+
+   transition:
+      transform 180ms ease-in-out,
+      background-color 180ms ease-in-out,
+      box-shadow 180ms ease-in-out;
+}
+
+/* ===== ON STATE ===== */
+.material-switch--on .material-switch__track {
+   background-color: var(--primary-container);
+   border-color: var(--primary);
+}
+
+.material-switch--on .material-switch__thumb {
+   transform: translateX(20px);
+}
+
+/* Press feedback (RN pressed opacity) */
+.material-switch:active:not(.material-switch--disabled) {
+   opacity: 0.8;
+}

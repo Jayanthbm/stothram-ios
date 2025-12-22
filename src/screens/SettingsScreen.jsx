@@ -1,23 +1,33 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import AppHeader from "../components/appHeader.jsx";
-import { CACHED_DATA_KEYS, DATA_URLS, SCREEN_NAMES } from "../constants.jsx";
+import AppBar from "../components/AppBar.jsx";
+import IconList from "../components/IconList.jsx";
+import MaterialSwitch from "../components/MaterialSwitch.jsx";
+import ListHeader from "../components/ListHeader.jsx";
+
+import {
+  MdDarkMode,
+  MdPalette,
+  MdShare,
+  MdFavorite,
+  MdPeopleOutline,
+} from "react-icons/md";
+
 import { ThemeContext } from "../context/themeContext.jsx";
 import { dataHelper } from "../utils/dataUtils";
-import AdsenseBottom from "../components/adsenseBottom.jsx";
-import AdsenseTop from "../components/adsenseTop.jsx";
+import { CACHED_DATA_KEYS, DATA_URLS, SCREEN_NAMES } from "../constants.jsx";
+
 const SettingsScreen = () => {
   const { toggleDarkMode, darkmode, toggleDarkSwitch, darkSwitch } =
     useContext(ThemeContext);
-  const navigate = useNavigate();
   const [contributions, setContributions] = useState([]);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const fetchedData = await dataHelper(
           CACHED_DATA_KEYS.SETTINGS_SCREEN,
           DATA_URLS.SETTINGS_SCREEN,
-          SCREEN_NAMES.SETTINGS_SCREEN,
+          SCREEN_NAMES.SETTINGS_SCREEN
         );
         // Update state with fetched contributions
         if (fetchedData) {
@@ -30,66 +40,79 @@ const SettingsScreen = () => {
     fetchData();
   }, []);
 
-  const ListHeader = ({ title, icon }) => {
-    return (
-      <div className="list-header">
-        <span className="list-header-title">{title}</span>
-      </div>
-    );
-  };
-  const ListItem = ({ title, subtitle, toggle, state }) => {
-    // Provide default values for optional props
-    const renderSubtitle = subtitle && (
-      <span className="settings-item-subtitle">{subtitle}</span>
-    );
-    return (
-      <div className="settings-item-container">
-        <div className="settings-item">
-          <span className="settings-item-title">{title}</span>
-          {renderSubtitle}
-        </div>
-        {toggle && (
-          <label class="switch">
-            <input type="checkbox" checked={state} onChange={toggle} />
-            <span class="slider round"></span>
-          </label>
-        )}
-      </div>
-    );
+  const PLAY_STORE_URL = "https://jayanthbm.github.io/stothram-ios/";
+
+  const shareApp = async () => {
+    const text = `Check out this amazing Stothram app 🙏\n\n${PLAY_STORE_URL}`;
+
+    if (navigator.share) {
+      await navigator.share({
+        title: "Stothram App",
+        text,
+        url: PLAY_STORE_URL,
+      });
+    } else {
+      await navigator.clipboard.writeText(text);
+      alert("Link copied to clipboard");
+    }
   };
 
   return (
     <>
-      <AppHeader title={"Settings"} backAction={() => navigate(-1)} />
-      <AdsenseTop />
-      <ListHeader title="General Settings" icon={"settings"} />
-      <ListItem
-        title="Dark theme"
-        subtitle="Reduce glare and improve night viewing"
-        toggle={toggleDarkMode}
-        state={darkmode}
-      />
-      <ListItem
-        title="Toggle in Every Page"
-        subtitle="Show option to toggle dark mode in every screen"
-        toggle={toggleDarkSwitch}
-        state={darkSwitch}
-      />
+      <AppBar showBack title="Settings" rightIcons={[]} />
+      <div className="app-content">
+        <ListHeader title="General Settings" />
 
-      <ListHeader title="Contributions" icon={"info"} />
-      {contributions?.map(({ name, role }) => (
-        <ListItem title={name} subtitle={role} key={name} />
-      ))}
-      <ListHeader title="Andriod App" icon={"info"} />
-      <div style={{ textAlign: "center" }}>
-        <a
-          href="https://play.google.com/store/apps/details?id=com.jayanth.shotram"
-          target="_blank"
-        >
-          Download Now
-        </a>
+        <IconList
+          leftIcon={<MdDarkMode size={22} />}
+          title="Dark theme"
+          subtitle="Reduce glare and improve night viewing"
+          rightContent={
+            <MaterialSwitch value={darkmode} onValueChange={toggleDarkMode} />
+          }
+        />
+
+        <IconList
+          leftIcon={<MdPalette size={22} />}
+          title="Toggle in every page"
+          subtitle="Show dark mode toggle across screens"
+          rightContent={
+            <MaterialSwitch
+              value={darkSwitch}
+              onValueChange={toggleDarkSwitch}
+            />
+          }
+        />
+
+        {/* Available roles Developer,Editor, */}
+        <ListHeader title="Contributions" />
+
+        {contributions.map(({ name, role }, index) => (
+          <IconList
+            key={`${name}-${index}`}
+            leftIcon={<MdPeopleOutline size={22} />}
+            title={name}
+            subtitle={role}
+          />
+        ))}
+
+        {/* ---------- Share ---------- */}
+        <ListHeader title="Support" />
+
+        <div className="share-card" onClick={shareApp}>
+          <MdShare size={22} />
+          <span>Share app with friends & family</span>
+        </div>
+
+        {/* ---------- Made with ---------- */}
+        <div className="made-with">
+          <span>Made with</span>
+          <span className="heart">
+            <MdFavorite size={20} />
+          </span>
+          <span>in India 🇮🇳</span>
+        </div>
       </div>
-      <AdsenseBottom />
     </>
   );
 };

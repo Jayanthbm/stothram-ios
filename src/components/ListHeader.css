@@ -1,0 +1,12 @@
+.list-header {
+  margin: 24px 0 8px;
+  padding: 0 4px;
+}
+
+.list-header-title {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.6px;
+  color: var(--on-surface-variant);
+  text-transform: uppercase;
+}

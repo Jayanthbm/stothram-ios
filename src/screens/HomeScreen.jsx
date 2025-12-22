@@ -1,10 +1,11 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
-import { AiOutlineProfile } from "react-icons/ai";
-import { FiDatabase } from "react-icons/fi";
+import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
+import { MdOutlineLightMode, MdOutlineDarkMode } from "react-icons/md";
+import { FiSettings } from "react-icons/fi";
+import { MdMenuBook } from "react-icons/md";
+import { LuListMusic } from "react-icons/lu";
+import { FaStackExchange } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import AdsenseBottom from "../components/adsenseBottom.jsx";
-import AdsenseTop from "../components/adsenseTop.jsx";
-import AppHeader from "../components/appHeader.jsx";
+
 import { CACHED_DATA_KEYS, DATA_URLS, SCREEN_NAMES } from "../constants.jsx";
 import { ThemeContext } from "../context/themeContext.jsx";
 import {
@@ -13,11 +14,17 @@ import {
   storeItem,
   storeJSON,
 } from "../utils/dataUtils.jsx";
+import Card from "../components/Card.jsx";
+import AppBar from "../components/AppBar.jsx";
 
 const HomeScreen = () => {
   const navigate = useNavigate();
   const [types, setTypes] = useState([]);
-  const { darkmode } = useContext(ThemeContext);
+  const {
+    darkmode,
+    darkSwitch: showDarkSwitch,
+    toggleDarkMode,
+  } = useContext(ThemeContext);
   const windowSize = useRef([window.innerWidth, window.innerHeight]);
 
   useEffect(() => {
@@ -26,7 +33,7 @@ const HomeScreen = () => {
         const fetchedData = await dataHelper(
           CACHED_DATA_KEYS.HOME_SCREEN,
           DATA_URLS.HOME_SCREEN,
-          SCREEN_NAMES.HOME_SCREEN,
+          SCREEN_NAMES.HOME_SCREEN
         );
         if (fetchedData) {
           setTypes(fetchedData?.data);
@@ -45,58 +52,93 @@ const HomeScreen = () => {
     navigate("/list", { state: { type } });
   };
 
+  const rightIcons = useMemo(() => {
+    const icons = [];
+
+    if (showDarkSwitch) {
+      icons.push({
+        icon: darkmode ? (
+          <MdOutlineLightMode size={26} />
+        ) : (
+          <MdOutlineDarkMode size={26} />
+        ),
+        onPress: toggleDarkMode,
+      });
+    }
+
+    icons.push({
+      icon: <FiSettings size={26} />,
+      onPress: () => navigate("/settings"),
+    });
+
+    return icons;
+  }, [showDarkSwitch, darkmode, toggleDarkMode, navigate]);
+
+  const CARD_MARGIN = 10;
+  const CARD_HEIGHT = 130;
+
+  const containerWidth = window.innerWidth - 30;
+  const CARD_WIDTH = (containerWidth - CARD_MARGIN * 3) / 2;
+
+  const ICON_SIZE = Math.min(CARD_WIDTH * 0.5, 60);
+
   const icons = {
-    profile: (
-      <AiOutlineProfile color="#fff" size={80} style={{ paddingTop: 5 }} />
-    ),
-    database: <FiDatabase color="#fff" size={80} style={{ paddingTop: 5 }} />,
+    "book-open-page-variant-outline": <MdMenuBook size={ICON_SIZE} />,
+    "book-music-outline": <LuListMusic size={ICON_SIZE} />,
+    "stack-exchange": <FaStackExchange size={ICON_SIZE} />,
   };
-  const TypeItem = ({ item, onClick }) => {
-    const { title, icon, darkBackground, lightBackground } = item;
+  const TypeItem = ({ item, index, total, onClick }) => {
+    const isLastOdd = total % 2 !== 0 && index === total - 1;
+
     return (
-      <div
-        className="card-item"
-        style={{
-          backgroundColor: darkmode ? darkBackground : lightBackground,
-          borderColor: darkmode ? darkBackground : lightBackground,
-        }}
+      <Card
         onClick={onClick}
+        style={{
+          width: isLastOdd ? containerWidth - CARD_MARGIN * 2 : CARD_WIDTH,
+          height: CARD_HEIGHT,
+        }}
       >
-        {icons[icon]}
-        <div className="card-title" style={{ color: "#fff" }}>
-          {title}
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            height: "100%",
+          }}
+        >
+          {icons[item.icon_new]}
+          <div className="card-title">{item.title}</div>
         </div>
-      </div>
+      </Card>
     );
   };
 
   return (
     <>
-      <AppHeader
-        title={"Stothram"}
-        settingsAction={() => navigate("/settings")}
-      />
-      <AdsenseTop />
+      <AppBar showBack={false} title="Stothram" rightIcons={rightIcons} />
       <div
         style={{
           display: "flex",
-          flexDirection: "column-reverse",
+          flexDirection: "column",
+          justifyContent: "flex-end",
           height: windowSize.current[1] - 150,
         }}
       >
-        <div className="card-container">
-          {types.map((type) => (
-            <TypeItem
-              key={type.id}
-              item={type}
-              onClick={() => {
-                handlePress(type);
-              }}
-            />
-          ))}
+        <div className="list-wrapper">
+          <div className="card-container">
+            {types.map((type, index) => (
+              <TypeItem
+                key={type.id}
+                item={type}
+                index={index}
+                total={types.length}
+                onClick={() => handlePress(type)}
+              />
+            ))}
+          </div>
         </div>
       </div>
-      <AdsenseBottom />
     </>
   );
 };

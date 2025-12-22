@@ -1,175 +1,228 @@
-import { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import PdfReaderComponent from "../components/PdfReader.jsx";
-import AdsenseBottom from "../components/adsenseBottom.jsx";
-import AppHeader from "../components/appHeader.jsx";
-import { SCREEN_NAMES } from "../constants.jsx";
+import {
+  MdTranslate,
+  MdCheckCircle,
+  MdOutlineLightMode,
+  MdOutlineDarkMode,
+} from "react-icons/md";
+
+import AppBar from "../components/AppBar.jsx";
+import Card from "../components/Card.jsx";
+import BottomSheetModal from "../components/BottomSheetModal.jsx";
+import IconList from "../components/IconList.jsx";
+import NoDataCard from "../components/NoDataCard.jsx";
+import MaterialSlider from "../components/MaterialSlider.jsx";
+
 import { ThemeContext } from "../context/themeContext.jsx";
 import { dataHelper } from "../utils/dataUtils.jsx";
+import { SCREEN_NAMES } from "../constants.jsx";
+
+const LANGUAGE_MAPPER = { kn: "Kannada", en: "English" };
+const FONT_WEIGHTS = { brhknde: 600 };
 
 const ReaderScreen = () => {
-  const { font, updateFont } = useContext(ThemeContext);
-  const location = useLocation();
+  const {
+    font,
+    updateFont,
+    darkmode,
+    darkSwitch: showDarkSwitch,
+    toggleDarkMode,
+  } = useContext(ThemeContext);
+
   const navigate = useNavigate();
-  const { state } = location;
-  const { item } = state;
+  const { state } = useLocation();
+  const { item, type } = state || {};
+
   const [title, setTitle] = useState("");
   const [displayTitle, setDisplayTitle] = useState("");
   const [readerData, setReaderData] = useState(null);
-  const [pdfReader, setPdfReader] = useState(false);
-  const [highlightedIndex, setHighlightedIndex] = useState(0);
   const [fetchedData, setFetchedData] = useState(null);
-  const [languages, setLanguages] = useState(null);
+  const [languages, setLanguages] = useState([]);
   const [currentLanguage, setCurrentLanguage] = useState(null);
-  // useEffect to fetch data on component mount
+  const [showLanguageModal, setShowLanguageModal] = useState(false);
+  const [showScrollTop, setShowScrollTop] = useState(false);
+
+  const contentRef = useRef(null);
+
+  /* -------------------- Fetch -------------------- */
+
   useEffect(() => {
+    if (!item?.dataUrl) return;
+
     const fetchData = async () => {
-      try {
-        const fetchedData = await dataHelper(
-          item?.title,
-          item?.dataUrl,
-          SCREEN_NAMES.READER_SCREEN
-        );
-        setFetchedData(fetchedData);
-        if (fetchedData) {
-          if (typeof fetchedData === "string") {
-            setPdfReader(true);
-          }
-          if (fetchedData.translations) {
-            const languages = Object.keys(fetchedData.translations);
-            setLanguages(languages);
-            const currentLanguage = languages[0];
-            setCurrentLanguage(currentLanguage);
-          } else {
-            setReaderData(fetchedData);
-          }
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
+      const result = await dataHelper(
+        item.title,
+        item.dataUrl,
+        SCREEN_NAMES.READER_SCREEN
+      );
+
+      if (!result) return;
+
+      setFetchedData(result);
+
+      if (result.translations) {
+        const langs = Object.keys(result.translations);
+        setLanguages(langs);
+        setCurrentLanguage(langs[0]);
+      } else {
+        setReaderData(result);
       }
     };
+
+    setTitle(item.title);
     setDisplayTitle(item.displayTitle);
-    setTitle(item?.title);
-    if (item?.dataUrl) {
-      fetchData();
-    }
+    fetchData();
   }, [item]);
 
+  /* -------------------- Language switch -------------------- */
+
   useEffect(() => {
-    if (currentLanguage && fetchedData.translations !== undefined) {
-      setReaderData(fetchedData["translations"][currentLanguage]);
-      setDisplayTitle(fetchedData["translations"][currentLanguage].title);
+    if (currentLanguage && fetchedData?.translations) {
+      const next = fetchedData.translations[currentLanguage];
+      setReaderData(next);
+      setDisplayTitle(next.title);
     }
-  }, [currentLanguage]);
-  // Scroll to top on component mount
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-  const Paragraph = ({
-    data,
-    index,
-    highlightedIndex,
-    onClick,
-    onTouchStart,
-    fontFamily,
-  }) => {
-    return (
-      <div
-        className={`paragarph-container ${
-          highlightedIndex === index ? "active-paragraph" : ""
-        }`}
-        onClick={onClick}
-        onTouchStart={onTouchStart}
-      >
-        {data?.lines?.map((line, index) => {
-          return (
-            <span
-              key={index}
-              className="line"
-              style={{
-                fontSize: fontFamily === "brhknde" ? parseInt(font) + 3 : font,
-                display: "block",
-                fontFamily: fontFamily,
-                fontWeight: "bold",
-                lineHeight: fontFamily === "brhknde" ? 2 : 1.8,
-              }}
-            >
-              {line}
-            </span>
-          );
-        })}
-      </div>
-    );
+  }, [currentLanguage, fetchedData]);
+
+  /* -------------------- Scroll -------------------- */
+
+  const handleScroll = () => {
+    if (!contentRef.current) return;
+    setShowScrollTop(contentRef.current.scrollTop > 250);
   };
 
-  const Subheading = ({ data }) => {
-    return (
-      <div className="subheading-container">
-        <span className="subheading-text">{data.title}</span>
-      </div>
-    );
+  const scrollToTop = () => {
+    contentRef.current?.scrollTo({ top: 0, behavior: "smooth" });
   };
-  const transalateAction = (language) => {
-    setCurrentLanguage(language);
+
+  /* -------------------- AppBar Icons -------------------- */
+
+  const rightIcons = useMemo(() => {
+    const icons = [];
+
+    if (showDarkSwitch) {
+      icons.push({
+        icon: darkmode ? (
+          <MdOutlineLightMode size={26} />
+        ) : (
+          <MdOutlineDarkMode size={26} />
+        ),
+        onPress: toggleDarkMode,
+      });
+    }
+
+    if (languages.length > 1) {
+      icons.push({
+        icon: <MdTranslate size={24} />,
+        onPress: () => setShowLanguageModal(true),
+      });
+    }
+
+    return icons;
+  }, [languages, showDarkSwitch, darkmode, toggleDarkMode]);
+
+  /* -------------------- Render content -------------------- */
+
+  const renderItem = (item, index) => {
+    if (item.type === "paragraph") {
+      return (
+        <Card key={index} disableRipple>
+          {item.lines.map((line, idx) =>
+            line?.trim() ? (
+              <div
+                key={idx}
+                style={{
+                  fontFamily: item.fontFamily,
+                  fontWeight: FONT_WEIGHTS[item.fontFamily] || 700,
+                  fontSize: item.fontFamily === "brhknde" ? font + 2 : font,
+                  lineHeight:
+                    item.fontFamily === "brhknde"
+                      ? `${font + 16}px`
+                      : `${font + 14}px`,
+                }}
+              >
+                {line}
+              </div>
+            ) : (
+              <div key={idx} style={{ height: 8 }} />
+            )
+          )}
+        </Card>
+      );
+    }
+
+    if (item.type === "subheading") {
+      return (
+        <Card
+          key={index}
+          style={{
+            backgroundColor: "var(--surface-variant)",
+            padding: 6,
+          }}
+          disableRipple
+        >
+          <div
+            style={{
+              textAlign: "center",
+              fontSize: font + 2,
+              fontWeight: 500,
+            }}
+          >
+            {item.title}
+          </div>
+        </Card>
+      );
+    }
+
+    return null;
   };
+
   return (
     <>
-      <AppHeader
-        title={displayTitle ? displayTitle : title}
-        backAction={() => navigate(-1)}
-        languages={languages}
-        selectedLanguage={currentLanguage}
-        transalateAction={transalateAction}
-      >
-        <div className="font-slider-container">
-          <input
-            type="range"
-            min="15"
-            max="40"
-            step="1"
-            value={font}
-            onChange={(e) => {
-              updateFont(parseInt(e.target.value));
-            }}
-            className="font-slider"
-          />
+      <AppBar
+        title={displayTitle || title}
+        rightIcons={rightIcons}
+        slider={true}
+      />
+      <div className="app-content-slider">
+        <div
+          ref={contentRef}
+          className="reader-content"
+          onScroll={handleScroll}
+        >
+          {readerData?.content?.length ? (
+            readerData.content.map(renderItem)
+          ) : (
+            <NoDataCard title="No content available" />
+          )}
         </div>
-      </AppHeader>
-      {pdfReader ? (
-        <>{readerData && <PdfReaderComponent url={readerData} />}</>
-      ) : (
-        <>
-          <div style={{ marginTop: "6rem" }}>
-            {readerData?.content?.map((item, index) => {
-              if (item?.type === "paragraph") {
-                return (
-                  <Paragraph
-                    data={item}
-                    key={index}
-                    onClick={() => {
-                      setHighlightedIndex(index);
-                    }}
-                    highlightedIndex={highlightedIndex}
-                    index={index}
-                    onTouchStart={() => {
-                      setHighlightedIndex(index);
-                    }}
-                    fontFamily={
-                      item?.fontFamily ? item?.fontFamily : "NotoSans"
-                    }
-                  />
-                );
-              }
-              if (item.type === "subheading") {
-                return <Subheading data={item} key={index} />;
-              }
-              return null;
-            })}
-          </div>
-        </>
-      )}
+      </div>
 
-      <AdsenseBottom />
+      {/* Language Picker */}
+      <BottomSheetModal
+        title="Choose Language"
+        visible={showLanguageModal}
+        closeModal={() => setShowLanguageModal(false)}
+      >
+        {languages.map((lang) => (
+          <IconList
+            key={lang}
+            title={LANGUAGE_MAPPER[lang] || lang.toUpperCase()}
+            subtitle={`Switch to ${LANGUAGE_MAPPER[lang] || lang}`}
+            leftIcon={<MdTranslate size={22} />}
+            rightContent={
+              currentLanguage === lang && (
+                <MdCheckCircle size={22} color="var(--primary)" />
+              )
+            }
+            onPress={() => {
+              setCurrentLanguage(lang);
+              setShowLanguageModal(false);
+            }}
+          />
+        ))}
+      </BottomSheetModal>
     </>
   );
 };
