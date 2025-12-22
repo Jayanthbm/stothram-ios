@@ -1,0 +1,84 @@
+.card {
+   position: relative;
+   border-radius: 16px;
+   padding: 16px;
+   margin: 8px 0;
+   overflow: hidden;
+   box-sizing: border-box;
+
+   background-color: var(--surface);
+   color: var(--on-surface);
+
+   cursor: pointer;
+   user-select: none;
+
+   transition:
+      box-shadow 120ms ease,
+      transform 120ms ease,
+      background-color 120ms ease;
+}
+
+/* ===== Elevated ===== */
+.card--elevated {
+   box-shadow:
+      0 1px 3px var(--shadow),
+      0 1px 2px var(--shadow);
+}
+
+.card--elevated.card--pressed {
+   box-shadow:
+      0 4px 6px var(--shadow),
+      0 2px 4px var(--shadow);
+}
+
+/* ===== Outlined ===== */
+.card--outlined {
+   border: 1px solid var(--outline-variant);
+   box-shadow: none;
+}
+
+/* ===== Press scale (non-Android equivalent) ===== */
+.card--pressed {
+   transform: scale(0.98);
+}
+
+/* ===== Disabled ===== */
+.card--disabled {
+   opacity: 0.6;
+   pointer-events: none;
+}
+
+/* ===== Typography ===== */
+.card__title {
+   font-size: 18px;
+   font-weight: 600;
+   margin-bottom: 4px;
+}
+
+.card__subtitle {
+   font-size: 14px;
+   font-weight: 400;
+   margin-bottom: 8px;
+   color: var(--on-surface-variant);
+}
+
+.card__body {
+   display: flex;
+   flex: 1;
+   justify-content: space-evenly;
+   flex-direction: column;
+}
+
+/* ===== Ripple (Android-style) ===== */
+.card__ripple {
+   position: absolute;
+   inset: 0;
+   background-color: rgba(0, 0, 0, 0.08);
+   opacity: 0;
+   transition: opacity 120ms ease;
+   pointer-events: none;
+}
+
+.card:active .card__ripple {
+   opacity: 1;
+}

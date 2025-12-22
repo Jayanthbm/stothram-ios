@@ -1,0 +1,56 @@
+.no-data-card {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+
+   margin: 60px 16px 0;
+   padding: 40px 16px;
+
+   border-radius: 16px;
+   border: 1px solid var(--outline-variant);
+
+   background-color: var(--surface);
+
+   box-shadow:
+      0 1px 2px rgba(0, 0, 0, 0.1);
+
+   text-align: center;
+}
+
+/* Icon */
+.no-data-card__icon {
+   margin-bottom: 8px;
+   color: var(--on-surface-variant);
+}
+
+/* Title */
+.no-data-card__title {
+   font-size: 16px;
+   font-weight: 500;
+   color: var(--on-surface-variant);
+   margin-bottom: 8px;
+   line-height: 1.4;
+}
+
+/* Action button */
+.no-data-card__action {
+   margin-top: 4px;
+   padding: 6px 12px;
+
+   border: none;
+   background: transparent;
+
+   font-size: 14px;
+   font-weight: 600;
+
+   border-radius: 8px;
+   cursor: pointer;
+
+   transition: background-color 120ms ease;
+}
+
+/* Press feedback (RN ripple analogue) */
+.no-data-card__action:active {
+   background-color: var(--surface-variant);
+}

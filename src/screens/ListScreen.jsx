@@ -1,146 +1,173 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import AppHeader from "../components/appHeader.jsx";
-
-import godLogo from "../assets/god.webp";
+import { MdOutlineLightMode, MdOutlineDarkMode } from "react-icons/md";
+import { FiGrid, FiList } from "react-icons/fi";
+import { LuNotepadText } from "react-icons/lu";
+import { MdSearchOff } from "react-icons/md";
 import { SCREEN_NAMES } from "../constants.jsx";
 import { ThemeContext } from "../context/themeContext.jsx";
 import { dataHelper, preFetcher } from "../utils/dataUtils.jsx";
-import AdsenseBottom from "../components/adsenseBottom.jsx";
-import AdsenseTop from "../components/adsenseTop.jsx";
+
+import AppBar from "../components/AppBar.jsx";
+import SearchBar from "../components/SearchBar.jsx";
+import Card from "../components/Card.jsx";
+import NoDataCard from "../components/NoDataCard.jsx";
+import IconList from "../components/IconList.jsx";
+
 const ListScreen = () => {
-  const { viewType } = useContext(ThemeContext);
-  const location = useLocation();
+  const {
+    viewType,
+    toggleViewType,
+    darkmode,
+    darkSwitch: showDarkSwitch,
+    toggleDarkMode,
+  } = useContext(ThemeContext);
+
   const navigate = useNavigate();
-  const { state } = location;
-  const { type } = state;
+  const { state } = useLocation();
+  const { type } = state || {};
+
   const [title, setTitle] = useState("");
   const [dataUrl, setDataUrl] = useState(null);
   const [list, setList] = useState([]);
   const [searchValue, setSearchValue] = useState("");
-  const [filteredData, setFilteredData] = useState(list);
-  const [rendered, setRendered] = useState(false);
-  // Set Title and Data URL
+
+  /* -------------------- Init -------------------- */
+
   useEffect(() => {
-    setTitle(type?.title);
-    setDataUrl(type?.dataUrl);
+    if (type) {
+      setTitle(type.title);
+      setDataUrl(type.dataUrl);
+    }
   }, [type]);
 
-  // Fetch Data
   useEffect(() => {
-    const fetchData = async () => {
-      const fetchedData = await dataHelper(
-        title,
-        dataUrl,
-        SCREEN_NAMES.LIST_SCREEN,
-      );
-      if (fetchedData) {
-        setList(fetchedData?.data);
-        // Prefetch data for the Reader screen
-        preFetcher(fetchedData?.data, SCREEN_NAMES.READER_SCREEN);
+    if (!dataUrl) return;
+
+    const load = async () => {
+      const result = await dataHelper(title, dataUrl, SCREEN_NAMES.LIST_SCREEN);
+      if (result?.data) {
+        setList(result.data);
+        preFetcher(result.data, SCREEN_NAMES.READER_SCREEN);
       }
     };
 
-    if (dataUrl) {
-      fetchData();
-    }
+    load();
   }, [dataUrl, title]);
 
-  // Update Filtered Data when List Changes
-  useEffect(() => {
-    setFilteredData(list);
-  }, [list]);
+  /* -------------------- Search -------------------- */
 
-  // Filter Data based on Search Text
-  const filterData = (data, searchText) => {
-    return data.filter((item) =>
-      item.title.toLowerCase().includes(searchText.toLowerCase()),
+  const filteredData = useMemo(() => {
+    if (!searchValue.trim()) return list;
+    return list.filter((item) =>
+      item.title.toLowerCase().includes(searchValue.toLowerCase())
     );
-  };
+  }, [list, searchValue]);
 
-  // Handle Search Input
-  const handleSearch = (text) => {
-    setSearchValue(text);
-    const newData = filterData(list, text);
-    setFilteredData(newData);
-    setRendered(true);
-  };
-
-  // Handle Item Click
   const handlePress = (item) => {
     navigate("/reader", { state: { item } });
   };
 
-  const CardView = ({ item, onClick }) => {
-    const { displayTitle } = item;
+  /* -------------------- Views -------------------- */
+
+  const CARD_MARGIN = 10;
+  const CARD_HEIGHT = 130;
+
+  const containerWidth = window.innerWidth - 30;
+  const CARD_WIDTH = (containerWidth - CARD_MARGIN * 3) / 2;
+  const ICON_SIZE = Math.min(CARD_WIDTH * 0.5, 60);
+  const CardView = ({ item, index, total }) => {
+    const isLastOdd = total % 2 !== 0 && index === total - 1;
     return (
-      <div className="card-item" onClick={onClick}>
-        <img src={godLogo} alt={"god"} className="card-image" />
-        <div className="card-title">{displayTitle}</div>
-      </div>
+      <Card
+        onClick={() => handlePress(item)}
+        style={{
+          width: isLastOdd ? containerWidth - CARD_MARGIN * 2 : CARD_WIDTH,
+          height: CARD_HEIGHT,
+        }}
+      >
+        <div className="card-grid-content">
+          <LuNotepadText size={ICON_SIZE} />
+          <div className="card-title">{item.displayTitle}</div>
+        </div>
+      </Card>
     );
   };
 
-  const ListView = ({ item, onClick }) => {
-    const { displayTitle } = item;
-    return (
-      <div className="list-item" onClick={onClick}>
-        <div className="list-title">{displayTitle}</div>
-      </div>
-    );
-  };
+  const ListView = ({ item }) => (
+    <IconList
+      leftIcon={<LuNotepadText size={22} />}
+      title={item.displayTitle}
+      onPress={() => handlePress(item)}
+    />
+  );
+
+  /* -------------------- AppBar icons -------------------- */
+
+  const rightIcons = useMemo(() => {
+    const icons = [];
+
+    if (showDarkSwitch) {
+      icons.push({
+        icon: darkmode ? (
+          <MdOutlineLightMode size={26} />
+        ) : (
+          <MdOutlineDarkMode size={26} />
+        ),
+        onPress: toggleDarkMode,
+      });
+    }
+
+    icons.push({
+      icon: viewType === "card" ? <FiList size={26} /> : <FiGrid size={26} />,
+      onPress: toggleViewType,
+    });
+
+    return icons;
+  }, [showDarkSwitch, darkmode, toggleDarkMode, viewType, toggleViewType]);
+
+  /* -------------------- Render -------------------- */
 
   return (
     <>
-      <AppHeader
-        title={title}
-        backAction={() => navigate(-1)}
-        toggleView={true}
-      />
-      <AdsenseTop />
-      <div className={"search-container"}>
-        <input
-          type="text"
+      <AppBar showBack title={title} rightIcons={rightIcons} />
+
+      <div className="app-content">
+        <SearchBar
           value={searchValue}
-          onChange={(e) => handleSearch(e.target.value)}
-          className="search-input"
-          placeholder="Search"
+          onChangeText={setSearchValue}
+          onClear={() => setSearchValue("")}
+          placeholder={`Search ${title}`}
         />
       </div>
+
       <div
-        className={`${
-          viewType === "list" ? "list-container" : "card-container"
-        }`}
+        className={viewType === "list" ? "list-container" : "card-container"}
       >
-        {filteredData.map((item, index) => {
-          if (viewType === "list") {
-            return (
-              <ListView
-                key={index}
-                item={item}
-                onClick={() => handlePress(item)}
-              />
-            );
-          }
-          if (viewType === "card") {
-            return (
-              <CardView
-                key={index}
-                item={item}
-                onClick={() => handlePress(item)}
-              />
-            );
-          } else {
-            return null;
-          }
-        })}
+        {filteredData.map((item, index) =>
+          viewType === "list" ? (
+            <ListView key={index} item={item} />
+          ) : (
+            <CardView
+              key={index}
+              item={item}
+              index={index}
+              total={item.length}
+            />
+          )
+        )}
       </div>
-      {rendered && filteredData.length === 0 && (
-        <div className="no-data">No data found</div>
+
+      {filteredData.length === 0 && searchValue && (
+        <NoDataCard
+          title={`No data found in ${title}`}
+          icon={<MdSearchOff size={48} />}
+          actionLabel="Clear"
+          onActionPress={() => setSearchValue("")}
+        />
       )}
-      <AdsenseBottom />
     </>
   );
-};
+};;
 
 export default ListScreen;

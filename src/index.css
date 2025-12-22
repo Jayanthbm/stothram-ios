@@ -1,44 +1,166 @@
-
 @font-face {
   font-family: 'NotoSans';
-  src: url('./assets/NotoSans.ttf') format('truetype');
+  src: url('./assets/fonts/NotoSans.ttf') format('truetype');
   font-weight: bold;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'NotoSerif';
-  src: url('./assets/NotoSerif.ttf') format('truetype');
+  src: url('./assets/fonts/NotoSerif.ttf') format('truetype');
   font-weight: bold;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Brhknde';
-  src: url('./assets/brhknde.ttf') format('truetype');
+  src: url('./assets/fonts/brhknde.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'NudiParijatha';
+  src: url('./assets/fonts/NudiParijatha.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'NudiParijathaBold';
+  src: url('./assets/fonts/NudiParijathaBold.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
 
 :root {
-  --background-color: #fefefe;
-  --text-color: #0d0d0d;
-  --header-color: #f0ead6;
-  --header-text-color: #676767;
-  --border-color: #cdcdcd;
-  --slider-color: #676767;;
-  --modal-background: #ececec;
+  /* ===== Primary ===== */
+    --primary: #0B57D0;
+    --on-primary: #FFFFFF;
+    --primary-container: #D2E3FF;
+    --on-primary-container: #001D35;
+  
+    /* ===== Secondary ===== */
+    --secondary: #535F70;
+    --on-secondary: #FFFFFF;
+    --secondary-container: #D7E3F0;
+    --on-secondary-container: #101C2B;
+  
+    /* ===== Background / Surface ===== */
+    --background: #EEEDF3;
+    --on-background: #1B1B1B;
+  
+    --surface: #F9F8FE;
+    --on-surface: #191A1F;
+  
+    --surface-variant: #EFF3F8;
+    --on-surface-variant: #444746;
+  
+    --surface-container-highest: #FFFFFF;
+  
+    /* ===== Outline ===== */
+    --outline: #C7C7C7;
+    --outline-variant: #DADCE0;
+  
+    /* ===== Focus / Accent ===== */
+    --focus: #1A73E8;
+  
+    /* ===== Navigation ===== */
+    --active-indicator: #C3E7FF;
+    --on-active-indicator: #004A77;
+  
+    /* ===== Status ===== */
+    --error: #B3261E;
+    --on-error: #FFFFFF;
+    --error-container: #F9DEDC;
+    --on-error-container: #410E0B;
+  
+    --warning: #FFB300;
+    --on-warning: #FFFFFF;
+    --warning-container: #FFF4E5;
+    --on-warning-container: #8A6100;
+  
+    /* ===== Utility ===== */
+    --shadow: rgba(0, 0, 0, 0.15);
+    --inverse-surface: #313033;
+    --inverse-on-surface: #F4EFF4;
+  
+    /* ===== App Specific ===== */
+    --search-container: #CBD8EB;
+    --income: #43a047;
+    --expense: #e53935;
+  
+    /* ===== Skeleton ===== */
+    --skeleton-bg: #E0E0E0;
+    --skeleton-shimmer: #F5F5F5;
+  
+    --transparent: transparent;
+  
+    --appbar-height: 64px;
 }
 
 .dark-mode {
-  --background-color: #171717;
-  --text-color: #f9f9f9;
-  --border-color: #b8b6ab;
-  --header-color: #3b3b3b;
-  --header-text-color: #cdcdcd;
-  --slider-color: #f0ead6;
-  --modal-background: #262626;
+  /* ===== Primary ===== */
+    --primary: #A8C7FA;
+    --on-primary: #00325A;
+    --primary-container: #1E3A5F;
+    --on-primary-container: #D2E3FF;
+  
+    /* ===== Secondary ===== */
+    --secondary: #BBC7DB;
+    --on-secondary: #1B1F23;
+    --secondary-container: #3B4858;
+    --on-secondary-container: #E8EAED;
+  
+    /* ===== Background / Surface ===== */
+    --background: #1D1F24;
+    --on-background: #E3E3E3;
+  
+    --surface: #111218;
+    --on-surface: #E3E3E3;
+  
+    --surface-variant: #1E1E1E;
+    --on-surface-variant: #C3C7CE;
+  
+    --surface-container-highest: #2A2C30;
+  
+    /* ===== Outline ===== */
+    --outline: #5F6368;
+    --outline-variant: #8C9199;
+  
+    /* ===== Focus ===== */
+    --focus: #8AB4F8;
+  
+    /* ===== Navigation ===== */
+    --active-indicator: #004A77;
+    --on-active-indicator: #C3E7FF;
+  
+    /* ===== Status ===== */
+    --error: #F28B82;
+    --on-error: #601410;
+    --error-container: #8C1D18;
+    --on-error-container: #F9DEDC;
+  
+    --warning: #FFB74D;
+    --on-warning: #2C1900;
+    --warning-container: #5C3A00;
+    --on-warning-container: #FFDFA6;
+  
+    /* ===== Utility ===== */
+    --shadow: rgba(0, 0, 0, 0.4);
+    --inverse-surface: #E3E3E3;
+    --inverse-on-surface: #121212;
+  
+    /* ===== App Specific ===== */
+    --search-container: #2B2C30;
+    --income: #66bb6a;
+    --expense: #ef5350;
+  
+    /* ===== Skeleton ===== */
+    --skeleton-bg: #2A2C30;
+    --skeleton-shimmer: #3A3C40;
+  
+    --transparent: transparent;
 }
 
 html {
@@ -51,8 +173,8 @@ body {
   font-family: "NotoSans", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: var(--background-color);
-  color: var(--text-color);
+  background-color: var(--background);
+    color: var(--on-background);
   overflow-x: hidden;
   -moz-user-select: none;
   -webkit-user-select: none;
@@ -61,7 +183,7 @@ body {
 }
 
 a {
-  color: var(--text-color);
+  color: var(--on-background);
 }
 
 a::visited {
@@ -71,4 +193,3 @@ a::visited {
 input[type="text"] {
   -webkit-text-size-adjust: 100%;
 }
-

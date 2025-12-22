@@ -1,0 +1,91 @@
+/* Wrapper (fixed) */
+.appbar-wrapper {
+   position: fixed;
+   top: 0;
+   left: 0;
+   right: 0;
+   z-index: 1000;
+   background-color: var(--surface);
+}
+
+/* Main bar */
+.appbar {
+   height: 64px;
+
+   display: flex;
+   align-items: center;
+   padding: 0 8px;
+
+   background-color: var(--surface);
+   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Slider row */
+.appbar-slider {
+   padding: 0 8px 8px;
+   background-color: var(--surface);
+}
+
+/* LEFT / RIGHT SECTIONS */
+.appbar__side {
+   width: 44px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+}
+
+.appbar__right {
+   display: flex;
+   flex-direction: row;
+   justify-content: flex-end;
+   align-items: center;
+}
+
+/* ICON BUTTON */
+.appbar__icon-btn {
+   width: 44px;
+   height: 44px;
+   border-radius: 22px;
+
+   display: flex;
+   align-items: center;
+   justify-content: center;
+
+   border: none;
+   background: transparent;
+   padding: 0;
+
+   cursor: pointer;
+   position: relative;
+}
+
+.appbar__icon-btn:active {
+   background-color: rgba(0, 0, 0, 0.08);
+}
+
+/* ICON */
+.appbar__icon {
+   font-size: 26px;
+   color: var(--on-surface);
+   display: flex;
+   align-items: center;
+   justify-content: center;
+}
+
+/* TITLE */
+.appbar__title-container {
+   flex: 1;
+   padding: 0 8px;
+   overflow: hidden;
+}
+
+.appbar__title {
+   font-size: 20px;
+   font-weight: 600;
+   letter-spacing: 0.15px;
+   white-space: nowrap;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   text-align: center;
+   color: var(--on-surface);
+}

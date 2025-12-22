@@ -1,0 +1,75 @@
+/* Overlay */
+.bottom-sheet__overlay {
+   position: fixed;
+   inset: 0;
+   background-color: rgba(0, 0, 0, 0.4);
+   z-index: 1000;
+   animation: fadeIn 200ms ease;
+}
+
+/* Sheet */
+.bottom-sheet {
+   position: fixed;
+   left: 0;
+   right: 0;
+   bottom: 0;
+
+   background-color: var(--surface);
+   color: var(--on-surface);
+
+   border-top-left-radius: 24px;
+   border-top-right-radius: 24px;
+
+   padding: 8px 20px 20px;
+
+   box-shadow:
+      0 -4px 10px rgba(0, 0, 0, 0.25);
+
+   z-index: 1001;
+
+   animation: slideUp 280ms ease;
+}
+
+/* Handle bar */
+.bottom-sheet__handle {
+   width: 50px;
+   height: 4px;
+   border-radius: 2px;
+   background-color: var(--outline-variant);
+   opacity: 0.4;
+   margin: 0 auto 12px;
+}
+
+/* Title */
+.bottom-sheet__title {
+   font-size: 18px;
+   font-weight: 600;
+   text-align: center;
+   margin-bottom: 8px;
+}
+
+/* Content */
+.bottom-sheet__content {
+   margin-top: 4px;
+}
+
+/* Animations */
+@keyframes slideUp {
+   from {
+      transform: translateY(100%);
+   }
+
+   to {
+      transform: translateY(0);
+   }
+}
+
+@keyframes fadeIn {
+   from {
+      opacity: 0;
+   }
+
+   to {
+      opacity: 1;
+   }
+}

@@ -1,0 +1,78 @@
+.search-bar {
+   display: flex;
+   align-items: center;
+
+   border-radius: 24px;
+   padding: 6px 12px;
+   margin: 6px 0;
+
+   background-color: var(--search-container);
+   border: 1px solid var(--outline-variant);
+
+   transition:
+      background-color 120ms ease,
+      box-shadow 120ms ease,
+      border-color 120ms ease;
+}
+
+/* Focused state (RN elevation = 4) */
+.search-bar--focused {
+   background-color: var(--surface);
+   border-color: transparent;
+
+   box-shadow:
+      0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Disabled */
+.search-bar--disabled {
+   opacity: 0.6;
+   pointer-events: none;
+}
+
+/* Search icon */
+.search-bar__icon {
+   margin-right: 8px;
+   color: var(--on-surface-variant);
+   flex-shrink: 0;
+}
+
+/* Input */
+.search-bar__input {
+   flex: 1;
+   border: none;
+   outline: none;
+   background: transparent;
+
+   font-size: 16px;
+   padding: 6px 0;
+
+   color: var(--on-surface);
+}
+
+.search-bar__input::placeholder {
+   color: color-mix(in srgb,
+         var(--on-surface-variant) 60%,
+         transparent);
+}
+
+/* Clear button */
+.search-bar__clear {
+   border: none;
+   background: transparent;
+   padding: 4px;
+
+   display: flex;
+   align-items: center;
+   justify-content: center;
+
+   border-radius: 50%;
+   cursor: pointer;
+
+   color: var(--on-surface-variant);
+}
+
+/* Touch feedback (Android ripple analogue) */
+.search-bar__clear:active {
+   background-color: rgba(0, 0, 0, 0.12);
+}
