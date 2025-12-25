@@ -12,7 +12,6 @@ import Card from "../components/Card.jsx";
 import BottomSheetModal from "../components/BottomSheetModal.jsx";
 import IconList from "../components/IconList.jsx";
 import NoDataCard from "../components/NoDataCard.jsx";
-import MaterialSlider from "../components/MaterialSlider.jsx";
 
 import { ThemeContext } from "../context/themeContext.jsx";
 import { dataHelper } from "../utils/dataUtils.jsx";
@@ -21,10 +20,21 @@ import { SCREEN_NAMES } from "../constants.jsx";
 const LANGUAGE_MAPPER = { kn: "Kannada", en: "English" };
 const FONT_WEIGHTS = { brhknde: 600 };
 
+const containsNonEnglish = (text) => {
+  if (!text) return false;
+  return /[^A-Za-z0-9 .,!?'"@#$%^&*()_+\-=;:/\\|<>[\]{}~`]/.test(text);
+};
+
+const getFontFamily = (text, fontFamily) => {
+  if (fontFamily) {
+    return fontFamily;
+  } else {
+    return containsNonEnglish(text) ? "NudiParijathaBold" : "NotoSans";
+  }
+};
 const ReaderScreen = () => {
   const {
     font,
-    updateFont,
     darkmode,
     darkSwitch: showDarkSwitch,
     toggleDarkMode,
@@ -41,7 +51,6 @@ const ReaderScreen = () => {
   const [languages, setLanguages] = useState([]);
   const [currentLanguage, setCurrentLanguage] = useState(null);
   const [showLanguageModal, setShowLanguageModal] = useState(false);
-  const [showScrollTop, setShowScrollTop] = useState(false);
 
   const contentRef = useRef(null);
 
@@ -85,13 +94,6 @@ const ReaderScreen = () => {
     }
   }, [currentLanguage, fetchedData]);
 
-  /* -------------------- Scroll -------------------- */
-
-  const handleScroll = () => {
-    if (!contentRef.current) return;
-    setShowScrollTop(contentRef.current.scrollTop > 250);
-  };
-
   const scrollToTop = () => {
     contentRef.current?.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -134,7 +136,7 @@ const ReaderScreen = () => {
                 className="reader-text"
                 key={idx}
                 style={{
-                  fontFamily: item.fontFamily,
+                  fontFamily: getFontFamily(line, item.fontFamily),
                   fontWeight: FONT_WEIGHTS[item.fontFamily] || 700,
                   fontSize: item.fontFamily === "brhknde" ? font + 2 : font,
                   lineHeight:
@@ -187,11 +189,7 @@ const ReaderScreen = () => {
         slider={true}
       />
       <div className="app-content-slider">
-        <div
-          ref={contentRef}
-          className="reader-content"
-          onScroll={handleScroll}
-        >
+        <div ref={contentRef} className="reader-content">
           {readerData?.content?.length ? (
             readerData.content.map(renderItem)
           ) : (
