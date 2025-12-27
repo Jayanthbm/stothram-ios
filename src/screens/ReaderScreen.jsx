@@ -29,7 +29,7 @@ const getFontFamily = (text, fontFamily) => {
   if (fontFamily) {
     return fontFamily;
   } else {
-    return containsNonEnglish(text) ? "NudiParijathaBold" : "NotoSans";
+    return containsNonEnglish(text) ? "NotoSerif" : "NotoSans";
   }
 };
 const ReaderScreen = () => {
@@ -93,10 +93,6 @@ const ReaderScreen = () => {
       setDisplayTitle(next.title);
     }
   }, [currentLanguage, fetchedData]);
-
-  const scrollToTop = () => {
-    contentRef.current?.scrollTo({ top: 0, behavior: "smooth" });
-  };
 
   /* -------------------- AppBar Icons -------------------- */
 
