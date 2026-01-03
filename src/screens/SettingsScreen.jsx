@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import AppBar from "../components/AppBar.jsx";
 import IconList from "../components/IconList.jsx";
 import MaterialSwitch from "../components/MaterialSwitch.jsx";
@@ -57,6 +57,50 @@ const SettingsScreen = () => {
     }
   };
 
+  const DARK_MODE_KEY = "@darkmode";
+  const DARK_MODE_TOGGLE_KEY = "@darkmodetoggle";
+  const FONT_SIZE_KEY = "@fontSize";
+
+  const clearCacheExceptSettings = () => {
+    try {
+      const keysToPreserve = new Set([
+        CACHED_DATA_KEYS.SETTINGS_SCREEN,
+        DARK_MODE_KEY,
+        DARK_MODE_TOGGLE_KEY,
+        FONT_SIZE_KEY,
+      ]);
+
+      const allKeys = Object.keys(localStorage);
+
+      const keysToRemove = allKeys.filter((key) => !keysToPreserve.has(key));
+
+      keysToRemove.forEach((key) => localStorage.removeItem(key));
+
+      alert(`Cache cleared ✅\n${keysToRemove.length} entries removed`);
+    } catch (e) {
+      console.error("Cache clear failed", e);
+    }
+  };
+
+  const heartTapCount = useRef(0);
+  const heartTapTimeout = useRef(null);
+
+  const onHeartClick = () => {
+    heartTapCount.current += 1;
+
+    if (heartTapTimeout.current) {
+      clearTimeout(heartTapTimeout.current);
+    }
+
+    heartTapTimeout.current = setTimeout(() => {
+      heartTapCount.current = 0;
+    }, 2000); // 2-second window
+
+    if (heartTapCount.current === 5) {
+      heartTapCount.current = 0;
+      clearCacheExceptSettings();
+    }
+  };
   return (
     <>
       <AppBar showBack title="Settings" rightIcons={[]} />
@@ -107,7 +151,11 @@ const SettingsScreen = () => {
         {/* ---------- Made with ---------- */}
         <div className="made-with">
           <span>Made with</span>
-          <span className="heart">
+          <span
+            className="heart"
+            onClick={onHeartClick}
+            style={{ cursor: "pointer" }}
+          >
             <MdFavorite size={20} />
           </span>
           <span>in India 🇮🇳</span>

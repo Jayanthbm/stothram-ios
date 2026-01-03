@@ -4,13 +4,45 @@
    display: flex;
    align-items: center;
    height: 40px;
+   gap: 8px;
+}
+
+/* ===== Icon buttons ===== */
+.material-slider__btn {
+   width: 36px;
+   height: 36px;
+   border-radius: 50%;
+   border: none;
+   background: transparent;
+
+   display: flex;
+   align-items: center;
+   justify-content: center;
+
+   cursor: pointer;
+   color: var(--primary);
+
+   transition: background-color 120ms ease, opacity 120ms ease;
+}
+
+.material-slider__btn:hover:not(:disabled) {
+   background-color: rgba(0, 0, 0, 0.08);
+}
+
+.material-slider__btn:active:not(:disabled) {
+   background-color: rgba(0, 0, 0, 0.12);
+}
+
+.material-slider__btn:disabled {
+   opacity: 0.4;
+   cursor: default;
 }
 
 /* Reset */
 .material-slider__input {
    -webkit-appearance: none;
    appearance: none;
-   width: 100%;
+   flex: 1;
    height: 40px;
    background: transparent;
    outline: none;
