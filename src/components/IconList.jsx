@@ -10,6 +10,7 @@ export default function IconList({
   onPress,
   rightContent,
   disabled = false,
+  id,
 }) {
   return (
     <button
@@ -28,10 +29,13 @@ export default function IconList({
       {leftIcon && <span className="icon-list__left-icon">{leftIcon}</span>}
 
       {/* Text */}
-      <span className="icon-list__text">
+      <div className="icon-list__text">
+        {id && <div className="chip">{id}</div>}
+
         <span className="icon-list__title">{title}</span>
+
         {subtitle && <span className="icon-list__subtitle">{subtitle}</span>}
-      </span>
+      </div>
 
       {/* Right content (switch / chevron / etc.) */}
       {rightContent && <span className="icon-list__right">{rightContent}</span>}

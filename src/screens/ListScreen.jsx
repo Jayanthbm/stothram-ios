@@ -58,9 +58,17 @@ const ListScreen = () => {
   /* -------------------- Search -------------------- */
 
   const filteredData = useMemo(() => {
-    if (!searchValue.trim()) return list;
+    const query = searchValue.trim();
+
+    if (!query) return list;
+    // Search by ID
+    if (/^\d+$/.test(query)) {
+      return list.filter((item) => String(item?.id ?? "").includes(query));
+    }
+
+    // Search by title
     return list.filter((item) =>
-      item.title.toLowerCase().includes(searchValue.toLowerCase())
+      item?.title?.toLowerCase().includes(query.toLowerCase()),
     );
   }, [list, searchValue]);
 
@@ -87,8 +95,11 @@ const ListScreen = () => {
         }}
       >
         <div className="card-grid-content">
+          <div className="card-chip chip">{item.id}</div>
+
           <LuNotepadText size={ICON_SIZE} />
-          <div className="card-title">{item.displayTitle}</div>
+
+          <div className="card-title">{item.displayTitle || item.title}</div>
         </div>
       </Card>
     );
@@ -96,8 +107,9 @@ const ListScreen = () => {
 
   const ListView = ({ item }) => (
     <IconList
+      id={item.id}
       leftIcon={<LuNotepadText size={22} />}
-      title={item.displayTitle}
+      title={item.displayTitle || item.title}
       onPress={() => handlePress(item)}
     />
   );
@@ -152,9 +164,9 @@ const ListScreen = () => {
               key={index}
               item={item}
               index={index}
-              total={item.length}
+              total={filteredData.length}
             />
-          )
+          ),
         )}
       </div>
 

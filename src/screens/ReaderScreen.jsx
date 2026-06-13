@@ -133,7 +133,7 @@ const ReaderScreen = () => {
                 key={idx}
                 style={{
                   fontFamily: getFontFamily(line, item.fontFamily),
-                  fontWeight: FONT_WEIGHTS[item.fontFamily] || 700,
+                  
                   fontSize: item.fontFamily === "brhknde" ? font + 2 : font,
                   lineHeight:
                     item.fontFamily === "brhknde"

@@ -117,3 +117,36 @@
   overflow-wrap: anywhere;
   word-break: break-word;
 }
+.chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 4px 10px;
+  border-radius: 12px;
+
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1;
+
+  background-color: var(--primary-container);
+  color: var(--on-primary-container);
+
+  width: fit-content;
+  white-space: nowrap;
+  margin-bottom: 2px;
+}
+
+.card-grid-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-chip {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+}
