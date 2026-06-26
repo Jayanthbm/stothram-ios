@@ -2,8 +2,9 @@ import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
 import { MdOutlineLightMode, MdOutlineDarkMode } from "react-icons/md";
 import { FiSettings } from "react-icons/fi";
 import { MdMenuBook } from "react-icons/md";
-import { LuListMusic } from "react-icons/lu";
-import { FaStackExchange } from "react-icons/fa";
+import { LuListMusic, LuScrollText } from "react-icons/lu";
+import { FaStackExchange, FaPrayingHands } from "react-icons/fa";
+import { PiBooks } from "react-icons/pi";
 import { useNavigate } from "react-router-dom";
 
 import { CACHED_DATA_KEYS, DATA_URLS, SCREEN_NAMES } from "../constants.jsx";
@@ -86,6 +87,9 @@ const HomeScreen = () => {
     "book-open-page-variant-outline": <MdMenuBook size={ICON_SIZE} />,
     "book-music-outline": <LuListMusic size={ICON_SIZE} />,
     "stack-exchange": <FaStackExchange size={ICON_SIZE} />,
+    "script-text-outline": <LuScrollText size={ICON_SIZE} />,
+    "hands-pray": <FaPrayingHands size={ICON_SIZE} />,
+    "book-multiple-outline": <PiBooks size={ICON_SIZE} />,
   };
   const TypeItem = ({ item, index, total, onClick }) => {
     const isLastOdd = total % 2 !== 0 && index === total - 1;
@@ -107,7 +111,7 @@ const HomeScreen = () => {
             height: "100%",
           }}
         >
-          {icons[item.icon_new]}
+          {icons[item.icon_new] || icons["book-open-page-variant-outline"]}
           <div className="card-title">{item.title}</div>
         </div>
       </Card>

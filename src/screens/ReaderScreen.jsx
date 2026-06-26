@@ -16,22 +16,12 @@ import NoDataCard from "../components/NoDataCard.jsx";
 import { ThemeContext } from "../context/themeContext.jsx";
 import { dataHelper } from "../utils/dataUtils.jsx";
 import { SCREEN_NAMES } from "../constants.jsx";
+import { getFontFamily } from "../utils/commonUtils.jsx";
 
 const LANGUAGE_MAPPER = { kn: "Kannada", en: "English" };
 const FONT_WEIGHTS = { brhknde: 600 };
 
-const containsNonEnglish = (text) => {
-  if (!text) return false;
-  return /[^A-Za-z0-9 .,!?'"@#$%^&*()_+\-=;:/\\|<>[\]{}~`]/.test(text);
-};
 
-const getFontFamily = (text, fontFamily) => {
-  if (fontFamily) {
-    return fontFamily;
-  } else {
-    return containsNonEnglish(text) ? "NotoSerif" : "NotoSans";
-  }
-};
 const ReaderScreen = () => {
   const {
     font,
@@ -132,8 +122,12 @@ const ReaderScreen = () => {
                 className="reader-text"
                 key={idx}
                 style={{
-                  fontFamily: getFontFamily(line, item.fontFamily),
-                  
+                  fontFamily: getFontFamily(
+                    line,
+                    item.fontFamily,
+                    readerData?.fonts,
+                  ),
+
                   fontSize: item.fontFamily === "brhknde" ? font + 2 : font,
                   lineHeight:
                     item.fontFamily === "brhknde"
@@ -145,7 +139,7 @@ const ReaderScreen = () => {
               </div>
             ) : (
               <div key={idx} style={{ height: 8 }} />
-            )
+            ),
           )}
         </Card>
       );
