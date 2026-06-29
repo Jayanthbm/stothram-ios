@@ -40,7 +40,7 @@ const SettingsScreen = () => {
     fetchData();
   }, []);
 
-  const PLAY_STORE_URL = "https://jayanthbm.github.io/stothram-ios/";
+  const PLAY_STORE_URL = "https://play.google.com/store/apps/details?id=com.jayanth.shotram";
 
   const shareApp = async () => {
     const text = `Check out this amazing Stothram app 🙏\n\n${PLAY_STORE_URL}`;

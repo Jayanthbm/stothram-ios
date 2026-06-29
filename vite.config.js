@@ -11,25 +11,25 @@ const manifestForPlugin = {
     description: "Read stothram and bhajanes on the go.",
     icons: [
       {
-        src: "/stothram-ios/android-chrome-192x192.png",
+        src: "/android-chrome-192x192.png",
         sizes: "192x192",
         type: "image/png",
         purpose: "favicon",
       },
       {
-        src: "/stothram-ios/android-chrome-512x512.png",
+        src: "/android-chrome-512x512.png",
         sizes: "512x512",
         type: "image/png",
         purpose: "favicon",
       },
       {
-        src: "/stothram-ios/apple-touch-icon.png",
+        src: "apple-touch-icon.png",
         sizes: "180x180",
         type: "image/png",
         purpose: "apple touch icon",
       },
       {
-        src: "/stothram-ios/maskable_icon.png",
+        src: "maskable_icon.png",
         sizes: "512x512",
         type: "image/png",
         purpose: "any maskable",
@@ -38,13 +38,13 @@ const manifestForPlugin = {
     theme_color: "#171717",
     background_color: "#171717",
     display: "standalone",
-    scope: "/stothram-ios",
-    start_url: "/stothram-ios",
+    scope: "/",
+    start_url: "/",
     orientation: "portrait",
   },
 };
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: "/stothram-ios",
+  base: "/",
   plugins: [react(), VitePWA(manifestForPlugin)],
 });
