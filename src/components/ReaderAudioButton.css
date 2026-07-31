@@ -1,0 +1,69 @@
+.audio-segment-container {
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.audio-icon-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+  outline: none;
+}
+
+.audio-slider {
+  flex: 1;
+  height: 4px;
+  accent-color: var(--primary);
+  cursor: pointer;
+}
+
+.audio-top-idle-container {
+  width: 100%;
+  padding: 4px 24px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.audio-top-container {
+  width: 100%;
+  padding: 6px 16px;
+  box-sizing: border-box;
+}
+
+.audio-player-card {
+  padding: 8px 14px;
+  border-radius: 16px;
+  background-color: var(--primary-container, #3f51b5);
+  color: var(--on-primary-container, #ffffff);
+}
+
+.audio-controls-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.audio-top-slider {
+  flex: 1;
+  height: 4px;
+  accent-color: var(--on-primary-container, #ffffff);
+  cursor: pointer;
+}
+
+.audio-timer-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 4px;
+  margin-top: 2px;
+}
+
+.audio-time-text {
+  font-size: 11px;
+  opacity: 0.8;
+}

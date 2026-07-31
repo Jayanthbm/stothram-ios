@@ -11,6 +11,7 @@ import { CACHED_DATA_KEYS, DATA_URLS, SCREEN_NAMES } from "../constants.jsx";
 import { ThemeContext } from "../context/themeContext.jsx";
 import {
   dataHelper,
+  getDynamicDataUrls,
   preFetcher,
   storeItem,
   storeJSON,
@@ -31,9 +32,11 @@ const HomeScreen = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        const dynamicUrls = getDynamicDataUrls();
+        const homeUrl = dynamicUrls?.HOME_SCREEN || dynamicUrls?.HOME || DATA_URLS.HOME_SCREEN;
         const fetchedData = await dataHelper(
           CACHED_DATA_KEYS.HOME_SCREEN,
-          DATA_URLS.HOME_SCREEN,
+          homeUrl,
           SCREEN_NAMES.HOME_SCREEN
         );
         if (fetchedData) {
