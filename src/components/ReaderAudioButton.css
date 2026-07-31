@@ -58,12 +58,41 @@
 
 .audio-timer-row {
   display: flex;
+  align-items: center;
   justify-content: space-between;
   padding: 0 4px;
-  margin-top: 2px;
+  margin-top: 4px;
 }
 
 .audio-time-text {
   font-size: 11px;
   opacity: 0.8;
+}
+
+.audio-speed-controls {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.audio-speed-btn {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: var(--on-primary-container, #ffffff);
+  border-radius: 10px;
+  padding: 2px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 120ms ease;
+}
+
+.audio-speed-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.audio-speed-btn--active {
+  background: var(--on-primary-container, #ffffff);
+  color: var(--primary-container, #3f51b5);
+  border-color: var(--on-primary-container, #ffffff);
 }

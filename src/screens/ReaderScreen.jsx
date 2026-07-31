@@ -236,17 +236,17 @@ const ReaderScreen = () => {
         title={displayTitle || item?.title}
         rightIcons={rightIcons}
         slider={true}
+        audioPlayer={
+          <ReaderAudioButton
+            audioUrl={topAudioUrl}
+            isTopPlayer={true}
+            title={item?.title}
+            displayTitle={displayTitle}
+          />
+        }
       />
 
       <div className="app-content-slider">
-        {/* Top Main Audio Player */}
-        <ReaderAudioButton
-          audioUrl={topAudioUrl}
-          isTopPlayer={true}
-          title={item?.title}
-          displayTitle={displayTitle}
-        />
-
         <div ref={contentRef} className="reader-content">
           {readerData?.content?.length ? (
             readerData.content.map(renderItem)

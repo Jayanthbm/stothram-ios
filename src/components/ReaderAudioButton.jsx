@@ -5,6 +5,7 @@ import {
   seekAudioTrack,
   stopAudioTrack,
   subscribeAudioState,
+  setPlaybackRate,
 } from "../services/audioService";
 import "./ReaderAudioButton.css";
 
@@ -14,6 +15,8 @@ const formatTime = (seconds) => {
   const secs = Math.floor(seconds % 60);
   return `${mins}:${secs < 10 ? "0" : ""}${secs}`;
 };
+
+const SPEED_OPTIONS = [1, 1.5, 2];
 
 const ReaderAudioButton = memo(
   ({
@@ -33,6 +36,7 @@ const ReaderAudioButton = memo(
       currentUrl: null,
       activeStartTimestamp: 0,
       activeEndTimestamp: 0,
+      playbackRate: 1,
     });
 
     useEffect(() => {
@@ -204,6 +208,19 @@ const ReaderAudioButton = memo(
             <span className="audio-time-text">
               {formatTime(audioState.currentTime)}
             </span>
+
+            <div className="audio-speed-controls">
+              {SPEED_OPTIONS.map((rate) => (
+                <button
+                  key={rate}
+                  className={`audio-speed-btn ${audioState.playbackRate === rate ? "audio-speed-btn--active" : ""}`}
+                  onClick={() => setPlaybackRate(rate)}
+                >
+                  {rate}x
+                </button>
+              ))}
+            </div>
+
             <span className="audio-time-text">
               {formatTime(audioState.duration)}
             </span>

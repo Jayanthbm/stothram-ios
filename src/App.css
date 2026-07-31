@@ -106,11 +106,11 @@
 }
 
 .app-content {
-  padding-top: 64px;
+  padding-top: 0;
 }
 
 .app-content-slider {
-  padding-top: 100px;
+  padding-top: 0;
 }
 
 .reader-text {

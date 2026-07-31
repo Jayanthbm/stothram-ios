@@ -13,6 +13,7 @@ export default function AppBar({
   title = "Stothram",
   rightIcons = [],
   slider = false,
+  audioPlayer = null,
 }) {
   const navigate = useNavigate();
   const { font, updateFont } = useContext(ThemeContext);
@@ -87,6 +88,9 @@ export default function AppBar({
           />
         </div>
       )}
+
+      {/* ===== AUDIO PLAYER ROW ===== */}
+      {audioPlayer && <div className="appbar-audio-player">{audioPlayer}</div>}
     </div>
   );
 }

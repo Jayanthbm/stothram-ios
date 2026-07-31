@@ -3,6 +3,7 @@ let currentUrl = null;
 let isPlaying = false;
 let duration = 0;
 let currentTime = 0;
+let playbackRate = 1;
 let progressInterval = null;
 
 const listeners = new Set();
@@ -18,6 +19,7 @@ const notifyListeners = () => {
     currentUrl,
     activeStartTimestamp,
     activeEndTimestamp,
+    playbackRate,
   };
   listeners.forEach((cb) => cb(state));
 };
@@ -31,11 +33,22 @@ export const subscribeAudioState = (callback) => {
     currentUrl,
     activeStartTimestamp,
     activeEndTimestamp,
+    playbackRate,
   });
   return () => {
     listeners.delete(callback);
   };
 };
+
+export const setPlaybackRate = (rate) => {
+  playbackRate = rate;
+  if (currentAudio) {
+    currentAudio.playbackRate = rate;
+  }
+  notifyListeners();
+};
+
+export const getPlaybackRate = () => playbackRate;
 
 const startProgressTimer = () => {
   stopProgressTimer();
@@ -84,6 +97,7 @@ export const playAudioTrack = ({
           currentAudio.currentTime = activeStartTimestamp;
           currentTime = activeStartTimestamp;
         }
+        currentAudio.playbackRate = playbackRate;
         currentAudio.play().catch((err) => console.error("Audio play error:", err));
         isPlaying = true;
         startProgressTimer();
@@ -94,6 +108,7 @@ export const playAudioTrack = ({
       activeEndTimestamp = targetEnd;
       currentTime = targetStart;
       currentAudio.currentTime = targetStart;
+      currentAudio.playbackRate = playbackRate;
       currentAudio.play().catch((err) => console.error("Audio play error:", err));
       isPlaying = true;
       startProgressTimer();
@@ -110,6 +125,7 @@ export const playAudioTrack = ({
   currentTime = targetStart;
 
   const audio = new Audio(url);
+  audio.playbackRate = playbackRate;
 
   audio.onloadedmetadata = () => {
     duration = audio.duration || 0;
