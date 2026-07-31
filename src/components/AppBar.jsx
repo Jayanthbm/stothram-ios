@@ -7,13 +7,13 @@ import { ThemeContext } from "../context/themeContext";
 import MaterialSlider from "./MaterialSlider";
 const ICON_SIZE = 26;
 const ICON_TOUCH = 44;
-const RIGHT_WIDTH = ICON_TOUCH * 2;
 
 export default function AppBar({
   showBack = true,
   title = "Stothram",
   rightIcons = [],
   slider = false,
+  audioPlayer = null,
 }) {
   const navigate = useNavigate();
   const { font, updateFont } = useContext(ThemeContext);
@@ -21,6 +21,11 @@ export default function AppBar({
   const onBackPress = () => {
     navigate(-1);
   };
+
+  const safeRightIcons = Array.isArray(rightIcons) ? rightIcons : [];
+  const maxIcons = Math.max(2, safeRightIcons.length);
+  const rightWidth = ICON_TOUCH * maxIcons;
+  const placeholderCount = Math.max(0, 2 - safeRightIcons.length);
 
   return (
     <div className="appbar-wrapper">
@@ -51,14 +56,14 @@ export default function AppBar({
         </div>
 
         {/* RIGHT */}
-        <div className="appbar__right" style={{ width: RIGHT_WIDTH }}>
-          {Array(2 - rightIcons.length)
+        <div className="appbar__right" style={{ width: rightWidth }}>
+          {Array(placeholderCount)
             .fill(0)
             .map((_, i) => (
               <div key={`ph-${i}`} className="appbar__icon-btn" />
             ))}
 
-          {rightIcons.slice(0, 2).map((item, index) => (
+          {safeRightIcons.map((item, index) => (
             <button
               key={index}
               className="appbar__icon-btn"
@@ -83,6 +88,9 @@ export default function AppBar({
           />
         </div>
       )}
+
+      {/* ===== AUDIO PLAYER ROW ===== */}
+      {audioPlayer && <div className="appbar-audio-player">{audioPlayer}</div>}
     </div>
   );
 }

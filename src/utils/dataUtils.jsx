@@ -1,16 +1,122 @@
-export const DATA_THRESHOLDS = {
-  HOME: 1 * 60 * 60 * 1000, // 1 hours in milliseconds
-  LIST: 2 * 60 * 60 * 1000, // 3 hours in milliseconds
+import { API_URL, CACHED_DATA_KEYS, DATA_URLS } from "../constants.jsx";
+
+// Default constants for data thresholds
+export const DEFAULT_DATA_THRESHOLDS = {
+  HOME: 1 * 60 * 60 * 1000, // 1 hour in milliseconds
+  LIST: 2 * 60 * 60 * 1000, // 2 hours in milliseconds
   READER: 1 * 60 * 60 * 1000, // 1 hour in milliseconds
   SETTING: 15 * 24 * 60 * 60 * 1000, // 15 days in milliseconds
 };
 
+export const DATA_THRESHOLDS = { ...DEFAULT_DATA_THRESHOLDS };
+
+/**
+ * Initialize cache thresholds in localStorage if not present
+ */
+export const initCacheThresholds = () => {
+  try {
+    const existing = getJSON(CACHED_DATA_KEYS.CACHE_THRESHOLDS);
+    if (!existing) {
+      storeJSON(
+        CACHED_DATA_KEYS.CACHE_THRESHOLDS,
+        DEFAULT_DATA_THRESHOLDS
+      );
+    }
+  } catch (error) {
+    console.error("Error initializing cache thresholds:", error);
+  }
+};
+
+/**
+ * Get dynamic cache thresholds from localStorage
+ */
+export const getCacheThresholds = () => {
+  try {
+    const custom = getJSON(CACHED_DATA_KEYS.CACHE_THRESHOLDS);
+    return { ...DEFAULT_DATA_THRESHOLDS, ...(custom || {}) };
+  } catch (error) {
+    console.error("Error fetching cache thresholds:", error);
+    return DEFAULT_DATA_THRESHOLDS;
+  }
+};
+
+/**
+ * Save custom cache thresholds to localStorage
+ */
+export const saveCacheThresholds = (thresholds) => {
+  try {
+    storeJSON(CACHED_DATA_KEYS.CACHE_THRESHOLDS, thresholds);
+  } catch (error) {
+    console.error("Error saving cache thresholds:", error);
+  }
+};
+
+/**
+ * Initialize API_URL and DATA_URLS in localStorage if not present
+ */
+export const initApiUrlToStorage = () => {
+  try {
+    const existingApiUrl = getItem(CACHED_DATA_KEYS.API_URL);
+    if (!existingApiUrl) {
+      storeItem(CACHED_DATA_KEYS.API_URL, API_URL);
+      storeJSON(CACHED_DATA_KEYS.DATA_URLS, DATA_URLS);
+    }
+  } catch (error) {
+    console.error("Error initializing API URL:", error);
+  }
+};
+
+/**
+ * Get current API_URL from localStorage
+ */
+export const getApiUrl = () => {
+  try {
+    const stored = getItem(CACHED_DATA_KEYS.API_URL);
+    return stored || API_URL;
+  } catch (error) {
+    console.error("Error getting API URL:", error);
+    return API_URL;
+  }
+};
+
+/**
+ * Get dynamic DATA_URLS from localStorage
+ */
+export const getDynamicDataUrls = () => {
+  try {
+    const stored = getJSON(CACHED_DATA_KEYS.DATA_URLS);
+    return stored || DATA_URLS;
+  } catch (error) {
+    console.error("Error getting dynamic DATA_URLS:", error);
+    return DATA_URLS;
+  }
+};
+
+/**
+ * Update API_URL in localStorage and recalculate DATA_URLS
+ */
+export const updateApiUrl = (newApiUrl) => {
+  try {
+    const baseUrl = newApiUrl.trim().replace(/\/+$/, "");
+    storeItem(CACHED_DATA_KEYS.API_URL, baseUrl);
+    const updatedDataUrls = {
+      HOME: `${baseUrl}/home-screen-data`,
+      SETTINGS: `${baseUrl}/setting-screen-data`,
+      HOME_SCREEN: `${baseUrl}/home-screen-data`,
+      SETTINGS_SCREEN: `${baseUrl}/setting-screen-data`,
+    };
+    storeJSON(CACHED_DATA_KEYS.DATA_URLS, updatedDataUrls);
+    return updatedDataUrls;
+  } catch (error) {
+    console.error("Error updating API URL:", error);
+    return DATA_URLS;
+  }
+};
+
 /**
  * Store a key-value pair in local storage.
- * @param {string} key - The key to store.
- * @param {string} value - The value to store.
  */
-export const storeItem = async (key, value) => {
+export const storeItem = (key, value) => {
   try {
     localStorage.setItem(key, value);
   } catch (error) {
@@ -20,8 +126,6 @@ export const storeItem = async (key, value) => {
 
 /**
  * Retrieve the value associated with the given key from local storage.
- * @param {string} key - The key to retrieve.
- * @returns {string|null} - The retrieved value or null on error.
  */
 export const getItem = (key) => {
   try {
@@ -35,8 +139,6 @@ export const getItem = (key) => {
 
 /**
  * Store a key-value pair as JSON in local storage.
- * @param {string} key - The key to store.
- * @param {object} value - The value to store as JSON.
  */
 export const storeJSON = (key, value) => {
   try {
@@ -48,8 +150,6 @@ export const storeJSON = (key, value) => {
 
 /**
  * Retrieve the JSON value associated with the given key from local storage.
- * @param {string} key - The key to retrieve.
- * @returns {object|null} - The retrieved JSON value or null on error.
  */
 export const getJSON = (key) => {
   try {
@@ -64,29 +164,20 @@ export const getJSON = (key) => {
 
 /**
  * Check if the device is connected to the internet.
- * @returns {boolean} - True if connected, false otherwise.
  */
 export const isInternetConnected = () => {
   try {
     return navigator.onLine;
   } catch (error) {
     console.error("Error checking internet connection:", error);
-    return false; // Handle the error appropriately based on your application's needs
+    return false;
   }
 };
 
 /**
- * Helper function to compare the time difference between the current time and the last fetch time.
- * @param {number} currentTime - The current time in milliseconds.
- * @param {string} lastFetchTime - The timestamp of the last fetch.
- * @param {number} threshold - The threshold for time difference in milliseconds.
- * @returns {boolean} - True if the time difference is greater than the threshold, false otherwise.
+ * Helper function to compare the time difference between current time and last fetch time.
  */
-export const compareTimeDifference = (
-  currentTime,
-  lastFetchTime,
-  threshold,
-) => {
+export const compareTimeDifference = (currentTime, lastFetchTime, threshold) => {
   const timeDifference = lastFetchTime
     ? currentTime - parseInt(lastFetchTime)
     : threshold;
@@ -96,32 +187,34 @@ export const compareTimeDifference = (
 
 /**
  * Helper function to handle data fetching and caching.
- * @param {string} KEYNAME - The key under which data is stored.
- * @param {string} URL - The URL to fetch the data from.
- * @param {string} SCREEN_TYPE - The type of the screen.
- * @returns {object|null} - The fetched data or null on error.
  */
 export const dataHelper = async (KEYNAME, URL, SCREEN_TYPE) => {
   try {
+    const screenKey = (SCREEN_TYPE || "HOME").toUpperCase().replace("_SCREEN", "");
+    const thresholds = getCacheThresholds();
+    const threshold =
+      thresholds[screenKey] ?? DEFAULT_DATA_THRESHOLDS[screenKey] ?? DEFAULT_DATA_THRESHOLDS.HOME;
+
+    if (threshold === 0) {
+      const freshData = await fetchAndStoreData(KEYNAME, URL);
+      if (freshData) return freshData;
+    }
+
     const cachedData = getJSON(KEYNAME);
     const lastFetchTime = getItem(`${KEYNAME}_lastFetchTime`);
 
     if (cachedData) {
-      // Check if it's time to fetch from online
       const currentTime = new Date().getTime();
       const shouldFetchFromOnline = compareTimeDifference(
         currentTime,
         lastFetchTime,
-        DATA_THRESHOLDS[SCREEN_TYPE],
+        threshold
       );
       if (!lastFetchTime || shouldFetchFromOnline) {
         fetchAndStoreData(KEYNAME, URL);
       }
-
       return cachedData;
     } else {
-      // If no cached version, fetch from online
-      console.log(`Fetching ${SCREEN_TYPE} data from online`);
       const data = await fetchAndStoreData(KEYNAME, URL);
       return data;
     }
@@ -132,26 +225,40 @@ export const dataHelper = async (KEYNAME, URL, SCREEN_TYPE) => {
 };
 
 /**
- * Helper function to fetch and store data in AsyncStorage
- * @param {string} KEYNAME - The key under which data is stored.
- * @param {string} URL - The URL to fetch the data from.
- * @returns {object|null} - The fetched data or null on error.
+ * Helper function to fetch and store data in localStorage.
+ * Automatically replaces default API URL base with current custom API URL if set.
  */
 export const fetchAndStoreData = async (KEYNAME, URL) => {
   try {
-    // Check if the device is connected to the internet
     const isConnected = isInternetConnected();
+    const env = getItem(CACHED_DATA_KEYS.ENV) || "prod";
+    const baseUrl = getApiUrl();
+
+    let targetUrl = URL;
+
+    if (baseUrl) {
+      if (targetUrl.startsWith(API_URL)) {
+        targetUrl = targetUrl.replace(API_URL, baseUrl);
+      } else if (targetUrl.startsWith("https://jayanthbm.github.io/stothram-data")) {
+        targetUrl = targetUrl.replace("https://jayanthbm.github.io/stothram-data", baseUrl);
+      }
+    }
+
+    let newURL;
+    if (targetUrl.includes("https://") || targetUrl.includes("http://")) {
+      newURL = `${targetUrl}${targetUrl.includes("?") ? "&" : "?"}env=${env}`;
+    } else {
+      const cleanUrl = targetUrl.startsWith("/") ? targetUrl : `/${targetUrl}`;
+      console.log("cleanUrl",cleanUrl)
+      newURL = `${baseUrl}${cleanUrl}${cleanUrl.includes("?") ? "&" : "?"}env=${env}`;
+    }
 
     if (isConnected) {
       if (URL.endsWith(".pdf")) {
-        // Handle PDF files differently
         return fetchAndStorePDF(KEYNAME, URL);
       } else {
-        // Handle JSON files as before
-        const response = await fetch(URL);
+        const response = await fetch(newURL);
         const data = await response.json();
-
-        // Update local storage with the new data and timestamp
         storeJSON(KEYNAME, data);
         storeItem(`${KEYNAME}_lastFetchTime`, new Date().getTime().toString());
         return data;
@@ -167,21 +274,15 @@ export const fetchAndStoreData = async (KEYNAME, URL) => {
 };
 
 /**
- * Helper function to fetch and store PDF URL in AsyncStorage
- * @param {string} KEYNAME - The key under which PDF URL is stored.
- * @param {string} URL - The URL to fetch the PDF from.
- * @returns {string|null} - The PDF URL or null on error.
+ * Helper function to fetch and store PDF URL in localStorage
  */
 export const fetchAndStorePDF = async (KEYNAME, URL) => {
   try {
-    const isConnected = await isInternetConnected();
+    const isConnected = isInternetConnected();
 
     if (isConnected) {
-      await storeItem(KEYNAME, URL);
-      await storeItem(
-        `${KEYNAME}_lastFetchTime`,
-        new Date().getTime().toString(),
-      );
+      storeItem(KEYNAME, URL);
+      storeItem(`${KEYNAME}_lastFetchTime`, new Date().getTime().toString());
       return URL;
     } else {
       console.log("No internet connection. Data fetching skipped.");
@@ -192,18 +293,17 @@ export const fetchAndStorePDF = async (KEYNAME, URL) => {
     return null;
   }
 };
+
 /**
  * Prefetch data for multiple data objects asynchronously.
- * @param {Array} dataArray - Array of data objects.
- * @param {string} SCREEN_TYPE - The type of the screen.
- * @returns {boolean} - True if prefetching is successful, false otherwise.
  */
 export const preFetcher = async (dataArray, SCREEN_TYPE) => {
   try {
+    if (!Array.isArray(dataArray)) return false;
     const fetchPromises = dataArray.map((dataObject) =>
       dataObject.dataUrl
         ? dataHelper(dataObject.title, dataObject.dataUrl, SCREEN_TYPE)
-        : Promise.resolve(null),
+        : Promise.resolve(null)
     );
 
     await Promise.all(fetchPromises);
@@ -215,15 +315,12 @@ export const preFetcher = async (dataArray, SCREEN_TYPE) => {
 };
 
 /**
- * used to get device info
- * @returns {object} - device info
+ * Get OS Info
  */
-
 export const getOSInfo = () => {
   const userAgent = navigator.userAgent;
   let os = "Unknown";
 
-  // Detect OS
   if (/windows phone/i.test(userAgent)) {
     os = "Windows Phone";
   } else if (/android/i.test(userAgent)) {

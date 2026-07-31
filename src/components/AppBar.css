@@ -1,11 +1,12 @@
-/* Wrapper (fixed) */
+/* Wrapper (sticky) */
 .appbar-wrapper {
-   position: fixed;
+   position: sticky;
    top: 0;
    left: 0;
    right: 0;
    z-index: 1000;
    background-color: var(--surface);
+   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* Main bar */
@@ -17,11 +18,16 @@
    padding: 0 8px;
 
    background-color: var(--surface);
-   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* Slider row */
 .appbar-slider {
+   padding: 0 8px 8px;
+   background-color: var(--surface);
+}
+
+/* Audio Player row */
+.appbar-audio-player {
    padding: 0 8px 8px;
    background-color: var(--surface);
 }
