@@ -33,11 +33,14 @@ const HomeScreen = () => {
     const fetchData = async () => {
       try {
         const dynamicUrls = getDynamicDataUrls();
-        const homeUrl = dynamicUrls?.HOME_SCREEN || dynamicUrls?.HOME || DATA_URLS.HOME_SCREEN;
+        const homeUrl =
+          dynamicUrls?.HOME_SCREEN ||
+          dynamicUrls?.HOME ||
+          DATA_URLS.HOME_SCREEN;
         const fetchedData = await dataHelper(
           CACHED_DATA_KEYS.HOME_SCREEN,
           homeUrl,
-          SCREEN_NAMES.HOME_SCREEN
+          SCREEN_NAMES.HOME_SCREEN,
         );
         if (fetchedData) {
           setTypes(fetchedData?.data);

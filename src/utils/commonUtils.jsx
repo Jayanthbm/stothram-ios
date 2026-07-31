@@ -1,4 +1,4 @@
-export  const containsNonEnglish = (text) => {
+export const containsNonEnglish = (text) => {
   if (!text) return false;
   return /[^A-Za-z0-9 .,!?'"@#$%^&*()_+\-=;:/\\|<>[\]{}~`]/.test(text);
 };

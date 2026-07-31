@@ -52,7 +52,8 @@ const ReaderScreen = () => {
   const [showMeanings, setShowMeanings] = useState(false);
   const [meaningLanguage, setMeaningLanguage] = useState(null);
   const [meaningLanguages, setMeaningLanguages] = useState([]);
-  const [showMeaningLanguageModal, setShowMeaningLanguageModal] = useState(false);
+  const [showMeaningLanguageModal, setShowMeaningLanguageModal] =
+    useState(false);
 
   const contentRef = useRef(null);
 
@@ -142,17 +143,17 @@ const ReaderScreen = () => {
         const fetchedData = await dataHelper(
           item.title,
           item.dataUrl,
-          SCREEN_NAMES.READER_SCREEN
+          SCREEN_NAMES.READER_SCREEN,
         );
         if (fetchedData) {
           setReaderData(fetchedData);
           setDisplayTitle(
-            fetchedData.title || item?.displayTitle || item?.title
+            fetchedData.title || item?.displayTitle || item?.title,
           );
 
           const defaultLang = fetchedData.defaultLanguage || "kn";
           const availableLangs = getAvailableLanguages(
-            fetchedData.supportedLanguages
+            fetchedData.supportedLanguages,
           );
           const availableMeaningLangs =
             getAvailableMeaningLanguages(fetchedData);
@@ -175,7 +176,7 @@ const ReaderScreen = () => {
     const fontFamily = getFontForLanguage(
       readerData?.fonts,
       currentLanguage,
-      contentType
+      contentType,
     );
 
     if (contentType === "paragraph") {
