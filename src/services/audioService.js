@@ -87,7 +87,8 @@ export const playAudioTrack = ({
     const isSameSegment =
       targetStart === 0 && targetEnd === 0
         ? activeStartTimestamp === 0 && activeEndTimestamp === 0
-        : activeStartTimestamp === targetStart && activeEndTimestamp === targetEnd;
+        : activeStartTimestamp === targetStart &&
+          activeEndTimestamp === targetEnd;
 
     if (isSameSegment) {
       if (isPlaying) {
@@ -98,7 +99,9 @@ export const playAudioTrack = ({
           currentTime = activeStartTimestamp;
         }
         currentAudio.playbackRate = playbackRate;
-        currentAudio.play().catch((err) => console.error("Audio play error:", err));
+        currentAudio
+          .play()
+          .catch((err) => console.error("Audio play error:", err));
         isPlaying = true;
         startProgressTimer();
         notifyListeners();
@@ -109,7 +112,9 @@ export const playAudioTrack = ({
       currentTime = targetStart;
       currentAudio.currentTime = targetStart;
       currentAudio.playbackRate = playbackRate;
-      currentAudio.play().catch((err) => console.error("Audio play error:", err));
+      currentAudio
+        .play()
+        .catch((err) => console.error("Audio play error:", err));
       isPlaying = true;
       startProgressTimer();
       notifyListeners();

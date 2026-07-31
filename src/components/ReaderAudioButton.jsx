@@ -179,9 +179,15 @@ const ReaderAudioButton = memo(
               title={isThisPlaying ? "Pause" : "Play"}
             >
               {isThisPlaying ? (
-                <MdPauseCircle size={32} color="var(--on-primary-container, #ffffff)" />
+                <MdPauseCircle
+                  size={32}
+                  color="var(--on-primary-container, #ffffff)"
+                />
               ) : (
-                <MdPlayCircle size={32} color="var(--on-primary-container, #ffffff)" />
+                <MdPlayCircle
+                  size={32}
+                  color="var(--on-primary-container, #ffffff)"
+                />
               )}
             </button>
 
@@ -200,7 +206,10 @@ const ReaderAudioButton = memo(
               onClick={handleStop}
               title="Stop"
             >
-              <MdStopCircle size={30} color="var(--on-primary-container, #ffffff)" />
+              <MdStopCircle
+                size={30}
+                color="var(--on-primary-container, #ffffff)"
+              />
             </button>
           </div>
 
@@ -228,7 +237,7 @@ const ReaderAudioButton = memo(
         </div>
       </div>
     );
-  }
+  },
 );
 
 export default ReaderAudioButton;

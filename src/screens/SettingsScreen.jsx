@@ -37,7 +37,12 @@ import {
   updateApiUrl,
   DEFAULT_DATA_THRESHOLDS,
 } from "../utils/dataUtils.jsx";
-import { CACHED_DATA_KEYS, DATA_URLS, SCREEN_NAMES, API_URL } from "../constants.jsx";
+import {
+  CACHED_DATA_KEYS,
+  DATA_URLS,
+  SCREEN_NAMES,
+  API_URL,
+} from "../constants.jsx";
 
 const ENVS = ["dev", "stage", "prod"];
 const ENV_LABELS = {
@@ -77,7 +82,8 @@ const SettingsScreen = () => {
   const [showEnvModal, setShowEnvModal] = useState(false);
   const [selectedEnv, setSelectedEnv] = useState("prod");
   const [thresholds, setThresholds] = useState(DEFAULT_DATA_THRESHOLDS);
-  const [selectedScreenForThreshold, setSelectedScreenForThreshold] = useState(null);
+  const [selectedScreenForThreshold, setSelectedScreenForThreshold] =
+    useState(null);
 
   const [apiEditMenu, setApiEditMenu] = useState(false);
   const [currentApiUrl, setCurrentApiUrl] = useState(API_URL);
@@ -87,17 +93,20 @@ const SettingsScreen = () => {
   const fetchData = async () => {
     try {
       const dynamicUrls = getDynamicDataUrls();
-      const settingsUrl = dynamicUrls?.SETTINGS_SCREEN || dynamicUrls?.SETTINGS || DATA_URLS.SETTINGS_SCREEN;
+      const settingsUrl =
+        dynamicUrls?.SETTINGS_SCREEN ||
+        dynamicUrls?.SETTINGS ||
+        DATA_URLS.SETTINGS_SCREEN;
       const fetchedData = await dataHelper(
         CACHED_DATA_KEYS.SETTINGS_SCREEN,
         settingsUrl,
-        SCREEN_NAMES.SETTINGS_SCREEN
+        SCREEN_NAMES.SETTINGS_SCREEN,
       );
       if (fetchedData) {
         setContributions(
           Array.isArray(fetchedData?.contributions)
             ? fetchedData.contributions
-            : []
+            : [],
         );
       }
 
@@ -405,10 +414,7 @@ const SettingsScreen = () => {
           >
             <MdFavorite size={20} color="var(--error, red)" />
           </span>
-          <span
-            onClick={onFlagClick}
-            style={{ cursor: "pointer" }}
-          >
+          <span onClick={onFlagClick} style={{ cursor: "pointer" }}>
             in India 🇮🇳
           </span>
         </div>

@@ -14,8 +14,8 @@ export const ThemeContext = React.createContext({
   viewType: "card",
   toggleViewType: () => {},
   font: 24,
-  updateFont: () => { },
-  showAlert: () => { },
+  updateFont: () => {},
+  showAlert: () => {},
 });
 
 export const ThemeProvider = ({ children }) => {

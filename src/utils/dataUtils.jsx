@@ -17,10 +17,7 @@ export const initCacheThresholds = () => {
   try {
     const existing = getJSON(CACHED_DATA_KEYS.CACHE_THRESHOLDS);
     if (!existing) {
-      storeJSON(
-        CACHED_DATA_KEYS.CACHE_THRESHOLDS,
-        DEFAULT_DATA_THRESHOLDS
-      );
+      storeJSON(CACHED_DATA_KEYS.CACHE_THRESHOLDS, DEFAULT_DATA_THRESHOLDS);
     }
   } catch (error) {
     console.error("Error initializing cache thresholds:", error);
@@ -177,7 +174,11 @@ export const isInternetConnected = () => {
 /**
  * Helper function to compare the time difference between current time and last fetch time.
  */
-export const compareTimeDifference = (currentTime, lastFetchTime, threshold) => {
+export const compareTimeDifference = (
+  currentTime,
+  lastFetchTime,
+  threshold,
+) => {
   const timeDifference = lastFetchTime
     ? currentTime - parseInt(lastFetchTime)
     : threshold;
@@ -190,10 +191,14 @@ export const compareTimeDifference = (currentTime, lastFetchTime, threshold) => 
  */
 export const dataHelper = async (KEYNAME, URL, SCREEN_TYPE) => {
   try {
-    const screenKey = (SCREEN_TYPE || "HOME").toUpperCase().replace("_SCREEN", "");
+    const screenKey = (SCREEN_TYPE || "HOME")
+      .toUpperCase()
+      .replace("_SCREEN", "");
     const thresholds = getCacheThresholds();
     const threshold =
-      thresholds[screenKey] ?? DEFAULT_DATA_THRESHOLDS[screenKey] ?? DEFAULT_DATA_THRESHOLDS.HOME;
+      thresholds[screenKey] ??
+      DEFAULT_DATA_THRESHOLDS[screenKey] ??
+      DEFAULT_DATA_THRESHOLDS.HOME;
 
     if (threshold === 0) {
       const freshData = await fetchAndStoreData(KEYNAME, URL);
@@ -208,7 +213,7 @@ export const dataHelper = async (KEYNAME, URL, SCREEN_TYPE) => {
       const shouldFetchFromOnline = compareTimeDifference(
         currentTime,
         lastFetchTime,
-        threshold
+        threshold,
       );
       if (!lastFetchTime || shouldFetchFromOnline) {
         fetchAndStoreData(KEYNAME, URL);
@@ -239,8 +244,13 @@ export const fetchAndStoreData = async (KEYNAME, URL) => {
     if (baseUrl) {
       if (targetUrl.startsWith(API_URL)) {
         targetUrl = targetUrl.replace(API_URL, baseUrl);
-      } else if (targetUrl.startsWith("https://jayanthbm.github.io/stothram-data")) {
-        targetUrl = targetUrl.replace("https://jayanthbm.github.io/stothram-data", baseUrl);
+      } else if (
+        targetUrl.startsWith("https://jayanthbm.github.io/stothram-data")
+      ) {
+        targetUrl = targetUrl.replace(
+          "https://jayanthbm.github.io/stothram-data",
+          baseUrl,
+        );
       }
     }
 
@@ -249,7 +259,7 @@ export const fetchAndStoreData = async (KEYNAME, URL) => {
       newURL = `${targetUrl}${targetUrl.includes("?") ? "&" : "?"}env=${env}`;
     } else {
       const cleanUrl = targetUrl.startsWith("/") ? targetUrl : `/${targetUrl}`;
-      console.log("cleanUrl",cleanUrl)
+      console.log("cleanUrl", cleanUrl);
       newURL = `${baseUrl}${cleanUrl}${cleanUrl.includes("?") ? "&" : "?"}env=${env}`;
     }
 
@@ -303,7 +313,7 @@ export const preFetcher = async (dataArray, SCREEN_TYPE) => {
     const fetchPromises = dataArray.map((dataObject) =>
       dataObject.dataUrl
         ? dataHelper(dataObject.title, dataObject.dataUrl, SCREEN_TYPE)
-        : Promise.resolve(null)
+        : Promise.resolve(null),
     );
 
     await Promise.all(fetchPromises);

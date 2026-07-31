@@ -3,17 +3,23 @@
  */
 export const extractAudioUrl = (audioObj) => {
   if (!audioObj) return null;
-  if (typeof audioObj === 'string' && audioObj.trim().length > 0) {
+  if (typeof audioObj === "string" && audioObj.trim().length > 0) {
     return audioObj.trim();
   }
-  if (typeof audioObj === 'object') {
-    if (typeof audioObj.url === 'string' && audioObj.url.trim().length > 0) {
+  if (typeof audioObj === "object") {
+    if (typeof audioObj.url === "string" && audioObj.url.trim().length > 0) {
       return audioObj.url.trim();
     }
-    if (typeof audioObj.audioUrl === 'string' && audioObj.audioUrl.trim().length > 0) {
+    if (
+      typeof audioObj.audioUrl === "string" &&
+      audioObj.audioUrl.trim().length > 0
+    ) {
       return audioObj.audioUrl.trim();
     }
-    if (typeof audioObj.audio === 'string' && audioObj.audio.trim().length > 0) {
+    if (
+      typeof audioObj.audio === "string" &&
+      audioObj.audio.trim().length > 0
+    ) {
       return audioObj.audio.trim();
     }
   }
@@ -23,7 +29,7 @@ export const extractAudioUrl = (audioObj) => {
 /**
  * Resolves the font family for a given content type and display language.
  */
-export const getFontForLanguage = (fonts, language, type = 'paragraph') => {
+export const getFontForLanguage = (fonts, language, type = "paragraph") => {
   if (!fonts) return undefined;
   if (language && fonts[language] && fonts[language][type]) {
     return fonts[language][type];
@@ -52,11 +58,11 @@ export const resolveAudioData = (globalAudio, paragraphAudio) => {
  * Resolves available language codes from supportedLanguages.
  */
 export const getAvailableLanguages = (supportedLanguages) => {
-  if (!supportedLanguages) return ['kn'];
+  if (!supportedLanguages) return ["kn"];
   const textLangs = supportedLanguages.text || [];
   const transliterationLangs = supportedLanguages.transliterations || [];
   const allLangs = Array.from(new Set([...textLangs, ...transliterationLangs]));
-  return allLangs.length > 0 ? allLangs : ['kn'];
+  return allLangs.length > 0 ? allLangs : ["kn"];
 };
 
 /**
@@ -91,9 +97,9 @@ export const hasMeaningsInContent = (readerData) => {
 export const resolveMeaningLines = (
   meaningsDict,
   selectedLanguage,
-  defaultLanguage = 'kn',
+  defaultLanguage = "kn",
 ) => {
-  if (!meaningsDict || typeof meaningsDict !== 'object') return [];
+  if (!meaningsDict || typeof meaningsDict !== "object") return [];
 
   // 1. Try selectedLanguage
   if (

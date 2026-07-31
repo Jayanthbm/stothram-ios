@@ -1,166 +1,166 @@
 @font-face {
-  font-family: 'NotoSans';
-  src: url('./assets/fonts/NotoSans.ttf') format('truetype');
+  font-family: "NotoSans";
+  src: url("./assets/fonts/NotoSans.ttf") format("truetype");
   font-weight: bold;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'NotoSerif';
-  src: url('./assets/fonts/NotoSerif.ttf') format('truetype');
+  font-family: "NotoSerif";
+  src: url("./assets/fonts/NotoSerif.ttf") format("truetype");
   font-weight: bold;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Brhknde';
-  src: url('./assets/fonts/brhknde.ttf') format('truetype');
+  font-family: "Brhknde";
+  src: url("./assets/fonts/brhknde.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'NudiParijatha';
-  src: url('./assets/fonts/NudiParijatha.ttf') format('truetype');
+  font-family: "NudiParijatha";
+  src: url("./assets/fonts/NudiParijatha.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'NudiParijathaBold';
-  src: url('./assets/fonts/NudiParijathaBold.ttf') format('truetype');
+  font-family: "NudiParijathaBold";
+  src: url("./assets/fonts/NudiParijathaBold.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
 
 :root {
   /* ===== Primary ===== */
-    --primary: #0B57D0;
-    --on-primary: #FFFFFF;
-    --primary-container: #D2E3FF;
-    --on-primary-container: #001D35;
+  --primary: #0b57d0;
+  --on-primary: #ffffff;
+  --primary-container: #d2e3ff;
+  --on-primary-container: #001d35;
 
-    /* ===== Secondary ===== */
-    --secondary: #535F70;
-    --on-secondary: #FFFFFF;
-    --secondary-container: #D7E3F0;
-    --on-secondary-container: #101C2B;
+  /* ===== Secondary ===== */
+  --secondary: #535f70;
+  --on-secondary: #ffffff;
+  --secondary-container: #d7e3f0;
+  --on-secondary-container: #101c2b;
 
-    /* ===== Background / Surface ===== */
-    --background: #EEEDF3;
-    --on-background: #1B1B1B;
+  /* ===== Background / Surface ===== */
+  --background: #eeedf3;
+  --on-background: #1b1b1b;
 
-    --surface: #F9F8FE;
-    --on-surface: #191A1F;
+  --surface: #f9f8fe;
+  --on-surface: #191a1f;
 
-    --surface-variant: #EFF3F8;
-    --on-surface-variant: #444746;
+  --surface-variant: #eff3f8;
+  --on-surface-variant: #444746;
 
-    --surface-container-highest: #FFFFFF;
+  --surface-container-highest: #ffffff;
 
-    /* ===== Outline ===== */
-    --outline: #C7C7C7;
-    --outline-variant: #DADCE0;
+  /* ===== Outline ===== */
+  --outline: #c7c7c7;
+  --outline-variant: #dadce0;
 
-    /* ===== Focus / Accent ===== */
-    --focus: #1A73E8;
+  /* ===== Focus / Accent ===== */
+  --focus: #1a73e8;
 
-    /* ===== Navigation ===== */
-    --active-indicator: #C3E7FF;
-    --on-active-indicator: #004A77;
+  /* ===== Navigation ===== */
+  --active-indicator: #c3e7ff;
+  --on-active-indicator: #004a77;
 
-    /* ===== Status ===== */
-    --error: #B3261E;
-    --on-error: #FFFFFF;
-    --error-container: #F9DEDC;
-    --on-error-container: #410E0B;
+  /* ===== Status ===== */
+  --error: #b3261e;
+  --on-error: #ffffff;
+  --error-container: #f9dedc;
+  --on-error-container: #410e0b;
 
-    --warning: #FFB300;
-    --on-warning: #FFFFFF;
-    --warning-container: #FFF4E5;
-    --on-warning-container: #8A6100;
+  --warning: #ffb300;
+  --on-warning: #ffffff;
+  --warning-container: #fff4e5;
+  --on-warning-container: #8a6100;
 
-    /* ===== Utility ===== */
-    --shadow: rgba(0, 0, 0, 0.15);
-    --inverse-surface: #313033;
-    --inverse-on-surface: #F4EFF4;
+  /* ===== Utility ===== */
+  --shadow: rgba(0, 0, 0, 0.15);
+  --inverse-surface: #313033;
+  --inverse-on-surface: #f4eff4;
 
-    /* ===== App Specific ===== */
-    --search-container: #CBD8EB;
-    --income: #43a047;
-    --expense: #e53935;
+  /* ===== App Specific ===== */
+  --search-container: #cbd8eb;
+  --income: #43a047;
+  --expense: #e53935;
 
-    /* ===== Skeleton ===== */
-    --skeleton-bg: #E0E0E0;
-    --skeleton-shimmer: #F5F5F5;
+  /* ===== Skeleton ===== */
+  --skeleton-bg: #e0e0e0;
+  --skeleton-shimmer: #f5f5f5;
 
-    --transparent: transparent;
+  --transparent: transparent;
 
-    --appbar-height: 64px;
+  --appbar-height: 64px;
 }
 
 .dark-mode {
   /* ===== Primary ===== */
-    --primary: #A8C7FA;
-    --on-primary: #00325A;
-    --primary-container: #1E3A5F;
-    --on-primary-container: #D2E3FF;
+  --primary: #a8c7fa;
+  --on-primary: #00325a;
+  --primary-container: #1e3a5f;
+  --on-primary-container: #d2e3ff;
 
-    /* ===== Secondary ===== */
-    --secondary: #BBC7DB;
-    --on-secondary: #1B1F23;
-    --secondary-container: #3B4858;
-    --on-secondary-container: #E8EAED;
+  /* ===== Secondary ===== */
+  --secondary: #bbc7db;
+  --on-secondary: #1b1f23;
+  --secondary-container: #3b4858;
+  --on-secondary-container: #e8eaed;
 
-    /* ===== Background / Surface ===== */
-    --background: #1D1F24;
-    --on-background: #E3E3E3;
+  /* ===== Background / Surface ===== */
+  --background: #1d1f24;
+  --on-background: #e3e3e3;
 
-    --surface: #111218;
-    --on-surface: #E3E3E3;
+  --surface: #111218;
+  --on-surface: #e3e3e3;
 
-    --surface-variant: #1E1E1E;
-    --on-surface-variant: #C3C7CE;
+  --surface-variant: #1e1e1e;
+  --on-surface-variant: #c3c7ce;
 
-    --surface-container-highest: #2A2C30;
+  --surface-container-highest: #2a2c30;
 
-    /* ===== Outline ===== */
-    --outline: #5F6368;
-    --outline-variant: #8C9199;
+  /* ===== Outline ===== */
+  --outline: #5f6368;
+  --outline-variant: #8c9199;
 
-    /* ===== Focus ===== */
-    --focus: #8AB4F8;
+  /* ===== Focus ===== */
+  --focus: #8ab4f8;
 
-    /* ===== Navigation ===== */
-    --active-indicator: #004A77;
-    --on-active-indicator: #C3E7FF;
+  /* ===== Navigation ===== */
+  --active-indicator: #004a77;
+  --on-active-indicator: #c3e7ff;
 
-    /* ===== Status ===== */
-    --error: #F28B82;
-    --on-error: #601410;
-    --error-container: #8C1D18;
-    --on-error-container: #F9DEDC;
+  /* ===== Status ===== */
+  --error: #f28b82;
+  --on-error: #601410;
+  --error-container: #8c1d18;
+  --on-error-container: #f9dedc;
 
-    --warning: #FFB74D;
-    --on-warning: #2C1900;
-    --warning-container: #5C3A00;
-    --on-warning-container: #FFDFA6;
+  --warning: #ffb74d;
+  --on-warning: #2c1900;
+  --warning-container: #5c3a00;
+  --on-warning-container: #ffdfa6;
 
-    /* ===== Utility ===== */
-    --shadow: rgba(0, 0, 0, 0.4);
-    --inverse-surface: #E3E3E3;
-    --inverse-on-surface: #121212;
+  /* ===== Utility ===== */
+  --shadow: rgba(0, 0, 0, 0.4);
+  --inverse-surface: #e3e3e3;
+  --inverse-on-surface: #121212;
 
-    /* ===== App Specific ===== */
-    --search-container: #2B2C30;
-    --income: #66bb6a;
-    --expense: #ef5350;
+  /* ===== App Specific ===== */
+  --search-container: #2b2c30;
+  --income: #66bb6a;
+  --expense: #ef5350;
 
-    /* ===== Skeleton ===== */
-    --skeleton-bg: #2A2C30;
-    --skeleton-shimmer: #3A3C40;
+  /* ===== Skeleton ===== */
+  --skeleton-bg: #2a2c30;
+  --skeleton-shimmer: #3a3c40;
 
-    --transparent: transparent;
+  --transparent: transparent;
 }
 
 html {

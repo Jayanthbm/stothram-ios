@@ -2,7 +2,10 @@ import React, { memo } from "react";
 import Card from "./Card.jsx";
 import ReaderAudioButton from "./ReaderAudioButton.jsx";
 import ReaderMeaning from "./ReaderMeaning.jsx";
-import { resolveAudioData, resolveMeaningLines } from "../utils/readerUtils.jsx";
+import {
+  resolveAudioData,
+  resolveMeaningLines,
+} from "../utils/readerUtils.jsx";
 import { getFontFamily } from "../utils/commonUtils.jsx";
 
 const ReaderParagraph = memo(
@@ -30,7 +33,7 @@ const ReaderParagraph = memo(
 
     const meaningLines = resolveMeaningLines(
       item.meanings,
-      meaningLanguage || currentLanguage
+      meaningLanguage || currentLanguage,
     );
     const hasMeaningLines =
       showMeanings && Array.isArray(meaningLines) && meaningLines.length > 0;
@@ -59,7 +62,7 @@ const ReaderParagraph = memo(
           const fontStyleFamily = getFontFamily(
             line,
             fontFamily || item.fontFamily,
-            fonts
+            fonts,
           );
           const fontSize =
             fontFamily === "brhknde" || item.fontFamily === "brhknde"
@@ -105,7 +108,7 @@ const ReaderParagraph = memo(
         />
       </Card>
     );
-  }
+  },
 );
 
 export default ReaderParagraph;
